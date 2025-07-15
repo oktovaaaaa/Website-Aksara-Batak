@@ -565,6 +565,10 @@
                         <Culinary />
                         <CeritaKuno />
                         <FAQ />
+
+
+
+                        
                     </main>
                     <Footer />
                     <MusicControl />
@@ -576,5 +580,152 @@
         root.render(<App />);
     </script>
 </body>
+
+<!-- ================================================= INI FELI YG KUTAMBAHIN KEKMANA MASUKKAN NYA KE VIEW DIATAS FOOTER ========================================================= -->
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            batak: ['Noto Sans Batak', 'sans-serif'],
+          },
+          colors: {
+            'batak-red': {
+              '700': '#9b2c2c',
+              '800': '#742a2a',
+              '900': '#63171b'
+            },
+            'batak-black': '#1a202c',
+            'batak-white': '#f8fafc',
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Batak&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-batak-white text-batak-black font-sans">
+  <div class="min-h-screen flex flex-col items-center p-4 sm:p-6 lg:p-10">
+    <div class="w-full max-w-2xl bg-white p-6 rounded-2xl shadow-lg border border-batak-red-700">
+      <h1 class="text-2xl sm:text-3xl font-semibold text-batak-red-900 mb-4">Latihan Aksara Batak</h1>
+      <p class="mb-4 text-base sm:text-lg">Seret jawaban yang benar ke aksara Batak yang sesuai.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="drop-zone border-2 border-dashed border-gray-300 rounded-lg p-6 text-center min-h-[100px]" data-answer="ba"
+          ondrop="drop(event)" ondragover="allowDrop(event)">
+          <div class="text-4xl font-batak mb-2">ᯇ</div>
+        </div>
+
+        <div class="drop-zone border-2 border-dashed border-gray-300 rounded-lg p-6 text-center min-h-[100px]" data-answer="na"
+          ondrop="drop(event)" ondragover="allowDrop(event)">
+          <div class="text-4xl font-batak mb-2">ᯉ</div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-4 mt-6 justify-center" id="choices">
+        <div class="drag-item bg-batak-red-700 text-white px-4 py-2 rounded-lg cursor-move" draggable="true"
+          ondragstart="drag(event)" id="ba">ba</div>
+        <div class="drag-item bg-batak-red-700 text-white px-4 py-2 rounded-lg cursor-move" draggable="true"
+          ondragstart="drag(event)" id="na">na</div>
+        <div class="drag-item bg-batak-red-700 text-white px-4 py-2 rounded-lg cursor-move" draggable="true"
+          ondragstart="drag(event)" id="ga">ga</div>
+        <div class="drag-item bg-batak-red-700 text-white px-4 py-2 rounded-lg cursor-move" draggable="true"
+          ondragstart="drag(event)" id="la">la</div>
+      </div>
+
+      <button onclick="checkDragAnswers()"
+        class="mt-6 bg-batak-red-800 hover:bg-batak-red-900 text-white py-2 px-4 rounded-lg w-full sm:w-auto">Periksa Jawaban</button>
+
+      <div id="result" class="mt-4 text-center font-semibold text-lg"></div>
+    </div>
+  </div>
+
+  <script>
+    // Simpan referensi ke elemen asli
+    const originalItems = {
+      'ba': document.getElementById('ba').cloneNode(true),
+      'na': document.getElementById('na').cloneNode(true),
+      'ga': document.getElementById('ga').cloneNode(true),
+      'la': document.getElementById('la').cloneNode(true)
+    };
+
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      const data = ev.dataTransfer.getData("text");
+      const dragged = document.getElementById(data);
+      const dropZone = ev.target.closest(".drop-zone");
+
+      if (!dropZone) return;
+
+      // Kembalikan item yang ada sebelumnya ke daftar pilihan
+      const old = dropZone.querySelector(".drag-item");
+      if (old) {
+        const oldId = old.id;
+        const choices = document.getElementById("choices");
+        
+        // Kembalikan item asli ke daftar pilihan
+        const restoredItem = originalItems[oldId].cloneNode(true);
+        restoredItem.addEventListener("dragstart", drag);
+        choices.appendChild(restoredItem);
+        
+        old.remove();
+        dropZone.removeAttribute("data-user");
+      }
+
+      // Tambahkan item yang baru di-drag ke drop zone
+      const clone = originalItems[data].cloneNode(true);
+      clone.classList.remove("cursor-move");
+      clone.setAttribute("draggable", "false");
+      dropZone.appendChild(clone);
+      dropZone.setAttribute("data-user", data);
+
+      // Hapus item yang di-drag dari daftar pilihan
+      dragged.remove();
+    }
+
+    function checkDragAnswers() {
+      const zones = document.querySelectorAll(".drop-zone");
+      let correct = 0;
+      const totalQuestions = zones.length;
+
+      zones.forEach(zone => {
+        const user = zone.getAttribute("data-user");
+        const answer = zone.getAttribute("data-answer");
+        if (user === answer) {
+          correct++;
+          zone.classList.remove("border-red-500", "border-dashed");
+          zone.classList.add("border-green-500", "border-solid");
+        } else {
+          zone.classList.remove("border-green-500", "border-solid");
+          zone.classList.add("border-red-500", "border-dashed");
+        }
+      });
+
+      const result = document.getElementById("result");
+      if (correct === totalQuestions) {
+        result.textContent = "Hebat! Semua jawaban benar.";
+        result.classList.remove("text-red-600");
+        result.classList.add("text-green-600");
+      } else {
+        result.textContent = `Kamu menjawab ${correct} dari ${totalQuestions} dengan benar.`;
+        result.classList.remove("text-green-600");
+        result.classList.add("text-red-600");
+      }
+    }
+  </script>
+
+
 
 </html>
