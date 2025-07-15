@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Portal lengkap warisan budaya Batak. Jelajahi Aksara Batak, sejarah, cerita kuno, adat, kuliner, dan pariwisata dengan alat interaktif.">
+    <title>Aksara Batak - Ensiklopedia Warisan Budaya Nusantara</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Batak&family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.20.15/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        batak: ['Noto Sans Batak', 'sans-serif'],
+                    },
+                    colors: {
+                        'batak-red': {
+                            '700': '#9b2c2c',
+                            '800': '#742a2a',
+                            '900': '#63171b'
+                        },
+                        'batak-black': '#1a202c',
+                        'batak-white': '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #F9FAFB;
+            color: #1a202c;
+        }
+
+        .batak-font {
+            font-family: 'Noto Sans Batak', sans-serif;
+        }
+
+        .section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+    </style>
+</head>
+
+<body class="bg-batak-white">
+    <div id="root"></div>
+    <audio id="backgroundMusic" loop preload="auto">
+        <source src="TobaDream (Theme Song).mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <script type="text/babel">
+        const LanguageContext = React.createContext();
+        const translations = {
+            id: {
+                home: "Beranda", history: "Sejarah", introduction: "Pengenalan", transliteration: "Transliterasi", tourism: "Wisata", culture: "Budaya", culinary: "Kuliner", folklore: "Cerita Rakyat", faq: "FAQ", contact: "Kontak",
+                welcomeTitle: "SELAMAT DATANG DI WEBSITE AKSARA BATAK", welcomeSubtitle: "Menjelajahi Kekayaan Intelektual Leluhur di Era Digital", exploreNow: "Jelajahi Sekarang",
+                historyTitle: "Sejarah & Evolusi Aksara Batak", historySubtitle: "Menelusuri jejak perjalanan Surat Batak dari masa ke masa.",
+                introTitle: "Pengenalan Aksara Batak", introSubtitle: "Kenali struktur dasar 'Ina ni Surat' dan variasinya di setiap puak.",
+                transliterationTitle: "Alat Transliterasi", transliterationSubtitle: "Ubah tulisan Latin ke Aksara Batak secara instan.",
+                transliterationInput: "Ketik teks Latin di sini...", transliterationOutput: "Hasil Aksara Batak",
+                tourismTitle: "Destinasi Ikonik Tanah Batak", tourismSubtitle: "Jelajahi keindahan alam dan budaya yang menyatu.",
+                cultureTitle: "Kekayaan Budaya Batak", cultureSubtitle: "Tradisi, seni, dan kearifan lokal yang hidup.",
+                culinaryTitle: "Makanan dan Minuman Batak", culinarySubtitle: "Nikmati kelezatan kuliner warisan leluhur.",
+                folkloreTitle: "Cerita Rakyat Batak", folkloreSubtitle: "Kisah dan legenda yang diwariskan dari generasi ke generasi.",
+                faqTitle: "Pertanyaan Umum", faqSubtitle: "Jawaban cepat untuk pertanyaan yang sering diajukan.",
+                toba: "Toba", mandailing: "Mandailing/Angkola", karo: "Karo", simalungun: "Simalungun", pakpak: "Pakpak",
+                introOverview: "Ikhtisar Aksara Batak", introStructure: "Struktur dan Karakteristik", introVariations: "Variasi Antar Puak", introUsage: "Penggunaan Tradisional",
+                footerAboutTitle: "Tentang Kami",
+                footerAboutText: "Kami berdedikasi untuk melestarikan dan mempromosikan aksara Batak sebagai warisan budaya yang tak ternilai harganya.",
+                footerContactTitle: "Kontak",
+                footerContactEmail1: "Email: oktovaaaaa@gmail.com",
+                footerContactEmail2: "Email: felicyapanjaitan790@gmail.com",
+                footerSocialTitle: "Sosial Media",
+                footerSocialInsta: "Instagram: @aksarabatak",
+                footerSocialFB: "Facebook: Aksara Batak",
+                footerCopyright: "© 2025 Aksara Batak. Semua hak dilindungi.",
+            },
+            en: {
+                home: "Home", history: "History", introduction: "Introduction", transliteration: "Transliteration", tourism: "Tourism", culture: "Culture", culinary: "Culinary", folklore: "Folklore", faq: "FAQ", contact: "Contact",
+                welcomeTitle: "WELCOME TO THE BATAK SCRIPT HERITAGE CENTER", welcomeSubtitle: "Exploring Ancestral Intellectual Richness in the Digital Age", exploreNow: "Explore Now",
+                historyTitle: "History & Evolution of Batak Script", historySubtitle: "Tracing the journey of 'Surat Batak' through the ages.",
+                introTitle: "Introduction to Batak Script", introSubtitle: "Learn the basic structure of 'Ina ni Surat' and its variations.",
+                transliterationTitle: "Transliteration Tool", transliterationSubtitle: "Convert Latin text to Batak Script instantly.",
+                transliterationInput: "Type Latin text here...", transliterationOutput: "Batak Script Result",
+                tourismTitle: "Iconic Destinations of Batak Land", tourismSubtitle: "Explore the fusion of natural beauty and culture.",
+                cultureTitle: "The Richness of Batak Culture", cultureSubtitle: "Living traditions, arts, and local wisdom.",
+                culinaryTitle: "Authentic Batak Flavors", culinarySubtitle: "Enjoy the deliciousness of ancestral culinary heritage.",
+                folkloreTitle: "Batak Folklore", folkloreSubtitle: "Stories and legends passed down through generations.",
+                faqTitle: "Frequently Asked Questions", faqSubtitle: "Quick answers to common questions.",
+                toba: "Toba", mandailing: "Mandailing/Angkola", karo: "Karo", simalungun: "Simalungun", pakpak: "Pakpak",
+                introOverview: "Overview of Batak Script", introStructure: "Structure and Characteristics", introVariations: "Variations Across Sub-Ethnic Groups", introUsage: "Traditional Usage",
+                footerAboutTitle: "About Us",
+                footerAboutText: "We are dedicated to preserving and promoting the Batak script as a priceless cultural heritage.",
+                footerContactTitle: "Contact",
+                footerContactEmail1: "Email: oktovaaaaa@gmail.com",
+                footerContactEmail2: "Email: felicyapanjaitan790@gmail.com",
+                footerSocialTitle: "Social Media",
+                footerSocialInsta: "Instagram: @aksarabatak",
+                footerSocialFB: "Facebook: Aksara Batak",
+                footerCopyright: "© 2025 Batak Script. All rights reserved.",
+            }
+        };
+        const LanguageProvider = ({ children }) => {
+            const [language, setLanguage] = React.useState('id');
+            const t = (key) => translations[language]?.[key] || key;
+            return <LanguageContext.Provider value={{ language, setLanguage, t }}>{children}</LanguageContext.Provider>;
+        };
+        const useLanguage = () => React.useContext(LanguageContext);
+        const transliterateToBatak = (latin) => {
+            if (!latin || typeof latin !== 'string') return '';
+            let text = latin.toLowerCase();
+            const inaNiSurat = { 'a': 'ᯀ', 'i': 'ᯤ', 'u': 'ᯥ', 'ha': 'ᯂ', 'ka': 'ᯂ', 'ba': 'ᯅ', 'pa': 'ᯇ', 'na': 'ᯉ', 'wa': 'ᯋ', 'ga': 'ᯎ', 'ja': 'ᯐ', 'da': 'ᯑ', 'ra': 'ᯒ', 'ma': 'ᯔ', 'ta': 'ᯖ', 'sa': 'ᯘ', 'ya': 'ᯛ', 'nga': 'ᯝ', 'la': 'ᯞ', 'nya': 'ᯠ', 'ca': 'ᯡ' };
+            const konsonan = { 'ng': 'ᯝ', 'ny': 'ᯠ', 'h': 'ᯂ', 'k': 'ᯂ', 'b': 'ᯅ', 'p': 'ᯇ', 'n': 'ᯉ', 'w': 'ᯋ', 'g': 'ᯎ', 'j': 'ᯐ', 'd': 'ᯑ', 'r': 'ᯒ', 'm': 'ᯔ', 't': 'ᯖ', 's': 'ᯘ', 'y': 'ᯛ', 'l': 'ᯞ', 'c': 'ᯡ' };
+            const vokal = { 'e': '᯦', 'i': 'ᯪ', 'o': 'ᯨ', 'u': 'ᯮ' };
+            const pangolat = '᯲'; let result = ''; let i = 0;
+            while (i < text.length) {
+                if ('aiu'.includes(text[i]) && (i === 0 || ' ,.?!'.includes(text[i - 1]))) { result += inaNiSurat[text[i]]; i++; continue; }
+                let digraph = text.substring(i, i + 2); let consonant = konsonan[digraph] ? digraph : (konsonan[text[i]] ? text[i] : null);
+                if (consonant) {
+                    let base = konsonan[consonant]; i += consonant.length; let nextVowelChar = text[i];
+                    if (vokal.hasOwnProperty(nextVowelChar)) { result += base + vokal[nextVowelChar]; i++; } else if (nextVowelChar === 'a') { result += base; i++; } else { result += base + pangolat; }
+                } else { result += text[i]; i++; }
+            }
+            return result.replace(/᯲ /g, ' ').replace(/᯲,/g, ',').replace(/᯲\./g, '.');
+        };
+        const HoverBatakText = ({ children }) => {
+            const [isHovered, setIsHovered] = React.useState(false);
+            const batakVersion = React.useMemo(() => typeof children === 'string' ? transliterateToBatak(children) : '', [children]);
+            if (!children || typeof children !== 'string' || !batakVersion) return <>{children}</>;
+            return (
+                <span className="inline-block" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+                    {isHovered ? <span className="batak-font text-red-300">{batakVersion}</span> : children}
+                </span>
+            );
+        };
+        const NavBar = () => {
+            const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+            const { t, language, setLanguage } = useLanguage();
+            const menuItems = ['home', 'history', 'introduction', 'transliteration', 'tourism', 'culture', 'culinary', 'folklore', 'faq', 'contact'];
+            const LanguageSwitcher = () => (
+                <div className="flex items-center space-x-1 bg-black/30 rounded-full p-1">
+                    <button onClick={() => setLanguage('id')} className={`px-3 py-1 text-sm rounded-full transition-colors duration-300 ${language === 'id' ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-red-800'}`}>ID</button>
+                    <button onClick={() => setLanguage('en')} className={`px-3 py-1 text-sm rounded-full transition-colors duration-300 ${language === 'en' ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-red-800'}`}>EN</button>
+                </div>
+            );
+            return (
+                <nav className="bg-gradient-to-r from-black to-red-900 text-white p-4 fixed w-full top-0 z-50 shadow-xl">
+                    <div className="container mx-auto flex justify-between items-center">
+                        <a href="#home" className="text-3xl font-bold batak-font tracking-tight">ᯀᯂ᯦ᯚᯒ Aksara Batak</a>
+                        <div className="hidden md:flex items-center space-x-8">
+                            <ul className="flex space-x-8">
+                                {menuItems.slice(0, 5).map((item) => (
+                                    <li key={item}>
+                                        <a href={`#${item}`} className="text-lg hover:text-red-300 transition duration-300">
+                                            <HoverBatakText>{t(item)}</HoverBatakText>
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                            <LanguageSwitcher />
+                        </div>
+                        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden text-2xl">
+                            <i className={isMenuOpen ? "fas fa-times" : "fas fa-bars"}></i>
+                        </button>
+                    </div>
+                    <ul className={`${isMenuOpen ? 'flex' : 'hidden'} flex-col bg-red-900 absolute top-full left-0 w-full p-6 space-y-4 md:hidden`}>
+                        {menuItems.map((item) => (
+                            <li key={item}>
+                                <a href={`#${item}`} className="text-lg hover:text-red-300 transition duration-300" onClick={() => setIsMenuOpen(false)}>
+                                    <HoverBatakText>{t(item)}</HoverBatakText>
+                                </a>
+                            </li>
+                        ))}
+                        <li className="pt-4 flex justify-center"><LanguageSwitcher /></li>
+                    </ul>
+                </nav>
+            );
+        };
+        const Footer = () => {
+            const { t } = useLanguage();
+            return (
+                <footer id="contact" className="bg-gradient-to-r from-black to-red-900 text-white py-16 section">
+                    <div className="container mx-auto px-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                            <div>
+                                <h3 className="text-xl font-bold text-red-400 mb-4">{t('footerAboutTitle')}</h3>
+                                <p className="text-gray-200 leading-relaxed">{t('footerAboutText')}</p>
+                            </div>
+                            <div>
+                                <h3 className="text-xl font-bold text-red-400 mb-4">{t('footerContactTitle')}</h3>
+                                <p className="text-gray-200">{t('footerContactEmail1')}</p>
+                                <p className="text-gray-200 mt-2">{t('footerContactEmail2')}</p>
+                            </div>
+                            <div>
+                                <h3 className="text-xl font-bold text-red-400 mb-4">{t('footerSocialTitle')}</h3>
+                                <p className="text-gray-200">{t('footerSocialInsta')}</p>
+                                <p className="text-gray-200 mt-2">{t('footerSocialFB')}</p>
+                            </div>
+                        </div>
+                        <div className="border-t border-red-400 mt-12 pt-6 text-center text-gray-200">
+                            <p>{t('footerCopyright')}</p>
+                        </div>
+                    </div>
+                </footer>
+            );
+        };
+        const Hero = () => {
+            const { t } = useLanguage();
+            return (
+                <section id="home" className="section relative h-screen flex items-center justify-center text-white text-center">
+                    <video autoPlay muted loop playsInline className="absolute w-full h-full object-cover top-0 left-0 z-0">
+                        <source src="HEADER.mp4" type="video/mp4" />
+                        Video tidak didukung.
+                    </video>
+                    <div className="absolute inset-0 bg-black bg-opacity-60 z-10"></div>
+                    <div className="relative z-20 px-4">
+                        <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold mb-4 tracking-tight"><HoverBatakText>{t('welcomeTitle')}</HoverBatakText></h1>
+                        <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto font-light"><HoverBatakText>{t('welcomeSubtitle')}</HoverBatakText></p>
+                        <a href="#history" className="btn-primary inline-block bg-red-600 text-white px-6 py-3 rounded-full hover:bg-red-700 transition"><HoverBatakText>{t('exploreNow')}</HoverBatakText></a>
+                    </div>
+                </section>
+            );
+        };
+        const SejarahComponent = () => {
+            const { t } = useLanguage();
+            return (
+                <section id="history" className="section py-20 bg-white">
+                    <div className="container mx-auto px-6">
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl md:text-5xl font-bold text-batak-black mb-4 batak-font">ᯘ᯦ᯐᯒᯂ᯲</h2>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('historyTitle')}</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('historySubtitle')}</HoverBatakText></p>
+                        </div>
+                        <article className="prose prose-lg max-w-4xl mx-auto">
+                            <h4><HoverBatakText>Asal-usul</HoverBatakText></h4>
+                            <p><HoverBatakText>Aksara Batak atau Surat Batak adalah aksara tradisional yang digunakan untuk menuliskan bahasa-bahasa Batak. Aksara ini diyakini merupakan turunan dari aksara Brahmi dari India kuno, yang sampai ke Nusantara melalui aksara Pallawa dan Kawi.</HoverBatakText></p>
+                            <h4><HoverBatakText>Media Penulisan</HoverBatakText></h4>
+                            <ul>
+                                <li><strong><HoverBatakText>Pustaha Laklak:</HoverBatakText></strong> <HoverBatakText>Buku yang terbuat dari kulit kayu alim (gaharu), dilipat seperti akordeon, berisi catatan ilmu gaib, pengobatan, dan kalender adat yang hanya dimiliki oleh datu (dukun).</HoverBatakText></li>
+                                <li><strong><HoverBatakText>Bambu dan Tulang:</HoverBatakText></strong> <HoverBatakText>Digunakan untuk tulisan sehari-hari seperti surat, mantra, atau ungkapan perasaan (andung-andung).</HoverBatakText></li>
+                            </ul>
+                            <h4><HoverBatakText>Kemunduran dan Revitalisasi</HoverBatakText></h4>
+                            <p><HoverBatakText>Penggunaan Aksara Batak mulai menurun sejak kedatangan misionaris yang memperkenalkan aksara Latin untuk menerjemahkan Alkitab. Kini, upaya revitalisasi giat dilakukan dengan mengajarkannya di sekolah-sekolah sebagai muatan lokal dan menggunakannya dalam seni serta papan nama di Sumatera Utara.</HoverBatakText></p>
+                        </article>
+                    </div>
+                </section>
+            );
+        };
+        const PengenalanComponent = () => {
+            const { t } = useLanguage();
+            const aksaraData = [
+                { hurup: 'a', toba: 'ᯀ', mandailing: 'ᯀ', karo: 'ᯀ', simalungun: 'ᯁ', pakpak: 'ᯀ' },
+                { hurup: 'ha/ka', toba: 'ᯂ', mandailing: 'ᯄ', karo: 'ᯂ', simalungun: 'ᯃ', pakpak: 'ᯂ' },
+                { hurup: 'ba', toba: 'ᯅ', mandailing: 'ᯅ', karo: 'ᯆ', simalungun: 'ᯅ', pakpak: 'ᯅ' },
+                { hurup: 'pa', toba: 'ᯇ', mandailing: 'ᯇ', karo: 'ᯇ', simalungun: 'ᯈ', pakpak: 'ᯇ' },
+                { hurup: 'na', toba: 'ᯉ', mandailing: 'ᯉ', karo: 'ᯉ', simalungun: 'ᯉ', pakpak: 'ᯉ' },
+                { hurup: 'wa', toba: 'ᯋ', mandailing: 'ᯋ', karo: 'ᯋ', simalungun: 'ᯌ', pakpak: 'ᯍ' },
+                { hurup: 'ga', toba: 'ᯎ', mandailing: 'ᯎ', karo: 'ᯎ', simalungun: 'ᯏ', pakpak: 'ᯎ' },
+                { hurup: 'ja', toba: 'ᯐ', mandailing: 'ᯐ', karo: 'ᯐ', simalungun: 'ᯐ', pakpak: 'ᯐ' },
+                { hurup: 'da', toba: 'ᯑ', mandailing: 'ᯑ', karo: 'ᯑ', simalungun: 'ᯑ', pakpak: 'ᯑ' },
+                { hurup: 'ra', toba: 'ᯒ', mandailing: 'ᯒ', karo: 'ᯒ', simalungun: 'ᯓ', pakpak: 'ᯒ' },
+                { hurup: 'ma', toba: 'ᯔ', mandailing: 'ᯔ', karo: 'ᯔ', simalungun: 'ᯕ', pakpak: 'ᯔ' },
+                { hurup: 'ta', toba: 'ᯖ', mandailing: 'ᯖ', karo: 'ᯖ', simalungun: 'ᯖ', pakpak: 'ᯖ' },
+                { hurup: 'sa', toba: 'ᯘ', mandailing: 'ᯚ', karo: 'ᯘ', simalungun: 'ᯙ', pakpak: 'ᯘ' },
+                { hurup: 'ya', toba: 'ᯛ', mandailing: 'ᯛ', karo: 'ᯛ', simalungun: 'ᯛ', pakpak: 'ᯛ' },
+                { hurup: 'nga', toba: 'ᯝ', mandailing: 'ᯝ', karo: 'ᯝ', simalungun: 'ᯝ', pakpak: 'ᯝ' },
+                { hurup: 'la', toba: 'ᯞ', mandailing: 'ᯞ', karo: 'ᯞ', simalungun: 'ᯟ', pakpak: 'ᯞ' },
+                { hurup: 'nya', toba: 'ᯠ', mandailing: 'ᯠ', karo: 'ᯚ', simalungun: 'ᯠ', pakpak: 'ᯠ' },
+                { hurup: 'i', toba: 'ᯤ', mandailing: 'ᯤ', karo: 'ᯤ', simalungun: 'ᯤ', pakpak: 'ᯤ' },
+                { hurup: 'u', toba: 'ᯥ', mandailing: 'ᯥ', karo: 'ᯥ', simalungun: 'ᯥ', pakpak: 'ᯥ' },
+            ];
+            const [selectedAksara, setSelectedAksara] = React.useState(null);
+            const diakritikMap = (base) => ({ e: `${base}᯦`, i: `${base}ᯪ`, o: `${base}ᯨ`, u: `${base}ᯮ`, ng: `${base}ᯰ`, h: `${base}ᯱ`, Pangolat: `${base}᯲` });
+            return (
+                <section id="introduction" className="section py-20 bg-batak-white">
+                    <div className="container mx-auto px-6">
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl md:text-5xl font-bold text-batak-black mb-4 batak-font">ᯤᯉ ᯉᯪ ᯘᯮᯒᯖ᯲</h2>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('introTitle')}</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('introSubtitle')}</HoverBatakText></p>
+                        </div>
+                        <article className="prose prose-lg max-w-4xl mx-auto mb-12">
+                            <h4><HoverBatakText>{t('introOverview')}</HoverBatakText></h4>
+                            <p><HoverBatakText>Aksara Batak, yang dikenal sebagai 'Surat Batak' atau 'Ina ni Surat', adalah sistem tulisan abugida yang digunakan oleh masyarakat Batak untuk menuliskan bahasa-bahasa seperti Toba, Mandailing, Karo, Simalungun, dan Pakpak. Aksara ini terdiri dari karakter utama (induk surat) dan tanda baca tambahan (anak ni surat) yang mengubah bunyi vokal atau konsonan penutup.</HoverBatakText></p>
+                            <h4><HoverBatakText>{t('introStructure')}</HoverBatakText></h4>
+                            <p><HoverBatakText>Aksara Batak ditulis dari kiri ke kanan tanpa spasi antar kata, dengan tanda baca seperti titik atau koma untuk memisahkan kalimat. Setiap karakter induk mewakili konsonan dengan vokal inheren 'a', yang dapat dimodifikasi dengan tanda diakritik untuk vokal lain (e, i, o, u) atau konsonan penutup seperti 'ng' atau 'h'. Tanda khusus 'pangolat' (᯲) digunakan untuk menandakan konsonan tanpa vokal lanjutan.</HoverBatakText></p>
+                            <h4><HoverBatakText>{t('introVariations')}</HoverBatakText></h4>
+                            <p><HoverBatakText>Aksara Batak memiliki variasi di antara puak Batak (Toba, Mandailing/Angkola, Karo, Simalungun, Pakpak), terutama pada bentuk karakter tertentu seperti 'ha', 'sa', dan 'nya'. Meski demikian, struktur dasarnya tetap konsisten, memungkinkan saling pengertian antar varian. Tabel di bawah ini menunjukkan perbandingan karakter antar puak.</HoverBatakText></p>
+                            <h4><HoverBatakText>{t('introUsage')}</HoverBatakText></h4>
+                            <p><HoverBatakText>Secara tradisional, aksara ini digunakan untuk menulis pustaha (buku kulit kayu), mantra, surat, dan catatan adat. Pustaha sering berisi pengetahuan tentang ramalan, pengobatan, dan ritual, ditulis oleh datu (dukun). Aksara juga diukir pada bambu atau tulang untuk keperluan sehari-hari. Kini, aksara ini digunakan dalam seni, papan nama, dan pendidikan untuk melestarikan warisan budaya.</HoverBatakText></p>
+                        </article>
+                        <div className="overflow-x-auto bg-white rounded-xl shadow-lg">
+                            <table className="w-full text-left">
+                                <thead className="bg-batak-red-800 text-white">
+                                    <tr>
+                                        {['Huruf', t('toba'), t('mandailing'), t('karo'), t('simalungun'), t('pakpak')].map(h => (
+                                            <th key={h} className="p-4 font-semibold">{h}</th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-200">
+                                    {aksaraData.map((item, index) => (
+                                        <tr key={index} onClick={() => setSelectedAksara(item)} className="cursor-pointer hover:bg-red-50">
+                                            <td className="p-4 font-semibold">{item.hurup}</td>
+                                            <td className="p-4 text-3xl batak-font">{item.toba}</td>
+                                            <td className="p-4 text-3xl batak-font">{item.mandailing}</td>
+                                            <td className="p-4 text-3xl batak-font">{item.karo}</td>
+                                            <td className="p-4 text-3xl batak-font">{item.simalungun}</td>
+                                            <td className="p-4 text-3xl batak-font">{item.pakpak}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                        {selectedAksara && (
+                            <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[100] p-4" onClick={() => setSelectedAksara(null)}>
+                                <div className="bg-white rounded-xl shadow-2xl p-6 sm:p-8 max-w-lg w-full transform transition-all" onClick={e => e.stopPropagation()}>
+                                    <h3 className="text-xl sm:text-2xl font-bold text-batak-red-800 mb-2"><HoverBatakText>Diakritik untuk</HoverBatakText> <span className="batak-font text-3xl sm:text-4xl">{selectedAksara.toba}</span> ({selectedAksara.hurup})</h3>
+                                    <p className="text-gray-600 mb-6"><HoverBatakText>Contoh penambahan anak ni surat (tanda vokal & konsonan penutup).</HoverBatakText></p>
+                                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-4 text-center">
+                                        {Object.entries(diakritikMap(selectedAksara.toba)).map(([vokal, aksara]) => (
+                                            <div key={vokal} className="p-4 bg-slate-100 rounded-lg">
+                                                <div className="batak-font text-4xl sm:text-5xl text-batak-red-700">{aksara}</div>
+                                                <div className="mt-2 font-semibold text-gray-700">/{vokal}/</div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <button onClick={() => setSelectedAksara(null)} className="mt-8 w-full bg-batak-red-700 text-white py-3 rounded-lg font-semibold hover:bg-batak-red-800 transition"><HoverBatakText>Tutup</HoverBatakText></button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </section>
+            );
+        };
+        const TransliterasiComponent = () => {
+            const [latin, setLatin] = React.useState('');
+            const [batak, setBatak] = React.useState('');
+            const { t } = useLanguage();
+            React.useEffect(() => { setBatak(transliterateToBatak(latin)); }, [latin]);
+            return (
+                <section id="transliteration" className="section py-20 bg-white">
+                    <div className="container mx-auto px-6">
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl md:text-5xl font-bold text-batak-black mb-4 batak-font">ᯂᯮᯀᯞᯪᯖᯘ᯲</h2>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('transliterationTitle')}</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('transliterationSubtitle')}</HoverBatakText></p>
+                        </div>
+                        <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                            <div>
+                                <label className="font-semibold block mb-2"><HoverBatakText>{t('transliterationInput')}</HoverBatakText></label>
+                                <textarea value={latin} onChange={(e) => setLatin(e.target.value)} className="w-full h-48 p-4 border border-gray-300 rounded-lg focus:border-batak-red-700 focus:ring-batak-red-700 resize-none" placeholder={t('transliterationInput')}></textarea>
+                            </div>
+                            <div>
+                                <label className="font-semibold block mb-2"><HoverBatakText>{t('transliterationOutput')}</HoverBatakText></label>
+                                <div className="w-full h-48 p-4 border border-gray-300 rounded-lg bg-slate-50 batak-font text-2xl overflow-y-auto">{batak || <span className="text-gray-400 text-base font-sans">Hasil akan muncul di sini...</span>}</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+        const Tourism = () => {
+            const { t } = useLanguage();
+            const data = [{ title: "Danau Toba", desc: "Danau vulkanik terbesar di dunia, ikon keindahan alam Sumatera Utara.", image: 'danau.png' }, { title: "Pulau Samosir", desc: "Pulau di tengah Danau Toba, pusat kebudayaan Batak yang kaya.", image: 'samosir.jpg' }, { title: "Air Terjun Sipiso-piso", desc: "Salah satu air terjun tertinggi di Indonesia dengan pemandangan spektakuler.", image: 'air.jpg' },];
+            return (
+                <section id="tourism" className="section py-20 bg-batak-white">
+                    <div className="container mx-auto px-6">
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl md:text-5xl font-bold text-batak-black mb-4 batak-font">ᯏᯒᯪᯘᯖ</h2>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('tourismTitle')}</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('tourismSubtitle')}</HoverBatakText></p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {data.map((item, index) => (
+                                <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                                    <img src={item.image} alt={item.title} className="w-full h-56 object-cover" />
+                                    <div className="p-6">
+                                        <h4 className="text-xl font-bold text-gray-800 mb-2"><HoverBatakText>{item.title}</HoverBatakText></h4>
+                                        <p className="text-gray-600"><HoverBatakText>{item.desc}</HoverBatakText></p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+        const Culture = () => {
+            const { t } = useLanguage();
+            const data = [{ title: "Tari Tortor", desc: "Tarian sakral penuh makna yang ditampilkan dalam upacara adat.", image: 'tortor.jpg' }, { title: "Musik Gondang", desc: "Ansambel musik perkusi yang mengiringi berbagai ritual dan perayaan.", image: 'gondang.jpg' }, { title: "Kain Ulos", desc: "Kain tenun tradisional yang sarat makna spiritual dan sosial.", image: 'ulos.jpg' },];
+            return (
+                <section id="culture" className="section py-20 bg-white">
+                    <div className="container mx-auto px-6">
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl md:text-5xl font-bold text-batak-black mb-4 batak-font">ᯅᯮᯑᯛ</h2>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('cultureTitle')}</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('cultureSubtitle')}</HoverBatakText></p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {data.map((item, index) => (
+                                <div key={index} className="bg-slate-50 rounded-xl shadow-lg overflow-hidden card-hover">
+                                    <img src={item.image} alt={item.title} className="w-full h-56 object-cover" />
+                                    <div className="p-6">
+                                        <h4 className="text-xl font-bold text-gray-800 mb-2"><HoverBatakText>{item.title}</HoverBatakText></h4>
+                                        <p className="text-gray-600"><HoverBatakText>{item.desc}</HoverBatakText></p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+        const Culinary = () => {
+            const { t } = useLanguage();
+            const data = [{ title: "Arsik Ikan Mas", image: 'arsik.jpg' }, { title: "Babi Panggang Karo", image: 'BPK.jpg' }, { title: "Saksang", image: 'saksang.jpg' }, { title: "Naniura", image: 'naniura.jpg' }, { title: "Napinadar", image: 'napinadar.jpg' }, { title: "Lapet", image: 'lapet.jpeg' }, { title: "Hare", image: 'hare.png' }, { title: "Tuak", image: 'tuak.jpeg' },];
+            return (
+                <section id="culinary" className="section py-20 bg-batak-white">
+                    <div className="container mx-auto px-6">
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl md:text-5xl font-bold text-batak-black mb-4 batak-font">ᯂᯮᯞᯪᯉᯒ᯲</h2>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('culinaryTitle')}</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('culinarySubtitle')}</HoverBatakText></p>
+                        </div>
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                            {data.map((item, index) => (
+                                <div key={index} className="text-center card-hover">
+                                    <img src={item.image} alt={item.title} className="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full object-cover border-4 border-white shadow-lg" />
+                                    <div className="mt-4">
+                                        <h4 className="text-lg font-bold text-gray-800"><HoverBatakText>{item.title}</HoverBatakText></h4>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+        const CeritaKuno = () => {
+            const { t } = useLanguage();
+            return (
+                <section id="folklore" className="section py-20 bg-white">
+                    <div className="container mx-auto px-6">
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl md:text-5xl font-bold text-batak-black mb-4 batak-font">ᯖᯮᯒᯪᯖᯮᯒᯪᯀᯉ᯲</h2>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('folkloreTitle')}</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('folkloreSubtitle')}</HoverBatakText></p>
+                        </div>
+                        <div className="max-w-4xl mx-auto bg-batak-white p-8 rounded-xl shadow-lg border border-slate-200">
+                            <h4 className="text-2xl font-bold text-batak-red-800 mb-4"><HoverBatakText>Legenda Asal Mula Danau Toba</HoverBatakText></h4>
+                            <article className="prose prose-lg max-w-none space-y-4">
+                                <p><HoverBatakText>Pada zaman dahulu, di sebuah desa di Sumatera Utara, hiduplah seorang petani bernama Toba. Ia hidup sebatang kara dan setiap hari bekerja menggarap ladang serta mencari ikan untuk memenuhi kebutuhannya sehari-hari.</HoverBatakText></p>
+                                <p><HoverBatakText>Suatu hari, Toba pergi memancing ke sungai dekat rumahnya. Berbekal kail, umpan, dan wadah ikan, ia pun memulai harinya. Saat menunggu, ia berdoa, "Ya Allah, semoga aku dapat ikan hari ini." Tak lama kemudian, kailnya bergoyang. Ia menariknya dan sangat terkejut karena berhasil menangkap ikan mas besar berwarna keemasan.</HoverBatakText></p>
+                                <p><HoverBatakText>Namun, betapa terkejutnya ia ketika ikan itu bisa berbicara, "Tolong aku, jangan dimakan. Biarkan aku hidup." Dengan rasa iba, Toba pun melepaskan ikan itu kembali ke sungai.</HoverBatakText></p>
+                                <p><HoverBatakText>Tak lama kemudian, ikan itu berubah menjadi seorang wanita cantik. "Jangan takut, aku tidak akan menyakitimu," kata wanita itu. Ia mengaku sebagai putri kerajaan yang dikutuk menjadi ikan karena melanggar aturan kerajaan. Karena Toba telah membebaskannya, ia bersedia menjadi istrinya, dengan satu syarat: Toba tidak boleh mengungkap asal-usul sang wanita. Jika dilanggar, akan datang bencana besar.</HoverBatakText></p>
+                                <p><HoverBatakText>Toba menyetujui syarat itu, dan mereka pun menikah. Tak lama, mereka dikaruniai seorang anak laki-laki bernama Samosir. Samosir tumbuh menjadi anak tampan dan kuat, namun memiliki kebiasaan aneh: ia selalu merasa lapar dan tidak pernah kenyang.</HoverBatakText></p>
+                                <p><HoverBatakText>Suatu hari, ibunya menyuruh Samosir mengantarkan makanan ke sawah tempat ayahnya bekerja. Namun, dalam perjalanan, Samosir memakan habis makanan itu dan tertidur di sebuah gubuk. Ayahnya yang kelaparan pulang dan menemukan Samosir tertidur. Saat dibangunkan dan ditanya soal makanan, Samosir menjawab bahwa ia telah memakannya.</HoverBatakText></p>
+                                <p><HoverBatakText>Toba pun marah dan tak sengaja mengucapkan, "Dasar anak ikan!" Seketika itu, janji yang ia buat pada istrinya telah dilanggar. Istrinya sangat sedih dan berkata, "Engkau telah melanggar janji. Kini waktuku pergi. Bawalah anak kita ke tempat tinggi karena bencana akan datang."</HoverBatakText></p>
+                                <p><HoverBatakText>Setelah berkata demikian, sang istri dan anaknya menghilang. Dari bekas pijakan kaki mereka menyemburlah air sangat deras disertai hujan dan petir. Air itu terus meluap hingga membentuk sebuah danau besar.</HoverBatakText></p>
+                                <blockquote><HoverBatakText>Danau itu kini dikenal sebagai Danau Toba, dan di tengahnya terdapat sebuah pulau yang dinamakan Pulau Samosir, sebagai pengingat akan kisah yang penuh makna ini.</HoverBatakText></blockquote>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+        const FAQ = () => {
+            const { t } = useLanguage();
+            const data = [{ q: "Apa itu Aksara Batak?", a: "Sistem tulisan tradisional (abugida) turunan aksara Brahmi yang digunakan oleh suku Batak untuk menulis bahasa mereka." }, { q: "Bagaimana cara belajar Aksara Batak?", a: "Anda dapat memulai dengan menggunakan tabel dan alat transliterasi di situs ini, serta mengikuti kursus atau workshop budaya." }, { q: "Apa media penulisan Aksara Batak?", a: "Secara tradisional, aksara ini ditulis pada bambu, tulang hewan, dan kulit kayu khusus yang disebut Pustaha." },];
+            return (
+                <section id="faq" className="section py-20 bg-batak-white">
+                    <div className="container mx-auto px-6">
+                        <div className="text-center mb-16">
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('faqTitle')}</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('faqSubtitle')}</HoverBatakText></p>
+                        </div>
+                        <div className="max-w-3xl mx-auto space-y-6">
+                            {data.map((item, index) => (
+                                <div key={index} className="bg-white border-l-4 border-batak-red-700 p-6 rounded-r-lg shadow-md">
+                                    <h4 className="text-lg font-bold text-gray-800 mb-2"><HoverBatakText>{item.q}</HoverBatakText></h4>
+                                    <p className="text-gray-600"><HoverBatakText>{item.a}</HoverBatakText></p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+        const MusicControl = () => {
+            const [isPlaying, setIsPlaying] = React.useState(false);
+            const [volume, setVolume] = React.useState(0.5);
+            const audioRef = React.useRef(null);
+            React.useEffect(() => { audioRef.current = document.getElementById('backgroundMusic'); audioRef.current.volume = volume; }, []);
+            const togglePlay = () => {
+                if (isPlaying) { audioRef.current.pause(); } else { audioRef.current.play().catch(e => console.error("Audio play failed:", e)); }
+                setIsPlaying(!isPlaying);
+            };
+            const handleVolumeChange = (e) => { const newVolume = e.target.value; setVolume(newVolume); audioRef.current.volume = newVolume; };
+            return (
+                <div className="fixed bottom-4 right-4 z-50 bg-gray-900/80 backdrop-blur-sm text-white p-3 rounded-full flex items-center space-x-3 shadow-lg">
+                    <button onClick={togglePlay} className="w-8 h-8 flex items-center justify-center text-xl"><i className={`fas ${isPlaying ? 'fa-pause' : 'fa-play'}`}></i></button>
+                    <i className="fas fa-volume-down"></i>
+                    <input type="range" min="0" max="1" step="0.01" value={volume} onChange={handleVolumeChange} className="w-24 h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer" />
+                </div>
+            );
+        };
+        const ScrollToTop = () => {
+            const [isVisible, setIsVisible] = React.useState(false);
+            React.useEffect(() => { const toggleVisibility = () => setIsVisible(window.pageYOffset > 300); window.addEventListener('scroll', toggleVisibility); return () => window.removeEventListener('scroll', toggleVisibility); }, []);
+            return isVisible && (<button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="fixed bottom-20 right-4 z-50 bg-batak-red-700 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-batak-red-800 transition-all"><i className="fas fa-arrow-up"></i></button>);
+        };
+        const App = () => {
+            React.useEffect(() => {
+                const sections = document.querySelectorAll('.section');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, { threshold: 0.1 });
+                sections.forEach(section => observer.observe(section));
+            }, []);
+            return (
+                <LanguageProvider>
+                    <NavBar />
+                    <main>
+                        <Hero />
+                        <SejarahComponent />
+                        <PengenalanComponent />
+                        <TransliterasiComponent />
+                        <Tourism />
+                        <Culture />
+                        <Culinary />
+                        <CeritaKuno />
+                        <FAQ />
+                    </main>
+                    <Footer />
+                    <MusicControl />
+                    <ScrollToTop />
+                </LanguageProvider>
+            );
+        };
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
