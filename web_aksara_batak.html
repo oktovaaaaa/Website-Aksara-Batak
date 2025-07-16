@@ -79,63 +79,6 @@
         Your browser does not support the audio element.
     </audio>
     <script type="text/babel">
-        const LanguageContext = React.createContext();
-        const translations = {
-            id: {
-                home: "Beranda", history: "Sejarah", introduction: "Pengenalan", transliteration: "Transliterasi", tourism: "Wisata", culture: "Budaya", culinary: "Kuliner", folklore: "Cerita Rakyat", faq: "FAQ", contact: "Kontak",
-                welcomeTitle: "SELAMAT DATANG DI WEBSITE AKSARA BATAK", welcomeSubtitle: "Menjelajahi Kekayaan Intelektual Leluhur di Era Digital", exploreNow: "Jelajahi Sekarang",
-                historyTitle: "Sejarah & Evolusi Aksara Batak", historySubtitle: "Menelusuri jejak perjalanan Surat Batak dari masa ke masa.",
-                introTitle: "Pengenalan Aksara Batak", introSubtitle: "Kenali struktur dasar 'Ina ni Surat' dan variasinya di setiap puak.",
-                transliterationTitle: "Alat Transliterasi", transliterationSubtitle: "Ubah tulisan Latin ke Aksara Batak secara instan.",
-                transliterationInput: "Ketik teks Latin di sini...", transliterationOutput: "Hasil Aksara Batak",
-                tourismTitle: "Destinasi Ikonik Tanah Batak", tourismSubtitle: "Jelajahi keindahan alam dan budaya yang menyatu.",
-                cultureTitle: "Kekayaan Budaya Batak", cultureSubtitle: "Tradisi, seni, dan kearifan lokal yang hidup.",
-                culinaryTitle: "Makanan dan Minuman Batak", culinarySubtitle: "Nikmati kelezatan kuliner warisan leluhur.",
-                folkloreTitle: "Cerita Rakyat Batak", folkloreSubtitle: "Kisah dan legenda yang diwariskan dari generasi ke generasi.",
-                faqTitle: "Pertanyaan Umum", faqSubtitle: "Jawaban cepat untuk pertanyaan yang sering diajukan.",
-                toba: "Toba", mandailing: "Mandailing/Angkola", karo: "Karo", simalungun: "Simalungun", pakpak: "Pakpak",
-                introOverview: "Ikhtisar Aksara Batak", introStructure: "Struktur dan Karakteristik", introVariations: "Variasi Antar Puak", introUsage: "Penggunaan Tradisional",
-                footerAboutTitle: "Tentang Kami",
-                footerAboutText: "Kami berdedikasi untuk melestarikan dan mempromosikan aksara Batak sebagai warisan budaya yang tak ternilai harganya.",
-                footerContactTitle: "Kontak",
-                footerContactEmail1: "Email: oktovaaaaa@gmail.com",
-                footerContactEmail2: "Email: felicyapanjaitan790@gmail.com",
-                footerSocialTitle: "Sosial Media",
-                footerSocialInsta: "Instagram: @aksarabatak",
-                footerSocialFB: "Facebook: Aksara Batak",
-                footerCopyright: "© 2025 Aksara Batak. Semua hak dilindungi.",
-            },
-            en: {
-                home: "Home", history: "History", introduction: "Introduction", transliteration: "Transliteration", tourism: "Tourism", culture: "Culture", culinary: "Culinary", folklore: "Folklore", faq: "FAQ", contact: "Contact",
-                welcomeTitle: "WELCOME TO THE BATAK SCRIPT HERITAGE CENTER", welcomeSubtitle: "Exploring Ancestral Intellectual Richness in the Digital Age", exploreNow: "Explore Now",
-                historyTitle: "History & Evolution of Batak Script", historySubtitle: "Tracing the journey of 'Surat Batak' through the ages.",
-                introTitle: "Introduction to Batak Script", introSubtitle: "Learn the basic structure of 'Ina ni Surat' and its variations.",
-                transliterationTitle: "Transliteration Tool", transliterationSubtitle: "Convert Latin text to Batak Script instantly.",
-                transliterationInput: "Type Latin text here...", transliterationOutput: "Batak Script Result",
-                tourismTitle: "Iconic Destinations of Batak Land", tourismSubtitle: "Explore the fusion of natural beauty and culture.",
-                cultureTitle: "The Richness of Batak Culture", cultureSubtitle: "Living traditions, arts, and local wisdom.",
-                culinaryTitle: "Authentic Batak Flavors", culinarySubtitle: "Enjoy the deliciousness of ancestral culinary heritage.",
-                folkloreTitle: "Batak Folklore", folkloreSubtitle: "Stories and legends passed down through generations.",
-                faqTitle: "Frequently Asked Questions", faqSubtitle: "Quick answers to common questions.",
-                toba: "Toba", mandailing: "Mandailing/Angkola", karo: "Karo", simalungun: "Simalungun", pakpak: "Pakpak",
-                introOverview: "Overview of Batak Script", introStructure: "Structure and Characteristics", introVariations: "Variations Across Sub-Ethnic Groups", introUsage: "Traditional Usage",
-                footerAboutTitle: "About Us",
-                footerAboutText: "We are dedicated to preserving and promoting the Batak script as a priceless cultural heritage.",
-                footerContactTitle: "Contact",
-                footerContactEmail1: "Email: oktovaaaaa@gmail.com",
-                footerContactEmail2: "Email: felicyapanjaitan790@gmail.com",
-                footerSocialTitle: "Social Media",
-                footerSocialInsta: "Instagram: @aksarabatak",
-                footerSocialFB: "Facebook: Aksara Batak",
-                footerCopyright: "© 2025 Batak Script. All rights reserved.",
-            }
-        };
-        const LanguageProvider = ({ children }) => {
-            const [language, setLanguage] = React.useState('id');
-            const t = (key) => translations[language]?.[key] || key;
-            return <LanguageContext.Provider value={{ language, setLanguage, t }}>{children}</LanguageContext.Provider>;
-        };
-        const useLanguage = () => React.useContext(LanguageContext);
         const transliterateToBatak = (latin) => {
             if (!latin || typeof latin !== 'string') return '';
             let text = latin.toLowerCase();
@@ -165,14 +108,20 @@
         };
         const NavBar = () => {
             const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-            const { t, language, setLanguage } = useLanguage();
-            const menuItems = ['home', 'history', 'introduction', 'transliteration', 'tourism', 'culture', 'culinary', 'folklore', 'faq', 'contact'];
-            const LanguageSwitcher = () => (
-                <div className="flex items-center space-x-1 bg-black/30 rounded-full p-1">
-                    <button onClick={() => setLanguage('id')} className={`px-3 py-1 text-sm rounded-full transition-colors duration-300 ${language === 'id' ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-red-800'}`}>ID</button>
-                    <button onClick={() => setLanguage('en')} className={`px-3 py-1 text-sm rounded-full transition-colors duration-300 ${language === 'en' ? 'bg-red-600 text-white' : 'text-gray-300 hover:bg-red-800'}`}>EN</button>
-                </div>
-            );
+            const menuItems = [
+                { id: 'home', label: 'Beranda' },
+                { id: 'history', label: 'Sejarah' },
+                { id: 'introduction', label: 'Pengenalan' },
+                { id: 'transliteration', label: 'Transliterasi' },
+                { id: 'tourism', label: 'Wisata' },
+                { id: 'culture', label: 'Budaya' },
+                { id: 'culinary', label: 'Kuliner' },
+                { id: 'folklore', label: 'Cerita Rakyat' },
+                { id: 'exercise', label: 'Latihan' },
+                { id: 'faq', label: 'FAQ' },
+                { id: 'contact', label: 'Kontak' },
+            ];
+
             return (
                 <nav className="bg-gradient-to-r from-black to-red-900 text-white p-4 fixed w-full top-0 z-50 shadow-xl">
                     <div className="container mx-auto flex justify-between items-center">
@@ -180,14 +129,13 @@
                         <div className="hidden md:flex items-center space-x-8">
                             <ul className="flex space-x-8">
                                 {menuItems.slice(0, 5).map((item) => (
-                                    <li key={item}>
-                                        <a href={`#${item}`} className="text-lg hover:text-red-300 transition duration-300">
-                                            <HoverBatakText>{t(item)}</HoverBatakText>
+                                    <li key={item.id}>
+                                        <a href={`#${item.id}`} className="text-lg hover:text-red-300 transition duration-300">
+                                            <HoverBatakText>{item.label}</HoverBatakText>
                                         </a>
                                     </li>
                                 ))}
                             </ul>
-                            <LanguageSwitcher />
                         </div>
                         <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden text-2xl">
                             <i className={isMenuOpen ? "fas fa-times" : "fas fa-bars"}></i>
@@ -195,47 +143,44 @@
                     </div>
                     <ul className={`${isMenuOpen ? 'flex' : 'hidden'} flex-col bg-red-900 absolute top-full left-0 w-full p-6 space-y-4 md:hidden`}>
                         {menuItems.map((item) => (
-                            <li key={item}>
-                                <a href={`#${item}`} className="text-lg hover:text-red-300 transition duration-300" onClick={() => setIsMenuOpen(false)}>
-                                    <HoverBatakText>{t(item)}</HoverBatakText>
+                            <li key={item.id}>
+                                <a href={`#${item.id}`} className="text-lg hover:text-red-300 transition duration-300" onClick={() => setIsMenuOpen(false)}>
+                                    <HoverBatakText>{item.label}</HoverBatakText>
                                 </a>
                             </li>
                         ))}
-                        <li className="pt-4 flex justify-center"><LanguageSwitcher /></li>
                     </ul>
                 </nav>
             );
         };
         const Footer = () => {
-            const { t } = useLanguage();
             return (
                 <footer id="contact" className="bg-gradient-to-r from-black to-red-900 text-white py-16 section">
                     <div className="container mx-auto px-4">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                             <div>
-                                <h3 className="text-xl font-bold text-red-400 mb-4">{t('footerAboutTitle')}</h3>
-                                <p className="text-gray-200 leading-relaxed">{t('footerAboutText')}</p>
+                                <h3 className="text-xl font-bold text-red-400 mb-4">Tentang Kami</h3>
+                                <p className="text-gray-200 leading-relaxed">Kami berdedikasi untuk melestarikan dan mempromosikan aksara Batak sebagai warisan budaya yang tak ternilai harganya.</p>
                             </div>
                             <div>
-                                <h3 className="text-xl font-bold text-red-400 mb-4">{t('footerContactTitle')}</h3>
-                                <p className="text-gray-200">{t('footerContactEmail1')}</p>
-                                <p className="text-gray-200 mt-2">{t('footerContactEmail2')}</p>
+                                <h3 className="text-xl font-bold text-red-400 mb-4">Kontak</h3>
+                                <p className="text-gray-200">Email: oktovaaaaa@gmail.com</p>
+                                <p className="text-gray-200 mt-2">Email: felicyapanjaitan790@gmail.com</p>
                             </div>
                             <div>
-                                <h3 className="text-xl font-bold text-red-400 mb-4">{t('footerSocialTitle')}</h3>
-                                <p className="text-gray-200">{t('footerSocialInsta')}</p>
-                                <p className="text-gray-200 mt-2">{t('footerSocialFB')}</p>
+                                <h3 className="text-xl font-bold text-red-400 mb-4">Sosial Media</h3>
+                                <p className="text-gray-200">Instagram: @aksarabatak</p>
+                                <p className="text-gray-200 mt-2">Facebook: Aksara Batak</p>
                             </div>
                         </div>
                         <div className="border-t border-red-400 mt-12 pt-6 text-center text-gray-200">
-                            <p>{t('footerCopyright')}</p>
+                            <p>© 2025 Aksara Batak. Semua hak dilindungi.</p>
                         </div>
                     </div>
                 </footer>
             );
         };
         const Hero = () => {
-            const { t } = useLanguage();
             return (
                 <section id="home" className="section relative h-screen flex items-center justify-center text-white text-center">
                     <video autoPlay muted loop playsInline className="absolute w-full h-full object-cover top-0 left-0 z-0">
@@ -244,22 +189,21 @@
                     </video>
                     <div className="absolute inset-0 bg-black bg-opacity-60 z-10"></div>
                     <div className="relative z-20 px-4">
-                        <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold mb-4 tracking-tight"><HoverBatakText>{t('welcomeTitle')}</HoverBatakText></h1>
-                        <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto font-light"><HoverBatakText>{t('welcomeSubtitle')}</HoverBatakText></p>
-                        <a href="#history" className="btn-primary inline-block bg-red-600 text-white px-6 py-3 rounded-full hover:bg-red-700 transition"><HoverBatakText>{t('exploreNow')}</HoverBatakText></a>
+                        <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold mb-4 tracking-tight"><HoverBatakText>SELAMAT DATANG DI WEBSITE AKSARA BATAK</HoverBatakText></h1>
+                        <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto font-light"><HoverBatakText>Menjelajahi Kekayaan Intelektual Leluhur di Era Digital</HoverBatakText></p>
+                        <a href="#history" className="btn-primary inline-block bg-red-600 text-white px-6 py-3 rounded-full hover:bg-red-700 transition"><HoverBatakText>Jelajahi Sekarang</HoverBatakText></a>
                     </div>
                 </section>
             );
         };
         const SejarahComponent = () => {
-            const { t } = useLanguage();
             return (
                 <section id="history" className="section py-20 bg-white">
                     <div className="container mx-auto px-6">
                         <div className="text-center mb-16">
                             <h2 className="text-4xl md:text-5xl font-bold text-batak-black mb-4 batak-font">ᯘ᯦ᯐᯒᯂ᯲</h2>
-                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('historyTitle')}</HoverBatakText></h3>
-                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('historySubtitle')}</HoverBatakText></p>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>Sejarah & Evolusi Aksara Batak</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>Menelusuri jejak perjalanan Surat Batak dari masa ke masa.</HoverBatakText></p>
                         </div>
                         <article className="prose prose-lg max-w-4xl mx-auto">
                             <h4><HoverBatakText>Asal-usul</HoverBatakText></h4>
@@ -277,7 +221,6 @@
             );
         };
         const PengenalanComponent = () => {
-            const { t } = useLanguage();
             const aksaraData = [
                 { hurup: 'a', toba: 'ᯀ', mandailing: 'ᯀ', karo: 'ᯀ', simalungun: 'ᯁ', pakpak: 'ᯀ' },
                 { hurup: 'ha/ka', toba: 'ᯂ', mandailing: 'ᯄ', karo: 'ᯂ', simalungun: 'ᯃ', pakpak: 'ᯂ' },
@@ -306,24 +249,24 @@
                     <div className="container mx-auto px-6">
                         <div className="text-center mb-16">
                             <h2 className="text-4xl md:text-5xl font-bold text-batak-black mb-4 batak-font">ᯤᯉ ᯉᯪ ᯘᯮᯒᯖ᯲</h2>
-                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('introTitle')}</HoverBatakText></h3>
-                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('introSubtitle')}</HoverBatakText></p>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>Pengenalan Aksara Batak</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>Kenali struktur dasar 'Ina ni Surat' dan variasinya di setiap puak.</HoverBatakText></p>
                         </div>
                         <article className="prose prose-lg max-w-4xl mx-auto mb-12">
-                            <h4><HoverBatakText>{t('introOverview')}</HoverBatakText></h4>
+                            <h4><HoverBatakText>Ikhtisar Aksara Batak</HoverBatakText></h4>
                             <p><HoverBatakText>Aksara Batak, yang dikenal sebagai 'Surat Batak' atau 'Ina ni Surat', adalah sistem tulisan abugida yang digunakan oleh masyarakat Batak untuk menuliskan bahasa-bahasa seperti Toba, Mandailing, Karo, Simalungun, dan Pakpak. Aksara ini terdiri dari karakter utama (induk surat) dan tanda baca tambahan (anak ni surat) yang mengubah bunyi vokal atau konsonan penutup.</HoverBatakText></p>
-                            <h4><HoverBatakText>{t('introStructure')}</HoverBatakText></h4>
+                            <h4><HoverBatakText>Struktur dan Karakteristik</HoverBatakText></h4>
                             <p><HoverBatakText>Aksara Batak ditulis dari kiri ke kanan tanpa spasi antar kata, dengan tanda baca seperti titik atau koma untuk memisahkan kalimat. Setiap karakter induk mewakili konsonan dengan vokal inheren 'a', yang dapat dimodifikasi dengan tanda diakritik untuk vokal lain (e, i, o, u) atau konsonan penutup seperti 'ng' atau 'h'. Tanda khusus 'pangolat' (᯲) digunakan untuk menandakan konsonan tanpa vokal lanjutan.</HoverBatakText></p>
-                            <h4><HoverBatakText>{t('introVariations')}</HoverBatakText></h4>
+                            <h4><HoverBatakText>Variasi Antar Puak</HoverBatakText></h4>
                             <p><HoverBatakText>Aksara Batak memiliki variasi di antara puak Batak (Toba, Mandailing/Angkola, Karo, Simalungun, Pakpak), terutama pada bentuk karakter tertentu seperti 'ha', 'sa', dan 'nya'. Meski demikian, struktur dasarnya tetap konsisten, memungkinkan saling pengertian antar varian. Tabel di bawah ini menunjukkan perbandingan karakter antar puak.</HoverBatakText></p>
-                            <h4><HoverBatakText>{t('introUsage')}</HoverBatakText></h4>
+                            <h4><HoverBatakText>Penggunaan Tradisional</HoverBatakText></h4>
                             <p><HoverBatakText>Secara tradisional, aksara ini digunakan untuk menulis pustaha (buku kulit kayu), mantra, surat, dan catatan adat. Pustaha sering berisi pengetahuan tentang ramalan, pengobatan, dan ritual, ditulis oleh datu (dukun). Aksara juga diukir pada bambu atau tulang untuk keperluan sehari-hari. Kini, aksara ini digunakan dalam seni, papan nama, dan pendidikan untuk melestarikan warisan budaya.</HoverBatakText></p>
                         </article>
                         <div className="overflow-x-auto bg-white rounded-xl shadow-lg">
                             <table className="w-full text-left">
                                 <thead className="bg-batak-red-800 text-white">
                                     <tr>
-                                        {['Huruf', t('toba'), t('mandailing'), t('karo'), t('simalungun'), t('pakpak')].map(h => (
+                                        {['Huruf', 'Toba', 'Mandailing/Angkola', 'Karo', 'Simalungun', 'Pakpak'].map(h => (
                                             <th key={h} className="p-4 font-semibold">{h}</th>
                                         ))}
                                     </tr>
@@ -366,23 +309,22 @@
         const TransliterasiComponent = () => {
             const [latin, setLatin] = React.useState('');
             const [batak, setBatak] = React.useState('');
-            const { t } = useLanguage();
             React.useEffect(() => { setBatak(transliterateToBatak(latin)); }, [latin]);
             return (
                 <section id="transliteration" className="section py-20 bg-white">
                     <div className="container mx-auto px-6">
                         <div className="text-center mb-16">
                             <h2 className="text-4xl md:text-5xl font-bold text-batak-black mb-4 batak-font">ᯂᯮᯀᯞᯪᯖᯘ᯲</h2>
-                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('transliterationTitle')}</HoverBatakText></h3>
-                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('transliterationSubtitle')}</HoverBatakText></p>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>Alat Transliterasi</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>Ubah tulisan Latin ke Aksara Batak secara instan.</HoverBatakText></p>
                         </div>
                         <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
                             <div>
-                                <label className="font-semibold block mb-2"><HoverBatakText>{t('transliterationInput')}</HoverBatakText></label>
-                                <textarea value={latin} onChange={(e) => setLatin(e.target.value)} className="w-full h-48 p-4 border border-gray-300 rounded-lg focus:border-batak-red-700 focus:ring-batak-red-700 resize-none" placeholder={t('transliterationInput')}></textarea>
+                                <label className="font-semibold block mb-2"><HoverBatakText>Ketik teks Latin di sini...</HoverBatakText></label>
+                                <textarea value={latin} onChange={(e) => setLatin(e.target.value)} className="w-full h-48 p-4 border border-gray-300 rounded-lg focus:border-batak-red-700 focus:ring-batak-red-700 resize-none" placeholder="Ketik teks Latin di sini..."></textarea>
                             </div>
                             <div>
-                                <label className="font-semibold block mb-2"><HoverBatakText>{t('transliterationOutput')}</HoverBatakText></label>
+                                <label className="font-semibold block mb-2"><HoverBatakText>Hasil Aksara Batak</HoverBatakText></label>
                                 <div className="w-full h-48 p-4 border border-gray-300 rounded-lg bg-slate-50 batak-font text-2xl overflow-y-auto">{batak || <span className="text-gray-400 text-base font-sans">Hasil akan muncul di sini...</span>}</div>
                             </div>
                         </div>
@@ -391,15 +333,14 @@
             );
         };
         const Tourism = () => {
-            const { t } = useLanguage();
             const data = [{ title: "Danau Toba", desc: "Danau vulkanik terbesar di dunia, ikon keindahan alam Sumatera Utara.", image: 'aset/gambar/danau.png' }, { title: "Pulau Samosir", desc: "Pulau di tengah Danau Toba, pusat kebudayaan Batak yang kaya.", image: 'aset/gambar/samosir.jpg' }, { title: "Air Terjun Sipiso-piso", desc: "Salah satu air terjun tertinggi di Indonesia dengan pemandangan spektakuler.", image: 'aset/gambar/air.jpg' },];
             return (
                 <section id="tourism" className="section py-20 bg-batak-white">
                     <div className="container mx-auto px-6">
                         <div className="text-center mb-16">
                             <h2 className="text-4xl md:text-5xl font-bold text-batak-black mb-4 batak-font">ᯏᯒᯪᯘᯖ</h2>
-                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('tourismTitle')}</HoverBatakText></h3>
-                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('tourismSubtitle')}</HoverBatakText></p>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>Destinasi Ikonik Tanah Batak</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>Jelajahi keindahan alam dan budaya yang menyatu.</HoverBatakText></p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {data.map((item, index) => (
@@ -417,15 +358,14 @@
             );
         };
         const Culture = () => {
-            const { t } = useLanguage();
             const data = [{ title: "Tari Tortor", desc: "Tarian sakral penuh makna yang ditampilkan dalam upacara adat.", image: 'aset/gambar/tortor.jpg' }, { title: "Musik Gondang", desc: "Ansambel musik perkusi yang mengiringi berbagai ritual dan perayaan.", image: 'aset/gambar/gondang.jpg' }, { title: "Kain Ulos", desc: "Kain tenun tradisional yang sarat makna spiritual dan sosial.", image: 'aset/gambar/ulos.jpg' },];
             return (
                 <section id="culture" className="section py-20 bg-white">
                     <div className="container mx-auto px-6">
                         <div className="text-center mb-16">
                             <h2 className="text-4xl md:text-5xl font-bold text-batak-black mb-4 batak-font">ᯅᯮᯑᯛ</h2>
-                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('cultureTitle')}</HoverBatakText></h3>
-                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('cultureSubtitle')}</HoverBatakText></p>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>Kekayaan Budaya Batak</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>Tradisi, seni, dan kearifan lokal yang hidup.</HoverBatakText></p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {data.map((item, index) => (
@@ -443,15 +383,14 @@
             );
         };
         const Culinary = () => {
-            const { t } = useLanguage();
             const data = [{ title: "Arsik Ikan Mas", image: 'aset/gambar/arsik.jpg' }, { title: "Babi Panggang Karo", image: 'aset/gambar/BPK.jpg' }, { title: "Saksang", image: 'aset/gambar/saksang.jpg' }, { title: "Naniura", image: 'aset/gambar/naniura.jpg' }, { title: "Napinadar", image: 'aset/gambar/napinadar.jpg' }, { title: "Lapet", image: 'aset/gambar/lapet.jpeg' }, { title: "Hare", image: 'aset/gambar/hare.png' }, { title: "Tuak", image: 'aset/gambar/tuak.jpeg' },];
             return (
                 <section id="culinary" className="section py-20 bg-batak-white">
                     <div className="container mx-auto px-6">
                         <div className="text-center mb-16">
                             <h2 className="text-4xl md:text-5xl font-bold text-batak-black mb-4 batak-font">ᯂᯮᯞᯪᯉᯒ᯲</h2>
-                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('culinaryTitle')}</HoverBatakText></h3>
-                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('culinarySubtitle')}</HoverBatakText></p>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>Makanan dan Minuman Batak</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>Nikmati kelezatan kuliner warisan leluhur.</HoverBatakText></p>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                             {data.map((item, index) => (
@@ -468,14 +407,13 @@
             );
         };
         const CeritaKuno = () => {
-            const { t } = useLanguage();
             return (
                 <section id="folklore" className="section py-20 bg-white">
                     <div className="container mx-auto px-6">
                         <div className="text-center mb-16">
                             <h2 className="text-4xl md:text-5xl font-bold text-batak-black mb-4 batak-font">ᯖᯮᯒᯪᯖᯮᯒᯪᯀᯉ᯲</h2>
-                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('folkloreTitle')}</HoverBatakText></h3>
-                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('folkloreSubtitle')}</HoverBatakText></p>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>Cerita Rakyat Batak</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>Kisah dan legenda yang diwariskan dari generasi ke generasi.</HoverBatakText></p>
                         </div>
                         <div className="max-w-4xl mx-auto bg-batak-white p-8 rounded-xl shadow-lg border border-slate-200">
                             <h4 className="text-2xl font-bold text-batak-red-800 mb-4"><HoverBatakText>Legenda Asal Mula Danau Toba</HoverBatakText></h4>
@@ -495,15 +433,146 @@
                 </section>
             );
         };
+        const LatihanComponent = () => {
+            const initialChoices = ['pa', 'na', 'ga', 'la'];
+            const correctAnswers = { zone1: 'pa', zone2: 'na' };
+
+            const [choices, setChoices] = React.useState(initialChoices);
+            const [droppedItems, setDroppedItems] = React.useState({ zone1: null, zone2: null });
+            const [feedback, setFeedback] = React.useState({ zone1: null, zone2: null });
+            const [resultMessage, setResultMessage] = React.useState('');
+
+            const handleDragStart = (e, item) => {
+                e.dataTransfer.setData("text/plain", item);
+            };
+
+            const handleDragOver = (e) => {
+                e.preventDefault();
+            };
+
+            const handleDrop = (e, zoneId) => {
+                e.preventDefault();
+                const droppedItem = e.dataTransfer.getData("text/plain");
+
+                if (!choices.includes(droppedItem)) return;
+
+                const newDroppedItems = { ...droppedItems };
+                const previouslyDropped = newDroppedItems[zoneId];
+
+                const newChoices = choices.filter(c => c !== droppedItem);
+                if (previouslyDropped) {
+                    newChoices.push(previouslyDropped);
+                }
+
+                newDroppedItems[zoneId] = droppedItem;
+
+                setChoices(newChoices);
+                setDroppedItems(newDroppedItems);
+                setFeedback({ zone1: null, zone2: null });
+                setResultMessage('');
+            };
+
+            const checkAnswers = () => {
+                let correctCount = 0;
+                const newFeedback = {};
+
+                if (droppedItems.zone1 === correctAnswers.zone1) {
+                    correctCount++;
+                    newFeedback.zone1 = 'correct';
+                } else {
+                    newFeedback.zone1 = 'incorrect';
+                }
+
+                if (droppedItems.zone2 === correctAnswers.zone2) {
+                    correctCount++;
+                    newFeedback.zone2 = 'correct';
+                } else {
+                    newFeedback.zone2 = 'incorrect';
+                }
+
+                setFeedback(newFeedback);
+
+                if (correctCount === Object.keys(correctAnswers).length) {
+                    setResultMessage({ text: 'Hebat! Semua jawaban benar.', color: 'text-green-600' });
+                } else {
+                    setResultMessage({ text: `Anda menjawab ${correctCount} dari ${Object.keys(correctAnswers).length} dengan benar. Coba lagi!`, color: 'text-red-600' });
+                }
+            };
+
+            const getBorderClass = (zoneId) => {
+                const baseClass = "border-2 border-dashed border-gray-300";
+                if (feedback[zoneId] === 'correct') return "border-2 border-solid border-green-500";
+                if (feedback[zoneId] === 'incorrect') return "border-2 border-solid border-red-500";
+                return baseClass;
+            };
+
+            return (
+                <section id="exercise" className="section py-20 bg-batak-white">
+                    <div className="container mx-auto px-6">
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl md:text-5xl font-bold text-batak-black mb-4 batak-font">ᯞᯖᯪᯂᯉ᯲</h2>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>Latihan Interaktif</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>Uji pemahaman Anda tentang Aksara Batak.</HoverBatakText></p>
+                        </div>
+                        <div className="w-full max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-lg border border-slate-200">
+                            <p className="mb-6 text-base sm:text-lg text-center">Seret jawaban yang benar ke aksara Batak yang sesuai.</p>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div
+                                    className={`drop-zone rounded-lg p-6 text-center min-h-[120px] flex flex-col justify-center items-center transition-colors duration-300 ${getBorderClass('zone1')}`}
+                                    onDrop={(e) => handleDrop(e, 'zone1')}
+                                    onDragOver={handleDragOver}
+                                >
+                                    <div className="text-5xl batak-font mb-2">ᯇ</div>
+                                    {droppedItems.zone1 && <div className="drag-item bg-batak-red-700 text-white px-4 py-2 rounded-lg mt-2">{droppedItems.zone1}</div>}
+                                </div>
+                                <div
+                                    className={`drop-zone rounded-lg p-6 text-center min-h-[120px] flex flex-col justify-center items-center transition-colors duration-300 ${getBorderClass('zone2')}`}
+                                    onDrop={(e) => handleDrop(e, 'zone2')}
+                                    onDragOver={handleDragOver}
+                                >
+                                    <div className="text-5xl batak-font mb-2">ᯉ</div>
+                                    {droppedItems.zone2 && <div className="drag-item bg-batak-red-700 text-white px-4 py-2 rounded-lg mt-2">{droppedItems.zone2}</div>}
+                                </div>
+                            </div>
+
+                            <div className="flex flex-wrap gap-4 mt-8 justify-center min-h-[50px]">
+                                {choices.map(item => (
+                                    <div
+                                        key={item}
+                                        className="drag-item bg-batak-red-800 hover:bg-batak-red-900 text-white px-4 py-2 rounded-lg cursor-move"
+                                        draggable="true"
+                                        onDragStart={(e) => handleDragStart(e, item)}
+                                    >
+                                        {item}
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="text-center mt-6">
+                                <button onClick={checkAnswers} className="bg-batak-red-700 hover:bg-batak-red-800 text-white py-3 px-6 rounded-lg w-full sm:w-auto font-semibold">
+                                    Periksa Jawaban
+                                </button>
+                            </div>
+
+                            {resultMessage && (
+                                <div className={`mt-4 text-center font-semibold text-lg ${resultMessage.color}`}>
+                                    {resultMessage.text}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
         const FAQ = () => {
-            const { t } = useLanguage();
             const data = [{ q: "Apa itu Aksara Batak?", a: "Sistem tulisan tradisional (abugida) turunan aksara Brahmi yang digunakan oleh suku Batak untuk menulis bahasa mereka." }, { q: "Bagaimana cara belajar Aksara Batak?", a: "Anda dapat memulai dengan menggunakan tabel dan alat transliterasi di situs ini, serta mengikuti kursus atau workshop budaya." }, { q: "Apa media penulisan Aksara Batak?", a: "Secara tradisional, aksara ini ditulis pada bambu, tulang hewan, dan kulit kayu khusus yang disebut Pustaha." },];
             return (
                 <section id="faq" className="section py-20 bg-batak-white">
                     <div className="container mx-auto px-6">
                         <div className="text-center mb-16">
-                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>{t('faqTitle')}</HoverBatakText></h3>
-                            <p className="text-gray-500 mt-2"><HoverBatakText>{t('faqSubtitle')}</HoverBatakText></p>
+                            <h3 className="text-3xl md:text-4xl font-bold text-batak-red-700"><HoverBatakText>Pertanyaan Umum</HoverBatakText></h3>
+                            <p className="text-gray-500 mt-2"><HoverBatakText>Jawaban cepat untuk pertanyaan yang sering diajukan.</HoverBatakText></p>
                         </div>
                         <div className="max-w-3xl mx-auto space-y-6">
                             {data.map((item, index) => (
@@ -553,7 +622,7 @@
                 sections.forEach(section => observer.observe(section));
             }, []);
             return (
-                <LanguageProvider>
+                <React.Fragment>
                     <NavBar />
                     <main>
                         <Hero />
@@ -564,168 +633,18 @@
                         <Culture />
                         <Culinary />
                         <CeritaKuno />
+                        <LatihanComponent />
                         <FAQ />
-
-
-
-                        
                     </main>
                     <Footer />
                     <MusicControl />
                     <ScrollToTop />
-                </LanguageProvider>
+                </React.Fragment>
             );
         };
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
 </body>
-
-<!-- ================================================= INI FELI YG KUTAMBAHIN KEKMANA MASUKKAN NYA KE VIEW DIATAS FOOTER ========================================================= -->
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            batak: ['Noto Sans Batak', 'sans-serif'],
-          },
-          colors: {
-            'batak-red': {
-              '700': '#9b2c2c',
-              '800': '#742a2a',
-              '900': '#63171b'
-            },
-            'batak-black': '#1a202c',
-            'batak-white': '#f8fafc',
-          }
-        }
-      }
-    }
-  </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Batak&display=swap" rel="stylesheet">
-</head>
-
-<body class="bg-batak-white text-batak-black font-sans">
-  <div class="min-h-screen flex flex-col items-center p-4 sm:p-6 lg:p-10">
-    <div class="w-full max-w-2xl bg-white p-6 rounded-2xl shadow-lg border border-batak-red-700">
-      <h1 class="text-2xl sm:text-3xl font-semibold text-batak-red-900 mb-4">Latihan Aksara Batak</h1>
-      <p class="mb-4 text-base sm:text-lg">Seret jawaban yang benar ke aksara Batak yang sesuai.</p>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <div class="drop-zone border-2 border-dashed border-gray-300 rounded-lg p-6 text-center min-h-[100px]" data-answer="ba"
-          ondrop="drop(event)" ondragover="allowDrop(event)">
-          <div class="text-4xl font-batak mb-2">ᯇ</div>
-        </div>
-
-        <div class="drop-zone border-2 border-dashed border-gray-300 rounded-lg p-6 text-center min-h-[100px]" data-answer="na"
-          ondrop="drop(event)" ondragover="allowDrop(event)">
-          <div class="text-4xl font-batak mb-2">ᯉ</div>
-        </div>
-      </div>
-
-      <div class="flex flex-wrap gap-4 mt-6 justify-center" id="choices">
-        <div class="drag-item bg-batak-red-700 text-white px-4 py-2 rounded-lg cursor-move" draggable="true"
-          ondragstart="drag(event)" id="ba">ba</div>
-        <div class="drag-item bg-batak-red-700 text-white px-4 py-2 rounded-lg cursor-move" draggable="true"
-          ondragstart="drag(event)" id="na">na</div>
-        <div class="drag-item bg-batak-red-700 text-white px-4 py-2 rounded-lg cursor-move" draggable="true"
-          ondragstart="drag(event)" id="ga">ga</div>
-        <div class="drag-item bg-batak-red-700 text-white px-4 py-2 rounded-lg cursor-move" draggable="true"
-          ondragstart="drag(event)" id="la">la</div>
-      </div>
-
-      <button onclick="checkDragAnswers()"
-        class="mt-6 bg-batak-red-800 hover:bg-batak-red-900 text-white py-2 px-4 rounded-lg w-full sm:w-auto">Periksa Jawaban</button>
-
-      <div id="result" class="mt-4 text-center font-semibold text-lg"></div>
-    </div>
-  </div>
-
-  <script>
-    // Simpan referensi ke elemen asli
-    const originalItems = {
-      'ba': document.getElementById('ba').cloneNode(true),
-      'na': document.getElementById('na').cloneNode(true),
-      'ga': document.getElementById('ga').cloneNode(true),
-      'la': document.getElementById('la').cloneNode(true)
-    };
-
-    function allowDrop(ev) {
-      ev.preventDefault();
-    }
-
-    function drag(ev) {
-      ev.dataTransfer.setData("text", ev.target.id);
-    }
-
-    function drop(ev) {
-      ev.preventDefault();
-      const data = ev.dataTransfer.getData("text");
-      const dragged = document.getElementById(data);
-      const dropZone = ev.target.closest(".drop-zone");
-
-      if (!dropZone) return;
-
-      // Kembalikan item yang ada sebelumnya ke daftar pilihan
-      const old = dropZone.querySelector(".drag-item");
-      if (old) {
-        const oldId = old.id;
-        const choices = document.getElementById("choices");
-        
-        // Kembalikan item asli ke daftar pilihan
-        const restoredItem = originalItems[oldId].cloneNode(true);
-        restoredItem.addEventListener("dragstart", drag);
-        choices.appendChild(restoredItem);
-        
-        old.remove();
-        dropZone.removeAttribute("data-user");
-      }
-
-      // Tambahkan item yang baru di-drag ke drop zone
-      const clone = originalItems[data].cloneNode(true);
-      clone.classList.remove("cursor-move");
-      clone.setAttribute("draggable", "false");
-      dropZone.appendChild(clone);
-      dropZone.setAttribute("data-user", data);
-
-      // Hapus item yang di-drag dari daftar pilihan
-      dragged.remove();
-    }
-
-    function checkDragAnswers() {
-      const zones = document.querySelectorAll(".drop-zone");
-      let correct = 0;
-      const totalQuestions = zones.length;
-
-      zones.forEach(zone => {
-        const user = zone.getAttribute("data-user");
-        const answer = zone.getAttribute("data-answer");
-        if (user === answer) {
-          correct++;
-          zone.classList.remove("border-red-500", "border-dashed");
-          zone.classList.add("border-green-500", "border-solid");
-        } else {
-          zone.classList.remove("border-green-500", "border-solid");
-          zone.classList.add("border-red-500", "border-dashed");
-        }
-      });
-
-      const result = document.getElementById("result");
-      if (correct === totalQuestions) {
-        result.textContent = "Hebat! Semua jawaban benar.";
-        result.classList.remove("text-red-600");
-        result.classList.add("text-green-600");
-      } else {
-        result.textContent = `Kamu menjawab ${correct} dari ${totalQuestions} dengan benar.`;
-        result.classList.remove("text-green-600");
-        result.classList.add("text-red-600");
-      }
-    }
-  </script>
-
-
 
 </html>
