@@ -125,8 +125,9 @@
             padding: 0.75rem 2rem;
             position: sticky;
             top: 0;
-                position: relative; /* atau fixed, tergantung desain */
-    z-index: 1000;
+            position: relative;
+            /* atau fixed, tergantung desain */
+            z-index: 1000;
             border-bottom: 1px solid var(--border-color);
             transition: background 0.3s ease, border-color 0.3s ease;
         }
@@ -184,21 +185,21 @@
             line-height: 1;
         }
 
-.nav-links-mobile {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    background: var(--nav-bg);
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    animation: fadeInDown 0.3s ease;
-      z-index: 2000;
+        .nav-links-mobile {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            animation: fadeInDown 0.3s ease;
+            z-index: 2000;
 
-}
+        }
 
 
         @keyframes fadeInDown {
@@ -238,18 +239,27 @@
 
 
         .theme-toggle {
-            background: transparent;
-            color: var(--text-color);
             width: 42px;
             height: 42px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0;
+            margin: 0;
+            background: transparent;
+            color: var(--text-color);
+            border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.2rem;
-            border-radius: 50%;
         }
+
+        .theme-toggle i {
+            font-size: 1.2rem;
+            line-height: 1;
+            display: block;
+        }
+
+
 
         header {
             position: relative;
@@ -667,10 +677,13 @@
             justify-content: center;
         }
 
-        .audio-control:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 30px rgba(220, 38, 38, 0.4);
+        .audio-control i {
+            font-size: 1.2rem;
+            display: block;
+            line-height: 1;
+            pointer-events: none;
         }
+
 
         .table-container-responsive {
             width: 100%;
@@ -826,6 +839,37 @@
                 grid-template-columns: 1fr;
             }
         }
+
+
+
+
+        body[data-theme="light"] {
+            background-color: white;
+            color: black;
+        }
+
+
+        body[data-theme="dark"] {
+            background-color: #121212;
+            color: white;
+        }
+
+    
+        .theme-toggle,
+        .audio-control {
+            background-color: transparent;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+    </style>
+
+
     </style>
 </head>
 
@@ -1394,7 +1438,8 @@
                 }
             };
             themeToggleBtn.addEventListener('click', () => applyTheme(body.dataset.theme === 'dark' ? 'light' : 'dark'));
-            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            applyTheme(savedTheme);
 
             const headerContent = document.querySelector('.header-content');
             window.addEventListener('scroll', () => { headerContent.style.transform = `translateY(${window.scrollY * 0.4}px)`; });
@@ -1483,7 +1528,7 @@
             L.tileLayer(mapTileUrl, { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>' }).addTo(window.map);
             [{ lat: 2.659, lon: 98.835, name: "Pulau Samosir" }, { lat: 2.668, lon: 98.868, name: "Desa Tomok" }, { lat: 2.553, lon: 98.683, name: "Parapat" }, { lat: 2.868, lon: 98.535, name: "Air Terjun Sipiso-piso" }, { lat: 2.500, lon: 99.066, name: "Bukit Holbung" }].forEach(loc => { L.marker([loc.lat, loc.lon]).addTo(window.map).bindPopup(`<b>${loc.name}</b>`); });
 
-            applyTheme(savedTheme);
+
 
             const quizData = [
                 { aksara: "ᯀ", answer: "a", options: ["ha", "ba", "a", "i"] },
@@ -1589,4 +1634,3 @@
 </body>
 
 </html>
- 
