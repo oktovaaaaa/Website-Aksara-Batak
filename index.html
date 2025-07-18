@@ -125,7 +125,8 @@
             padding: 0.75rem 2rem;
             position: sticky;
             top: 0;
-            z-index: 999;
+                position: relative; /* atau fixed, tergantung desain */
+    z-index: 1000;
             border-bottom: 1px solid var(--border-color);
             transition: background 0.3s ease, border-color 0.3s ease;
         }
@@ -183,20 +184,22 @@
             line-height: 1;
         }
 
-        .nav-links-mobile {
-            display: none;
-            /* Sembunyikan dropdown di desktop */
-            flex-direction: column;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: var(--nav-bg);
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            animation: fadeInDown 0.3s ease;
-        }
+.nav-links-mobile {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: var(--nav-bg);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    animation: fadeInDown 0.3s ease;
+      z-index: 2000;
+
+}
+
 
         @keyframes fadeInDown {
             from {
