@@ -16,10 +16,10 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <style>
-        @font-face {
+        /* @font-face {
             font-family: 'AksaraBatak';
             src: url('https://raw.githubusercontent.com/huruhurubatak/pustaka-batak-font/master/PustakaBatak.otf') format('opentype');
-        }
+        } */
 
         :root {
             --primary-red: #e11d48;
@@ -170,9 +170,6 @@
             gap: 0.5rem;
         }
 
-
-        
-
         .nav-toggle {
             display: none;
             /* Sembunyikan di desktop */
@@ -187,29 +184,19 @@
         }
 
 .nav-links-mobile {
-  display: none;
-  flex-direction: column;
-  position: absolute;
-  top: 60px;
-  left: 0;
-  right: 0;
-  background-color: #1f2937;
-  padding: 1rem;
-  z-index: 999;
-  border-radius: 0 0 1rem 1rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    display: none;
+    flex-direction: column;
+    position: fixed; /* dari absolute ke fixed */
+    top: 65px; /* di bawah navbar */
+    left: 0;
+    width: 100%;
+    background: var(--nav-bg);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    animation: fadeInDown 0.3s ease;
+    z-index: 1000; /* lebih tinggi dari header dan video */
 }
-
-.nav-links-mobile.show {
-  display: flex;
-}
-
-.nav-toggle i {
-  font-size: 1.5rem;
-  color: white;
-  transition: transform 0.3s ease;
-}
-
 
 
         @keyframes fadeInDown {
@@ -224,7 +211,9 @@
             }
         }
 
-
+        .nav-links-mobile.show {
+            display: flex;
+        }
 
         .nav-links-mobile a {
             width: 100%;
@@ -864,13 +853,12 @@
             <a href="#kuis"><i class="fas fa-question-circle"></i>Kuis</a>
         </div>
 
-<div class="nav-controls">
-  <button class="theme-toggle" id="themeToggleBtn"><i id="themeIcon" class="fas fa-moon"></i></button>
-  <button class="nav-toggle" id="navToggleBtn" aria-label="Toggle navigation">
-    <i class="fas fa-bars" id="navIcon"></i>
-  </button>
-</div>
-
+        <div class="nav-controls">
+            <button class="theme-toggle" id="themeToggleBtn"><i id="themeIcon" class="fas fa-moon"></i></button>
+            <button class="nav-toggle" id="navToggleBtn" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
     </nav>
     <div class="nav-links-mobile" id="navLinksMobile">
         <a href="#sejarah"><i class="fas fa-scroll"></i>Sejarah</a>
@@ -1196,7 +1184,7 @@
                             eksekusi di masa lampau.</p>
                     </div>
                 </div>
-                <div class="galeri-item" data-aos="fade-up" data-aos-delay="200"><img src="aset/gambar/menara.jpeg"
+                <div class="galeri-item" data-aos="fade-up" data-aos-delay="200"><img src="aset/gambar/menara.jpg"
                         alt="Menara Pandang Tele">
                     <div class="galeri-overlay">
                         <h3 class="aksara-hover">Menara Pandang Tele</h3>
@@ -1386,7 +1374,6 @@
                 });
             });
 
-
             const themeToggleBtn = document.getElementById('themeToggleBtn');
             const body = document.body;
             const applyTheme = (theme) => {
@@ -1405,7 +1392,7 @@
                 }
             };
             themeToggleBtn.addEventListener('click', () => applyTheme(body.dataset.theme === 'dark' ? 'light' : 'dark'));
-            const savedTheme = localStorage.getItem('theme') || 'light';
+            const savedTheme = localStorage.getItem('theme') || 'dark';
 
             const headerContent = document.querySelector('.header-content');
             window.addEventListener('scroll', () => { headerContent.style.transform = `translateY(${window.scrollY * 0.4}px)`; });
@@ -1494,7 +1481,7 @@
             L.tileLayer(mapTileUrl, { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>' }).addTo(window.map);
             [{ lat: 2.659, lon: 98.835, name: "Pulau Samosir" }, { lat: 2.668, lon: 98.868, name: "Desa Tomok" }, { lat: 2.553, lon: 98.683, name: "Parapat" }, { lat: 2.868, lon: 98.535, name: "Air Terjun Sipiso-piso" }, { lat: 2.500, lon: 99.066, name: "Bukit Holbung" }].forEach(loc => { L.marker([loc.lat, loc.lon]).addTo(window.map).bindPopup(`<b>${loc.name}</b>`); });
 
-     
+            applyTheme(savedTheme);
 
             const quizData = [
                 { aksara: "ᯀ", answer: "a", options: ["ha", "ba", "a", "i"] },
@@ -1600,4 +1587,3 @@
 </body>
 
 </html>
- 
