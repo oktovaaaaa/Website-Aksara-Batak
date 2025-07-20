@@ -1,1589 +1,357 @@
 <!DOCTYPE html>
-<html lang="id">
-
+<html lang="id" data-theme="light">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aksara Batak - Portal Budaya Pemenang</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Carousel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        @font-face {
-            font-family: 'AksaraBatak';
-            src: url('https://raw.githubusercontent.com/huruhurubatak/pustaka-batak-font/master/PustakaBatak.otf') format('opentype');
-        }
 
         :root {
             --primary-red: #e11d48;
             --dark-red: #9f1239;
-            --black: #000000;
-            --white: #ffffff;
             --dark-bg: #111827;
             --light-bg: #f9fafb;
-            --card-bg-dark: #1f2937;
+            --card-bg-dark: #1f2937; 
             --card-bg-light: #ffffff;
             --text-light: #f3f4f6;
             --text-dark: #111827;
             --border-color-dark: #374151;
             --border-color-light: #e5e7eb;
-            --correct-green: #22c55e;
-            --incorrect-red: #ef4444;
         }
 
         [data-theme="light"] {
             --background: var(--light-bg);
-            --card-bg: var(--card-bg-light);
+            --card-main-bg: var(--card-bg-light);
             --text-color: var(--text-dark);
             --border-color: var(--border-color-light);
-            --nav-bg: rgba(255, 255, 255, 0.85);
-            --textarea-bg: #f3f4f6;
         }
 
         [data-theme="dark"] {
             --background: var(--dark-bg);
-            --card-bg: var(--card-bg-dark);
+            --card-main-bg: var(--card-bg-dark);
             --text-color: var(--text-light);
             --border-color: var(--border-color-dark);
-            --nav-bg: rgba(17, 24, 39, 0.85);
-            --textarea-bg: rgba(55, 65, 81, 0.5);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        /*
+        ==================================================================
+        == GAYA DASAR BODY DAN KOMPONEN CAROUSEL ==
+        ==================================================================
+        */
         body {
-            background: var(--background);
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
             color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
-            transition: background 0.4s ease, color 0.4s ease;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .bento-slider-container {
+            position: relative;
+            width: 95%; /* Sedikit lebih lebar untuk mobile */
+            max-width: 1000px;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bento-slider-wrapper {
+            position: relative;
             width: 100%;
             height: 100%;
-            z-index: 9999;
-            background: var(--dark-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-
-        #preloader.loaded {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .preloader-content {
-            font-family: 'AksaraBatak';
-            font-size: 5rem;
-            color: var(--primary-red);
-            animation: pulse 1.5s infinite ease-in-out;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                transform: scale(0.95);
-                opacity: 0.7;
-            }
-
-            50% {
-                transform: scale(1.05);
-                opacity: 1;
-            }
-        }
-
-        /* === GAYA NAVBAR RESPONSIVE BARU === */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--nav-bg);
-            backdrop-filter: blur(10px);
-            padding: 0.75rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 999;
-            border-bottom: 1px solid var(--border-color);
-            transition: background 0.3s ease, border-color 0.3s ease;
-        }
-
-        .nav-logo {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--text-color);
-            text-decoration: none;
-            flex-shrink: 0;
-        }
-
-        .nav-links-desktop {
-            display: flex;
-            justify-content: center;
-            flex-grow: 1;
-        }
-
-        .nav-links-desktop a {
-            color: var(--text-color);
-            margin: 0.5rem 0.6rem;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            position: relative;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-links-desktop a:hover {
-            color: var(--primary-red);
-            transform: translateY(-2px);
-        }
-
-        .nav-controls {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-toggle {
-            display: none;
-            /* Sembunyikan di desktop */
-            background: transparent;
-            border: none;
-            color: var(--text-color);
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1001;
-            padding: 0.25rem;
-            line-height: 1;
-        }
-
-        .nav-links-mobile {
-            display: none;
-            /* Sembunyikan dropdown di desktop */
-            flex-direction: column;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: var(--nav-bg);
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            animation: fadeInDown 0.3s ease;
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .nav-links-mobile.show {
-            display: flex;
-        }
-
-        .nav-links-mobile a {
-            width: 100%;
-            padding: 0.75rem 2rem;
-            color: var(--text-color);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-weight: 500;
-            border-radius: 0;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links-mobile a:hover {
-            background-color: rgba(225, 29, 72, 0.1);
-            color: var(--primary-red);
-            transform: translateX(5px);
-        }
-
-
-        .theme-toggle {
-            background: transparent;
-            color: var(--text-color);
-            width: 42px;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.2rem;
-            border-radius: 50%;
-        }
-
-        header {
-            position: relative;
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-            overflow: hidden;
-            color: var(--white);
             perspective: 1000px;
         }
 
-        header video {
+        /* [GAYA KARTU BARU] Menyesuaikan contoh "Tuak" */
+        .bento-slider-item {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
+            width: 60%;
+            max-width: 300px;
             height: auto;
-            transform: translate(-50%, -50%);
-            z-index: -2;
-            filter: brightness(0.8);
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(17, 24, 39, 0.8), transparent, rgba(17, 24, 39, 0.8));
-            z-index: -1;
-        }
-
-        .header-content {
-            will-change: transform;
-            text-align: center;
-            max-width: 90%;
-        }
-
-        header h1 {
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: 800;
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-            text-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
+            background: var(--card-main-bg); /* Warna dasar kartu */
+            border: 1px solid var(--primary-red); /* Border merah marun */
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            line-height: 1.2;
-        }
-
-        header p {
-            font-size: clamp(1rem, 2vw, 1.3rem);
-            max-width: 700px;
-            opacity: 0.9;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        #interactive-title {
+            flex-direction: column;
+            padding: 0; /* Padding dihilangkan dari container utama */
+            overflow: hidden; /* Penting agar konten tidak keluar dari border-radius */
             cursor: pointer;
+            opacity: 0.5;
+            transform: scale(0.8);
+            transition: all 0.5s ease;
+            user-select: none;
         }
 
-        #interactive-title span {
-            display: inline-block;
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), color 0.5s ease;
-            will-change: transform, color;
+        .bento-slider-item:not(.is-bento-active):not(.is-bento-prev):not(.is-bento-next) {
+            opacity: 0;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        #interactive-title:hover span {
-            transform: translateY(-10px);
-        }
-
-        #interactive-title span.is-aksara-title {
-            font-family: 'AksaraBatak';
-            font-size: 1.1em;
-            color: var(--primary-red);
-            text-shadow: 0 0 15px rgba(225, 29, 72, 0.5);
-        }
-
-        .section {
-            padding: 5rem 5%;
-            position: relative;
-            border-bottom: 1px solid var(--border-color);
-            overflow: hidden;
-        }
-
-        .section h2 {
-            font-size: clamp(2.2rem, 4vw, 3.2rem);
-            margin-bottom: 1.5rem;
-            color: var(--primary-red);
-            font-weight: 700;
-            text-align: center;
-            position: relative;
-        }
-
-        .section-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 6em;
-            color: var(--border-color);
-            opacity: 0.1;
-            z-index: -1;
-            transition: opacity 0.3s;
-        }
-
-        [data-theme="light"] .section-icon {
-            opacity: 0.05;
-        }
-
-        .section>p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            max-width: 800px;
-            margin: 0 auto 2.5rem;
-            text-align: center;
-            opacity: 0.8;
-        }
-
-        .aksara-hover {
-            transition: all 0.2s ease-in-out;
-        }
-
-        .is-aksara {
-            font-family: 'AksaraBatak', sans-serif;
-            font-size: 1.25em;
-            line-height: 1.5;
-            color: var(--primary-red);
-        }
-
-        .konversi,
-        .quiz-container {
-            background: var(--card-bg);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            margin: 3rem auto;
-            border: 1px solid var(--border-color);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            max-width: 800px;
-        }
-
-        .konversi:hover,
-        .quiz-container:hover {
-            border-color: var(--primary-red);
-        }
-
-        .input-group {
-            margin-bottom: 2rem;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--primary-red);
-        }
-
-        textarea,
-        input {
-            width: 100%;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 1rem;
-            background: var(--textarea-bg);
-            color: var(--text-color);
-            transition: all 0.3s ease;
-        }
-
-        textarea:focus,
-        input:focus {
-            outline: none;
-            border-color: var(--primary-red);
-            box-shadow: 0 0 15px rgba(220, 38, 38, 0.2);
-        }
-
-        #outputText {
-            font-family: 'AksaraBatak', sans-serif;
-            font-size: 1.5rem;
-            background: rgba(220, 38, 38, 0.05);
-            border-color: var(--primary-red);
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-
-        button {
-            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
-            color: var(--white);
-            padding: 0.8rem 1.8rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 15px rgba(220, 38, 38, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(220, 38, 38, 0.3);
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary-red);
-        }
-
-        .card h3 {
-            color: var(--primary-red);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .card p {
-            color: var(--text-color);
-            line-height: 1.6;
-            margin: 0;
-            text-align: left;
-            opacity: 0.9;
-        }
-
-        .galeri {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        .galeri-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 16px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.4s ease;
-        }
-
-        .galeri-item:hover {
-            transform: translateY(-10px) scale(1.03);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-        }
-
-        .galeri img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .galeri-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .galeri-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-            color: var(--white);
-            padding: 2rem 1.5rem 1.5rem;
-            transform: translateY(100%);
-            transition: transform 0.4s ease;
-        }
-
-        .galeri-item:hover .galeri-overlay {
-            transform: translateY(0);
-        }
-
-        .food-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        /* === GAYA BARU UNTUK KARTU MINUMAN AGAR RAPI === */
-        .drinks-grid {
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .food-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .food-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary-red);
-        }
-
-        .food-item img {
+        .bento-slider-item img {
             width: 100%;
             height: 200px;
             object-fit: cover;
+            /* Tidak perlu border-radius karena item sudah di-overflow:hidden */
+        }
+        
+        /* [BARU] Wrapper untuk konten teks dengan background gelap */
+        .bento-slider-content {
+            background-color: var(--dark-bg); /* Latar belakang selalu gelap */
+            padding: 20px;
+            flex-grow: 1;
+            text-align: center;
         }
 
-        .food-content {
-            padding: 1.5rem;
+        .bento-slider-content h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-red); /* Judul merah marun */
+            margin: 0 0 10px 0;
         }
-
-        .food-content h3 {
-            color: var(--primary-red);
-            margin-bottom: 0.5rem;
-        }
-
-        .food-content p {
+        
+        .bento-slider-content p {
             font-size: 0.9rem;
-            line-height: 1.5;
+            font-weight: 400;
+            color: var(--text-light); /* Teks deskripsi selalu terang */
+            line-height: 1.6;
             margin: 0;
-            opacity: 0.8;
         }
 
-        #map {
-            height: 450px;
-            border-radius: 16px;
-            margin-top: 3rem;
-            border: 1px solid var(--border-color);
+        /* Status Item */
+        .bento-slider-item.is-bento-active {
+            opacity: 1;
+            transform: translateX(-50%) scale(1.1);
+            z-index: 10;
+            left: 50%;
         }
 
-        footer {
-            background: #111827;
-            color: var(--text-light);
-            padding: 4rem 2rem 2rem;
-            margin-top: 3rem;
-            position: relative;
-            border-top: 3px solid var(--primary-red);
+        .bento-slider-item.is-bento-prev {
+            left: 20%;
+            transform: translateX(-50%) scale(0.8);
+            z-index: 5;
         }
 
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
+        .bento-slider-item.is-bento-next {
+            left: 80%;
+            transform: translateX(-50%) scale(0.8);
+            z-index: 5;
         }
 
-        .footer-section a:hover {
-            color: var(--primary-red);
+        /* Navigasi titik-titik */
+        .bento-slider-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
         }
 
-        .footer-section i {
-            color: var(--primary-red);
-            width: 20px;
-            margin-right: 10px;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-color-dark);
-            opacity: 0.7;
-        }
-
-        .audio-control {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
-            color: var(--white);
-            border: none;
+        .bento-slider-dot {
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            font-size: 1.2rem;
+            background-color: var(--border-color);
             cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border: none;
+            padding: 0;
         }
-
-        .audio-control:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 30px rgba(220, 38, 38, 0.4);
-        }
-
-        .table-container-responsive {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            margin: 2rem auto;
-            background: var(--card-bg);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .aksara-table {
-            width: 100%;
-            min-width: 600px;
-            border-collapse: collapse;
-            text-align: center;
-        }
-
-        .aksara-table th,
-        .aksara-table td {
-            padding: 1rem;
-            border: 1px solid var(--border-color);
-            font-size: 1.5rem;
-            font-family: 'AksaraBatak', sans-serif;
-            vertical-align: middle;
-        }
-
-        .aksara-table th {
+        
+        .bento-slider-dot.is-bento-dot-active {
             background-color: var(--primary-red);
-            color: var(--white);
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 1;
         }
 
-        .aksara-table tr:hover {
-            background-color: rgba(225, 29, 72, 0.1);
-        }
-
-        .aksara-table td:first-child,
-        .aksara-table th:first-child {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        #quiz-question {
-            font-family: 'AksaraBatak';
-            font-size: 8rem;
-            text-align: center;
-            color: var(--primary-red);
-            margin-bottom: 2rem;
-            min-height: 120px;
-        }
-
-        #quiz-options .btn-group {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .quiz-option {
-            font-size: 1.2rem;
-            padding: 1rem;
-            background: var(--textarea-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-        }
-
-        .quiz-option:hover {
-            border-color: var(--primary-red);
-            color: var(--primary-red);
-            transform: translateY(-2px);
-        }
-
-        .quiz-option.correct {
-            background: var(--correct-green);
-            color: var(--white);
-            border-color: var(--correct-green);
-        }
-
-        .quiz-option.incorrect {
-            background: var(--incorrect-red);
-            color: var(--white);
-            border-color: var(--incorrect-red);
-        }
-
-        .quiz-option:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        #quiz-feedback {
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-top: 2rem;
-            min-height: 2rem;
-        }
-
-        #quiz-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-
-
-        /* === ATURAN RESPONSIVE UNTUK NAVBAR DAN LAINNYA === */
-        @media (max-width: 992px) {
-            .nav-links-desktop {
-                display: none;
-                /* Sembunyikan menu desktop */
-            }
-
-            .nav-toggle {
-                display: block;
-                /* Tampilkan hamburger di layar kecil */
-            }
-        }
-
+        /* [PERUBAHAN RESPONSIVE] Menampilkan 3 kartu di HP */
         @media (max-width: 768px) {
-            header {
-                height: 80vh;
+            .bento-slider-container {
+                height: 400px; /* Tinggi disesuaikan untuk mobile */
             }
-
-            .section {
-                padding: 4rem 5%;
+            /* Ukuran kartu diatur kembali untuk mobile */
+            .bento-slider-item {
+                 max-width: 200px; /* Perkecil lebar maksimum kartu */
             }
-
-            .konversi,
-            .quiz-container {
-                padding: 2rem;
+            .bento-slider-item.is-bento-active {
+                transform: translateX(-50%) scale(1);
             }
-
-            .btn-group {
-                flex-direction: column;
-                align-items: center;
+            .bento-slider-item.is-bento-prev {
+                transform: translateX(-50%) scale(0.75);
+                left: 15%; /* Posisikan lebih ke tepi */
             }
-
-            button {
-                width: 100%;
-                max-width: 300px;
+             .bento-slider-item.is-bento-next {
+                transform: translateX(-50%) scale(0.75);
+                left: 85%; /* Posisikan lebih ke tepi */
             }
-
-            #quiz-options .btn-group {
-                grid-template-columns: 1fr;
-            }
+            .bento-slider-content h3 { font-size: 1rem; }
+            .bento-slider-content p { font-size: 0.8rem; }
         }
     </style>
 </head>
+<body>
 
-<body data-theme="light">
-
-    <div id="preloader">
-        <div class="preloader-content">ᯀ</div>
+    <div class="bento-slider-container">
+        <div class="bento-slider-wrapper" id="myUniqueSlider">
+            <div class="bento-slider-item" data-index="0">
+                <img src="aset/gambar/air.jpg" alt="Raw Material">
+                <div class="bento-slider-content">
+                    <h3>air</h3>
+                    <p>qwertyuioplkjhgfdsazxcvbnm</p>
+                </div>
+            </div>
+                       <div class="bento-slider-item" data-index="0">
+                <img src="aset/gambar/arsik.jpg" alt="Raw Material">
+                <div class="bento-slider-content">
+                    <h3>air</h3>
+                    <p>qwertyuioplkjhgfdsazxcvbnm</p>
+                </div>
+            </div>            <div class="bento-slider-item" data-index="0">
+                <img src="aset/gambar/danau.png" alt="Raw Material">
+                <div class="bento-slider-content">
+                    <h3>air</h3>
+                    <p>qwertyuioplkjhgfdsazxcvbnm</p>
+                </div>
+            </div>            <div class="bento-slider-item" data-index="0">
+                <img src="aset/gambar/gondang.jpg" alt="Raw Material">
+                <div class="bento-slider-content">
+                    <h3>air</h3>
+                    <p>qwertyuioplkjhgfdsazxcvbnm</p>
+                </div>
+            </div>            <div class="bento-slider-item" data-index="0">
+                <img src="aset/gambar/hare.png" alt="Raw Material">
+                <div class="bento-slider-content">
+                    <h3>air</h3>
+                    <p>qwertyuioplkjhgfdsazxcvbnm</p>
+                </div>
+            </div>
+        </div>
+        <div class="bento-slider-nav" id="myUniqueSliderNav"></div>
     </div>
-
-    <audio id="backgroundAudio" loop>
-        <source src="aset/musik_dohot_video/TobaDream (Theme Song).mp3" type="audio/mpeg" />
-    </audio>
-    <button class="audio-control" id="audioControlBtn"><i class="fas fa-play"></i></button>
-
-    <!-- === NAVIGASI RESPONSIVE BARU === -->
-    <nav>
-        <a href="#" class="nav-logo">Aksara Batak</a>
-
-        <div class="nav-links-desktop" id="navLinksDesktop">
-            <a href="#sejarah"><i class="fas fa-scroll"></i>Sejarah</a>
-            <a href="#pengenalan"><i class="fas fa-book-open"></i>Pengenalan</a>
-            <a href="#legenda"><i class="fas fa-dragon"></i>Legenda</a>
-            <a href="#falsafah"><i class="fas fa-hands-holding-circle"></i>Falsafah</a>
-            <a href="#adat"><i class="fas fa-gopuram"></i>Adat</a>
-            <a href="#destinasi"><i class="fas fa-map-marked-alt"></i>Destinasi</a>
-            <a href="#makanan"><i class="fas fa-utensils"></i>Kuliner</a>
-            <a href="#kuis"><i class="fas fa-question-circle"></i>Kuis</a>
-        </div>
-
-        <div class="nav-controls">
-            <button class="theme-toggle" id="themeToggleBtn"><i id="themeIcon" class="fas fa-moon"></i></button>
-            <button class="nav-toggle" id="navToggleBtn" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-    </nav>
-    <div class="nav-links-mobile" id="navLinksMobile">
-        <a href="#sejarah"><i class="fas fa-scroll"></i>Sejarah</a>
-        <a href="#pengenalan"><i class="fas fa-book-open"></i>Pengenalan</a>
-        <a href="#legenda"><i class="fas fa-dragon"></i>Legenda</a>
-        <a href="#falsafah"><i class="fas fa-hands-holding-circle"></i>Falsafah</a>
-        <a href="#adat"><i class="fas fa-gopuram"></i>Adat</a>
-        <a href="#destinasi"><i class="fas fa-map-marked-alt"></i>Destinasi</a>
-        <a href="#makanan"><i class="fas fa-utensils"></i>Kuliner</a>
-        <a href="#kuis"><i class="fas fa-question-circle"></i>Kuis</a>
-    </div>
-
-    <header>
-        <video autoplay muted loop playsinline>
-            <source src="aset/musik_dohot_video/HEADER.mp4" type="video/mp4" />
-        </video>
-        <div class="header-content">
-            <h1 id="interactive-title" data-text="SELAMAT DATANG DI WEBSITE AKSARA BATAK"></h1>
-        </div>
-    </header>
-
-    <main>
-        <section id="sejarah" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-scroll"></i></span><span
-                    class="aksara-hover">Sejarah Aksara Batak</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Aksara Batak, atau Surat Batak, adalah
-                warisan intelektual agung dari leluhur masyarakat Batak. Berakar dari aksara Brahmi di India, aksara ini
-                menyebar ke Nusantara dan berevolusi melalui aksara Pallawa dan Kawi kuno. Selama berabad-abad, Surat
-                Batak menjadi medium utama untuk mencatat pengetahuan, mulai dari surat-menyurat antar kerajaan, hukum
-                adat (patik), mantra sakral (tabas), hingga catatan astrologi dan ramalan (pustaha laklak). Pustaha,
-                yang ditulis di atas kulit kayu alim, adalah bukti nyata tingginya peradaban literasi Batak, mencakup
-                ilmu pengobatan, kalender, hingga strategi perang. Meskipun sempat terpinggirkan oleh aksara Latin, kini
-                semangat revitalisasi membara untuk memastikan warisan ini tidak akan pernah padam.</p>
-        </section>
-
-        <section id="pengenalan" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-book-open"></i></span><span
-                    class="aksara-hover">Pengenalan Aksara Batak</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Aksara Batak adalah sistem tulisan abugida,
-                di mana setiap huruf dasar (Ina ni Surat) memiliki vokal /a/ yang dapat diubah menggunakan diakritik
-                (Anak ni Surat).</p>
-            <div class="table-container-responsive" data-aos="fade-up" data-aos-delay="200">
-                <table class="aksara-table">
-                    <thead>
-                        <tr>
-                            <th>Latin</th>
-                            <th>Toba</th>
-                            <th>Mandailing</th>
-                            <th>Simalungun</th>
-                            <th>Pakpak</th>
-                            <th>Karo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>a</td>
-                            <td>ᯀ</td>
-                            <td>ᯀ</td>
-                            <td>ᯀ</td>
-                            <td>ᯀ</td>
-                            <td>ᯀ</td>
-                        </tr>
-                        <tr>
-                            <td>ha</td>
-                            <td>ᯂ</td>
-                            <td>ᯂ</td>
-                            <td>ᯂ</td>
-                            <td>ᯂ</td>
-                            <td>ᯂ</td>
-                        </tr>
-                        <tr>
-                            <td>ka</td>
-                            <td>ᯄ</td>
-                            <td>ᯄ</td>
-                            <td>ᯄ</td>
-                            <td>ᯄ</td>
-                            <td>ᯄ</td>
-                        </tr>
-                        <tr>
-                            <td>ba</td>
-                            <td>ᯅ</td>
-                            <td>ᯅ</td>
-                            <td>ᯅ</td>
-                            <td>ᯅ</td>
-                            <td>ᯅ</td>
-                        </tr>
-                        <tr>
-                            <td>pa</td>
-                            <td>ᯇ</td>
-                            <td>ᯇ</td>
-                            <td>ᯇ</td>
-                            <td>ᯇ</td>
-                            <td>ᯇ</td>
-                        </tr>
-                        <tr>
-                            <td>na</td>
-                            <td>ᯉ</td>
-                            <td>ᯉ</td>
-                            <td>ᯉ</td>
-                            <td>ᯉ</td>
-                            <td>ᯉ</td>
-                        </tr>
-                        <tr>
-                            <td>wa</td>
-                            <td>ᯋ</td>
-                            <td>ᯋ</td>
-                            <td>ᯋ</td>
-                            <td>ᯋ</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>ga</td>
-                            <td>ᯎ</td>
-                            <td>ᯎ</td>
-                            <td>ᯎ</td>
-                            <td>ᯎ</td>
-                            <td>ᯎ</td>
-                        </tr>
-                        <tr>
-                            <td>ja</td>
-                            <td>ᯐ</td>
-                            <td>ᯐ</td>
-                            <td>ᯐ</td>
-                            <td>ᯐ</td>
-                            <td>ᯐ</td>
-                        </tr>
-                        <tr>
-                            <td>da</td>
-                            <td>ᯑ</td>
-                            <td>ᯑ</td>
-                            <td>ᯑ</td>
-                            <td>ᯑ</td>
-                            <td>ᯑ</td>
-                        </tr>
-                        <tr>
-                            <td>ra</td>
-                            <td>ᯒ</td>
-                            <td>ᯒ</td>
-                            <td>ᯒ</td>
-                            <td>ᯒ</td>
-                            <td>ᯒ</td>
-                        </tr>
-                        <tr>
-                            <td>ma</td>
-                            <td>ᯔ</td>
-                            <td>ᯔ</td>
-                            <td>ᯔ</td>
-                            <td>ᯔ</td>
-                            <td>ᯔ</td>
-                        </tr>
-                        <tr>
-                            <td>ta</td>
-                            <td>ᯖ</td>
-                            <td>ᯖ</td>
-                            <td>ᯖ</td>
-                            <td>ᯖ</td>
-                            <td>ᯖ</td>
-                        </tr>
-                        <tr>
-                            <td>sa</td>
-                            <td>ᯘ</td>
-                            <td>ᯘ</td>
-                            <td>ᯙ</td>
-                            <td>ᯘ</td>
-                            <td>ᯚ</td>
-                        </tr>
-                        <tr>
-                            <td>ya</td>
-                            <td>ᯛ</td>
-                            <td>ᯜ</td>
-                            <td>ᯛ</td>
-                            <td>ᯛ</td>
-                            <td>ᯛ</td>
-                        </tr>
-                        <tr>
-                            <td>nga</td>
-                            <td>ᯝ</td>
-                            <td>ᯝ</td>
-                            <td>ᯝ</td>
-                            <td>ᯝ</td>
-                            <td>ᯝ</td>
-                        </tr>
-                        <tr>
-                            <td>la</td>
-                            <td>ᯞ</td>
-                            <td>ᯞ</td>
-                            <td>ᯞ</td>
-                            <td>ᯞ</td>
-                            <td>ᯞ</td>
-                        </tr>
-                        <tr>
-                            <td>nya</td>
-                            <td>ᯠ</td>
-                            <td>ᯠ</td>
-                            <td>ᯠ</td>
-                            <td>ᯠ</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>i</td>
-                            <td>ᯤ</td>
-                            <td>ᯤ</td>
-                            <td>ᯤ</td>
-                            <td>ᯤ</td>
-                            <td>ᯤ</td>
-                        </tr>
-                        <tr>
-                            <td>u</td>
-                            <td>ᯥ</td>
-                            <td>ᯥ</td>
-                            <td>ᯥ</td>
-                            <td>ᯥ</td>
-                            <td>ᯥ</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section id="legenda" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-dragon"></i></span><span
-                    class="aksara-hover">Kisah Legendaris Danau Toba</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Alkisah, di sebuah lembah subur di Sumatera
-                Utara, hiduplah seorang petani yatim piatu yang rajin bernama Toba. Selain bertani, ia gemar memancing
-                di sungai terdekat. Suatu hari yang terik, kailnya disambar oleh sesuatu yang luar biasa kuat. Dengan
-                susah payah, ia berhasil menarik seekor ikan mas raksasa bersisik emas berkilauan. Ketika ia membawanya
-                pulang, ikan itu secara ajaib berubah menjadi seorang putri jelita.</p>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="150">Sang putri, yang mengaku dikutuk menjadi
-                ikan, setuju untuk menikah dengan Toba dengan satu syarat mutlak: Toba tidak boleh sekali pun mengungkap
-                asal-usulnya sebagai ikan kepada siapa pun. Toba menyanggupinya dengan sungguh-sungguh. Mereka pun hidup
-                bahagia dan dikaruniai seorang anak laki-laki yang diberi nama Samosir. Namun, Samosir tumbuh menjadi
-                anak yang sangat rakus dan pemalas. Ia selalu merasa lapar dan sering membuat ibunya kewalahan.</p>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="200">Suatu siang, sang ibu meminta Samosir
-                mengantarkan bekal makanan untuk Toba yang sedang bekerja di ladang. Di tengah perjalanan, karena tak
-                tahan menahan lapar, Samosir melahap habis bekal untuk ayahnya. Setibanya di ladang, Toba yang sudah
-                sangat lelah dan lapar mendapati bekalnya kosong. Murka karena ulah anaknya, Toba kehilangan kendali dan
-                membentak, "Pantas kelakuanmu begini, dasar kau anak ikan!"</p>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="250">Seketika, langit menjadi gelap dan petir
-                menyambar. Samosir berlari pulang sambil menangis dan mengadukan perkataan ayahnya. Hati sang ibu hancur
-                karena sumpahnya telah dilanggar. Ia menyuruh Samosir untuk segera lari ke bukit tertinggi. Setelah itu,
-                sang ibu berlari menuju sungai. Dari bekas telapak kakinya, menyemburlah mata air yang sangat deras.
-                Hujan lebat turun tanpa henti, dan lembah itu pun tergenang air hingga menjadi danau raksasa. Toba tak
-                sempat menyelamatkan diri dan tenggelam oleh air bah. Danau itu kini dikenal sebagai Danau Toba, dan
-                bukit tempat Samosir berlindung menjadi Pulau Samosir.</p>
-        </section>
-
-        <section id="falsafah" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-hands-holding-circle"></i></span><span
-                    class="aksara-hover">Falsafah Hidup Orang Batak</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Di balik adat dan budayanya yang kaya,
-                masyarakat Batak memegang teguh falsafah hidup yang menjadi pedoman dalam kehidupan sehari-hari.</p>
-            <div class="card-grid">
-                <div class="card" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="aksara-hover">Dalihan Na Tolu</h3>
-                    <p class="aksara-hover">Secara harfiah berarti "Tungku Nan Tiga", ini adalah pilar sistem sosial
-                        Batak. Terdiri dari: <strong>Hula-hula</strong> (keluarga pihak istri, yang dihormati sebagai
-                        sumber berkat), <strong>Dongan Tubu</strong> (saudara semarga, sebagai teman dan sekutu), dan
-                        <strong>Boru</strong> (keluarga pihak perempuan, yang harus dilindungi dan disayangi).
-                    </p>
-                </div>
-                <div class="card" data-aos="fade-up" data-aos-delay="300">
-                    <h3 class="aksara-hover">Hamoraon, Hagabeon, Hasangapon</h3>
-                    <p class="aksara-hover">Tiga cita-cita utama dalam hidup orang Batak. <strong>Hamoraon</strong>
-                        (Kekayaan) bukan hanya materi, tetapi juga kebaikan hati. <strong>Hagabeon</strong> (Memiliki
-                        Keturunan) adalah harapan akan kelangsungan generasi. <strong>Hasangapon</strong> (Kehormatan)
-                        adalah martabat yang diraih melalui perbuatan baik dan kebijaksanaan.</p>
-                </div>
-                <div class="card" data-aos="fade-up" data-aos-delay="400">
-                    <h3 class="aksara-hover">Marsirimpa, Masialoan</h3>
-                    <p class="aksara-hover">Prinsip gotong royong dan saling membantu. <strong>Marsirimpa</strong>
-                        berarti memikul beban bersama-sama, sementara <strong>Masialoan</strong> berarti saling memberi
-                        dan menerima. Ini adalah fondasi kekuatan komunal masyarakat Batak dalam suka dan duka.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="adat" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-gopuram"></i></span><span
-                    class="aksara-hover">Adat Istiadat</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Adat Batak adalah sebuah sistem kompleks
-                yang mengatur setiap siklus kehidupan, dari lahir hingga meninggal, dengan upacara yang sarat makna.</p>
-            <div class="card-grid">
-                <div class="card" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="aksara-hover">Perkawinan Adat (Pesta Unjuk)</h3>
-                    <p class="aksara-hover">Sebuah prosesi panjang dan sakral yang melibatkan beberapa tahapan seperti
-                        Marhusip (perundingan rahasia), Martumpol (pertunangan di gereja), hingga puncaknya Pesta Unjuk,
-                        di mana keluarga besar berkumpul, manortor (menari), dan memberikan Ulos sebagai simbol restu.
-                    </p>
-                </div>
-                <div class="card" data-aos="fade-up" data-aos-delay="300">
-                    <h3 class="aksara-hover">Kelahiran Anak (Mangharoan)</h3>
-                    <p class="aksara-hover">Upacara syukuran atas kelahiran seorang anak, di mana keluarga dari pihak
-                        ibu (Hula-hula) akan datang membawa makanan khas dan Ulos Parompa (kain gendongan) sebagai
-                        simbol doa dan harapan agar anak tersebut tumbuh sehat dan menjadi berkat.</p>
-                </div>
-                <div class="card" data-aos="fade-up" data-aos-delay="400">
-                    <h3 class="aksara-hover">Upacara Kematian (Saur Matua)</h3>
-                    <p class="aksara-hover">Upacara pemakaman yang paling terhormat, diperuntukkan bagi orang tua yang
-                        meninggal setelah melihat anak-anaknya menikah dan memiliki cucu. Pesta ini bisa berlangsung
-                        berhari-hari, diiringi musik gondang dan tarian sebagai bentuk penghormatan terakhir atas
-                        kehidupan yang paripurna.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="destinasi" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-map-marked-alt"></i></span><span
-                    class="aksara-hover">Destinasi Wajib Kunjung</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Jelajahi pesona alam dan kekayaan budaya di
-                sekitar Danau Toba yang legendaris.</p>
-            <div class="galeri">
-                <div class="galeri-item" data-aos="fade-up"><img src="aset/gambar/samosir.jpg" alt="Pulau Samosir">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Pulau Samosir</h3>
-                        <p class="aksara-hover">Jantung budaya Batak dengan pemandangan dan desa adat yang indah.</p>
-                    </div>
-                </div>
-                <div class="galeri-item" data-aos="fade-up" data-aos-delay="100"><img src="aset/gambar/siallagan.jpg"
-                        alt="Huta Siallagan">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Huta Siallagan</h3>
-                        <p class="aksara-hover">Desa kuno yang terkenal dengan 'Batu Parsidangan', tempat pengadilan dan
-                            eksekusi di masa lampau.</p>
-                    </div>
-                </div>
-                <div class="galeri-item" data-aos="fade-up" data-aos-delay="200"><img src="aset/gambar/menara.jpeg"
-                        alt="Menara Pandang Tele">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Menara Pandang Tele</h3>
-                        <p class="aksara-hover">Menawarkan salah satu pemandangan panorama Danau Toba dan Pulau Samosir
-                            yang paling spektakuler dari ketinggian.</p>
-                    </div>
-                </div>
-                <div class="galeri-item" data-aos="fade-up" data-aos-delay="300"><img src="aset/gambar/air.jpg"
-                        alt="Air Terjun Sipiso-piso">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Air Terjun Sipiso-piso</h3>
-                        <p class="aksara-hover">Salah satu air terjun tertinggi di Indonesia, jatuh dari ketinggian 120
-                            meter ke ngarai yang dalam.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="makanan" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-utensils"></i></span><span
-                    class="aksara-hover">Sajian Kuliner Khas</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Cita rasa masakan Batak dikenal kuat, pedas,
-                dan kaya akan rempah-rempah unik seperti andaliman, si merica Batak.</p>
-            <div class="food-grid">
-                <div class="food-item" data-aos="fade-up"><img src="aset/gambar/arsik.jpg" alt="Arsik">
-                    <div class="food-content">
-                        <h3 class="aksara-hover">Arsik</h3>
-                        <p class="aksara-hover">Ikan mas bumbu kuning kaya rempah, dimasak hingga kuahnya mengering.
-                            Sajian wajib dalam upacara adat.</p>
-                    </div>
-                </div>
-                <div class="food-item" data-aos="fade-up" data-aos-delay="100"><img src="aset/gambar/BPK.jpg"
-                        alt="Babi Panggang">
-                    <div class="food-content">
-                        <h3 class="aksara-hover">Babi Panggang Karo (BPK)</h3>
-                        <p class="aksara-hover">Daging babi panggang renyah disajikan dengan sambal pedas andaliman dan
-                            saus khas dari darah.</p>
-                    </div>
-                </div>
-                <div class="food-item" data-aos="fade-up" data-aos-delay="200"><img src="aset/gambar/napinadar.jpg"
-                        alt="Manuk Napinadar">
-                    <div class="food-content">
-                        <h3 class="aksara-hover">Manuk Napinadar</h3>
-                        <p class="aksara-hover">Ayam panggang yang disiram dengan saus kental dari darah ayam itu
-                            sendiri, dibumbui andaliman dan rempah lainnya.</p>
-                    </div>
-                </div>
-                <div class="food-item" data-aos="fade-up" data-aos-delay="300"><img src="aset/gambar/lapet.jpeg"
-                        alt="Lapet">
-                    <div class="food-content">
-                        <h3 class="aksara-hover">Lapet</h3>
-                        <p class="aksara-hover">Kue tradisional berbentuk piramida dari tepung beras dan kelapa parut,
-                            berisi gula merah, lalu dibungkus daun pisang dan dikukus.</p>
-                    </div>
-                </div>
-            </div>
-            <h3 class="aksara-hover" style="text-align:center; margin-top:4rem;" data-aos="fade-up">Minuman Khas</h3>
-
-            <div class="food-grid drinks-grid">
-                <div class="food-item" data-aos="fade-up" data-aos-delay="100"><img src="aset/gambar/tuak.jpeg"
-                        alt="Tuak">
-                    <div class="food-content">
-                        <h3 class="aksara-hover">Tuak</h3>
-                        <p class="aksara-hover">Minuman beralkohol tradisional dari nira pohon aren atau kelapa yang
-                            difermentasi. Memiliki rasa manis sedikit asam dan peran sosial yang kuat.</p>
-                    </div>
-                </div>
-                <div class="food-item" data-aos="fade-up" data-aos-delay="200"><img src="aset/gambar/kopi.jpg"
-                        alt="Kopi">
-                    <div class="food-content">
-                        <h3 class="aksara-hover">Kopi Sidikalang</h3>
-                        <p class="aksara-hover">Salah satu kopi terbaik Indonesia dari dataran tinggi Dairi. Dikenal
-                            memiliki aroma kuat, keasaman rendah, dan cita rasa yang mantap.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="peta" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-map"></i></span><span
-                    class="aksara-hover">Peta Budaya Interaktif</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Jelajahi lokasi-lokasi budaya penting di
-                sekitar Danau Toba. Klik pin pada peta untuk melihat informasi.</p>
-            <div id="map" data-aos="zoom-in" data-aos-delay="200"></div>
-        </section>
-
-        <section id="kuis" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-question-circle"></i></span><span
-                    class="aksara-hover">Kuis Aksara Batak</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Uji pengetahuanmu! Tebak arti dari aksara
-                Batak yang ditampilkan.</p>
-            <div class="quiz-container" data-aos="fade-up" data-aos-delay="200">
-                <div id="quiz-info">
-                    <span id="quiz-progress">Soal 1/10</span>
-                    <span id="quiz-score">Skor: 0</span>
-                </div>
-                <div id="quiz-question">ᯀ</div>
-                <div id="quiz-options" class="btn-group">
-                </div>
-                <div id="quiz-feedback"></div>
-                <div class="btn-group" style="margin-top: 2rem;">
-                    <button id="nextQuestionBtn" style="display: none;"><i class="fas fa-arrow-right"></i> Soal
-                        Berikutnya</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="konversi" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-exchange-alt"></i></span><span
-                    class="aksara-hover">Konverter Teks Cepat</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Gunakan alat ini untuk mengubah teks Latin
-                menjadi Aksara Batak Toba secara instan.</p>
-            <div class="konversi" data-aos="fade-up" data-aos-delay="200">
-                <div class="input-group"><label for="inputText"><i class="fas fa-edit"></i> Masukkan Teks
-                        Latin</label><textarea id="inputText" placeholder="Ketik teks yang ingin dikonversi..."
-                        rows="4"></textarea></div>
-                <div class="btn-group"><button onclick="konversiAksara()"><i class="fas fa-sync-alt"></i>
-                        Konversi</button><button onclick="clearText()"><i class="fas fa-eraser"></i>
-                        Hapus</button><button onclick="copyText()"><i class="fas fa-copy"></i> Salin</button></div>
-                <div class="input-group"><label for="outputText"><i class="fas fa-star"></i> Hasil Aksara
-                        Batak</label><textarea id="outputText" placeholder="Hasil konversi akan muncul di sini..."
-                        rows="4" readonly></textarea></div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3 class="aksara-hover">Tentang Website Ini</h3>
-                <p class="aksara-hover">Website Aksara Batak ini dibangun untuk melestarikan dan mempromosikan
-                    keanekaragaman budaya Batak melalui teknologi digital.</p>
-            </div>
-            <div class="footer-section">
-                <h3 class="aksara-hover">Kontak</h3>
-                <p><i class="fas fa-map-marker-alt"></i> Danau Toba, Indonesia</p><a
-                    href="mailto:felicyapanjaitan790@gmail.com">
-                    <i class="fas fa-envelope"></i> felicyapanjaitan790@gmail.com
-                </a>
-                <br>
-                <a href="mailto:oktovaaaaa@gmail.com">
-                    <i class="fas fa-envelope"></i> oktovaaaaa@gmail.com
-                </a>
-
-            </div>
-            <div class="footer-section">
-                <h3 class="aksara-hover">Ikuti Kami</h3><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a><a
-                    href="#"><i class="fab fa-instagram"></i> Instagram</a><a href="#"><i class="fab fa-youtube"></i>
-                    YouTube</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2025 Aksara Batak. Dibuat dengan untuk melestarikan Budaya Batak.</p>
-        </div>
-    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const preloader = document.getElementById('preloader');
-            window.addEventListener('load', () => { preloader.classList.add('loaded'); });
-            AOS.init({ duration: 800, once: true, easing: 'ease-in-out-cubic' });
+            const sliderWrapper = document.getElementById('myUniqueSlider');
+            if (!sliderWrapper) return;
+            
+            const sliderItems = Array.from(sliderWrapper.getElementsByClassName('bento-slider-item'));
+            const navContainer = document.getElementById('myUniqueSliderNav');
 
-            // === FUNGSI NAVBAR RESPONSIVE BARU ===
-            const navToggleBtn = document.getElementById('navToggleBtn');
-            const navLinksMobile = document.getElementById('navLinksMobile');
-            const navIcon = navToggleBtn.querySelector('i');
+            if (sliderItems.length === 0) return;
 
-            navToggleBtn.addEventListener('click', () => {
-                navLinksMobile.classList.toggle('show');
-                if (navLinksMobile.classList.contains('show')) {
-                    navIcon.classList.remove('fa-bars');
-                    navIcon.classList.add('fa-times');
-                } else {
-                    navIcon.classList.remove('fa-times');
-                    navIcon.classList.add('fa-bars');
-                }
-            });
+            let currentIndex = 0;
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            // [LOGIKA AUTO-SWAP BARU]
+            let autoSwapInterval = null;
 
-            document.querySelectorAll('.nav-links-mobile a').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (navLinksMobile.classList.contains('show')) {
-                        navLinksMobile.classList.remove('show');
-                        navIcon.classList.remove('fa-times');
-                        navIcon.classList.add('fa-bars');
-                    }
-                });
-            });
-
-            const themeToggleBtn = document.getElementById('themeToggleBtn');
-            const body = document.body;
-            const applyTheme = (theme) => {
-                body.setAttribute('data-theme', theme);
-                document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-                localStorage.setItem('theme', theme);
-                if (window.map) {
-                    const mapTileUrl = theme === 'dark'
-                        ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-                        : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-                    window.map.eachLayer(layer => {
-                        if (layer instanceof L.TileLayer) {
-                            layer.setUrl(mapTileUrl);
-                        }
-                    });
-                }
+            // Fungsi untuk memulai auto-swap
+            const startAutoSwap = () => {
+                // Hentikan interval yang sudah ada sebelum memulai yang baru
+                clearInterval(autoSwapInterval);
+                autoSwapInterval = setInterval(showNextItem, 4000); // 4000ms = 4 detik
             };
-            themeToggleBtn.addEventListener('click', () => applyTheme(body.dataset.theme === 'dark' ? 'light' : 'dark'));
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-
-            const headerContent = document.querySelector('.header-content');
-            window.addEventListener('scroll', () => { headerContent.style.transform = `translateY(${window.scrollY * 0.4}px)`; });
-
-            const aksaraMap = { 'h': 'ᯂ', 'k': 'ᯄ', 'b': 'ᯅ', 'p': 'ᯇ', 'n': 'ᯉ', 'w': 'ᯋ', 'g': 'ᯎ', 'j': 'ᯐ', 'd': 'ᯑ', 'r': 'ᯒ', 'm': 'ᯔ', 't': 'ᯖ', 's': 'ᯘ', 'y': 'ᯛ', 'l': 'ᯞ', 'ng': 'ᯝ', 'ny': 'ᯠ', 'a': 'ᯀ', 'i': 'ᯤ', 'u': 'ᯥ', 'diacritics': { 'i': 'ᯪ', 'u': 'ᯫ', 'e': 'ᯭ', 'o': 'ᯬ' }, 'pangolat': '᯲' };
-
-            // FUNGSI TRANSLITERASI DIPERBARUI
-            const transliterate = (text) => {
-                text = text.toLowerCase()
-                    .replace(/c/g, 'k') // Huruf 'c' diubah menjadi 'k'
-                    .replace(/f/g, 'p').replace(/v/g, 'b').replace(/z/g, 'j')
-                    .replace(/q/g, 'k').replace(/x/g, 'ks')
-                    .replace(/[^a-z0-9\s]/g, '');
-                let result = '';
-                const vowels = 'aiueo';
-                let i = 0;
-                while (i < text.length) {
-                    let twoChar = text.substring(i, i + 2);
-                    let oneChar = text[i];
-                    let consonant = (aksaraMap[twoChar] && !vowels.includes(twoChar)) ? twoChar : oneChar;
-
-                    if (aksaraMap[consonant] && !vowels.includes(consonant)) {
-                        const len = consonant.length;
-                        const vowel = text[i + len];
-                        if (vowel && 'ioue'.includes(vowel)) {
-                            result += aksaraMap[consonant] + aksaraMap.diacritics[vowel]; i += len + 1;
-                        } else if (vowel && 'a' === vowel) {
-                            result += aksaraMap[consonant]; i += len + 1;
-                        } else {
-                            result += aksaraMap[consonant] + aksaraMap.pangolat; i += len;
-                        }
-                    } else {
-                        const char = text[i];
-                        if ('aiu'.includes(char)) {
-                            result += aksaraMap[char];
-                        } else if ('eo'.includes(char)) {
-                            result += aksaraMap['a'] + aksaraMap.diacritics[char];
-                        } else {
-                            result += char;
-                        }
-                        i++;
-                    }
-                }
-                return result;
+            
+            // Fungsi untuk menghentikan auto-swap
+            const stopAutoSwap = () => {
+                clearInterval(autoSwapInterval);
             };
 
-            const titleEl = document.getElementById('interactive-title');
-            const originalTitleText = titleEl.dataset.text;
-            titleEl.innerHTML = '';
-            originalTitleText.split('').forEach((char, i) => {
-                const span = document.createElement('span');
-                span.textContent = char;
-                if (char.trim() !== '') {
-                    span.setAttribute('data-latin', char);
-                    span.setAttribute('data-aksara', transliterate(char));
-                    span.style.transitionDelay = `${i * 30}ms`;
-                }
-                if (char === ' ') {
-                    span.style.width = '0.5ch';
-                }
-                titleEl.appendChild(span);
-            });
-            titleEl.addEventListener('mouseenter', () => {
-                titleEl.querySelectorAll('span[data-aksara]').forEach(span => {
-                    span.textContent = span.dataset.aksara;
-                    span.classList.add('is-aksara-title');
-                });
-            });
-            titleEl.addEventListener('mouseleave', () => {
-                titleEl.querySelectorAll('span[data-latin]').forEach(span => {
-                    span.textContent = span.dataset.latin;
-                    span.classList.remove('is-aksara-title');
-                });
+            sliderItems.forEach((_, index) => {
+                const dot = document.createElement('button');
+                dot.classList.add('bento-slider-dot');
+                dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+                dot.addEventListener('click', () => goToItem(index));
+                navContainer.appendChild(dot);
             });
 
-            document.querySelectorAll('.aksara-hover').forEach(el => { const originalText = el.textContent; el.setAttribute('data-latin', originalText); el.addEventListener('mouseenter', () => { el.textContent = transliterate(el.getAttribute('data-latin')); el.classList.add('is-aksara'); }); el.addEventListener('mouseleave', () => { el.textContent = el.getAttribute('data-latin'); el.classList.remove('is-aksara'); }); });
+            const dots = Array.from(navContainer.getElementsByClassName('bento-slider-dot'));
 
-            window.konversiAksara = () => { document.getElementById('outputText').value = transliterate(document.getElementById('inputText').value); };
-            window.clearText = () => { document.getElementById('inputText').value = ''; document.getElementById('outputText').value = ''; };
-            window.copyText = () => { navigator.clipboard.writeText(document.getElementById('outputText').value).then(() => alert('Teks berhasil disalin!')); };
-
-            window.map = L.map('map').setView([2.6, 98.9], 9);
-            const mapTileUrl = savedTheme === 'dark'
-                ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-                : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            L.tileLayer(mapTileUrl, { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>' }).addTo(window.map);
-            [{ lat: 2.659, lon: 98.835, name: "Pulau Samosir" }, { lat: 2.668, lon: 98.868, name: "Desa Tomok" }, { lat: 2.553, lon: 98.683, name: "Parapat" }, { lat: 2.868, lon: 98.535, name: "Air Terjun Sipiso-piso" }, { lat: 2.500, lon: 99.066, name: "Bukit Holbung" }].forEach(loc => { L.marker([loc.lat, loc.lon]).addTo(window.map).bindPopup(`<b>${loc.name}</b>`); });
-
-            applyTheme(savedTheme);
-
-            const quizData = [
-                { aksara: "ᯀ", answer: "a", options: ["ha", "ba", "a", "i"] },
-                { aksara: "ᯅ", answer: "ba", options: ["da", "ga", "ba", "ma"] },
-                { aksara: "ᯎ", answer: "ga", options: ["ga", "ja", "da", "ra"] },
-                { aksara: "ᯑ", answer: "da", options: ["la", "da", "na", "pa"] },
-                { aksara: "ᯂ", answer: "ha", options: ["a", "ka", "ha", "sa"] },
-                { aksara: "ᯄ", answer: "ka", options: ["ta", "ka", "pa", "nga"] },
-                { aksara: "ᯉ", answer: "na", options: ["ma", "na", "nya", "nga"] },
-                { aksara: "ᯇ", answer: "pa", options: ["ba", "da", "pa", "ra"] },
-                { aksara: "ᯒ", answer: "ra", options: ["ra", "sa", "ta", "ya"] },
-                { aksara: "ᯘ", answer: "sa", options: ["ha", "sa", "wa", "ya"] },
-            ];
-
-            const quizQuestionEl = document.getElementById('quiz-question');
-            const quizOptionsEl = document.getElementById('quiz-options');
-            const quizFeedbackEl = document.getElementById('quiz-feedback');
-            const quizScoreEl = document.getElementById('quiz-score');
-            const quizProgressEl = document.getElementById('quiz-progress');
-            const nextQuestionBtn = document.getElementById('nextQuestionBtn');
-
-            let currentQuestionIndex = 0;
-            let score = 0;
-
-            function shuffleArray(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-            }
-
-            function loadQuestion() {
-                if (currentQuestionIndex >= quizData.length) {
-                    quizQuestionEl.textContent = '🎉';
-                    quizFeedbackEl.textContent = `Kuis Selesai! Skor Akhir Anda: ${score} dari ${quizData.length}`;
-                    quizOptionsEl.innerHTML = '';
-                    nextQuestionBtn.style.display = 'none';
-                    return;
-                }
-
-                quizFeedbackEl.textContent = '';
-                nextQuestionBtn.style.display = 'none';
-                quizOptionsEl.innerHTML = '';
-
-                const currentQuestion = quizData[currentQuestionIndex];
-                quizQuestionEl.textContent = currentQuestion.aksara;
-                quizScoreEl.textContent = `Skor: ${score}`;
-                quizProgressEl.textContent = `Soal ${currentQuestionIndex + 1}/${quizData.length}`;
-
-                const options = [...currentQuestion.options];
-                shuffleArray(options);
-
-                const optionsContainer = document.createElement('div');
-                optionsContainer.className = 'btn-group';
-
-                options.forEach(option => {
-                    const button = document.createElement('button');
-                    button.textContent = option;
-                    button.classList.add('quiz-option');
-                    button.addEventListener('click', () => checkAnswer(option, currentQuestion.answer));
-                    optionsContainer.appendChild(button);
-                });
-                quizOptionsEl.appendChild(optionsContainer);
-            }
-
-            function checkAnswer(selectedOption, correctAnswer) {
-                const buttons = quizOptionsEl.querySelectorAll('.quiz-option');
-                buttons.forEach(button => {
-                    button.disabled = true;
-                    if (button.textContent === correctAnswer) {
-                        button.classList.add('correct');
+            function updateSliderState() {
+                const totalItems = sliderItems.length;
+                sliderItems.forEach((item, index) => {
+                    item.classList.remove('is-bento-active', 'is-bento-prev', 'is-bento-next');
+                    if (index === currentIndex) {
+                        item.classList.add('is-bento-active');
+                    } else if (index === (currentIndex - 1 + totalItems) % totalItems) {
+                        item.classList.add('is-bento-prev');
+                    } else if (index === (currentIndex + 1) % totalItems) {
+                        item.classList.add('is-bento-next');
                     }
                 });
-
-                if (selectedOption === correctAnswer) {
-                    score++;
-                    quizFeedbackEl.style.color = 'var(--correct-green)';
-                    quizFeedbackEl.textContent = 'Benar! Jawaban Anda Tepat.';
-                } else {
-                    quizFeedbackEl.style.color = 'var(--incorrect-red)';
-                    quizFeedbackEl.textContent = `Salah. Jawaban yang benar adalah "${correctAnswer}".`;
-                    buttons.forEach(button => {
-                        if (button.textContent === selectedOption) {
-                            button.classList.add('incorrect');
-                        }
-                    });
-                }
-                quizScoreEl.textContent = `Skor: ${score}`;
-                nextQuestionBtn.style.display = 'block';
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('is-bento-dot-active', index === currentIndex);
+                });
             }
 
-            nextQuestionBtn.addEventListener('click', () => {
-                currentQuestionIndex++;
-                loadQuestion();
+            function goToItem(index) {
+                stopAutoSwap(); // Hentikan timer saat interaksi manual
+                currentIndex = index;
+                updateSliderState();
+                startAutoSwap(); // Mulai lagi timer setelah selesai
+            }
+
+            function showNextItem() {
+                stopAutoSwap();
+                currentIndex = (currentIndex + 1) % sliderItems.length;
+                updateSliderState();
+                startAutoSwap();
+            }
+
+            function showPrevItem() {
+                stopAutoSwap();
+                currentIndex = (currentIndex - 1 + sliderItems.length) % sliderItems.length;
+                updateSliderState();
+                startAutoSwap();
+            }
+
+            // Event listener untuk interaksi pengguna
+            sliderWrapper.addEventListener('click', (e) => {
+                const targetItem = e.target.closest('.bento-slider-item');
+                if (!targetItem) return;
+
+                if (targetItem.classList.contains('is-bento-next')) showNextItem();
+                else if (targetItem.classList.contains('is-bento-prev')) showPrevItem();
             });
+            
+            sliderWrapper.addEventListener('touchstart', (e) => {
+                stopAutoSwap();
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
 
-            loadQuestion();
+            sliderWrapper.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+                startAutoSwap(); // Mulai lagi setelah swipe selesai
+            });
+            
+            // Berhenti saat mouse hover, mulai lagi saat mouse keluar
+            sliderWrapper.addEventListener('mouseenter', stopAutoSwap);
+            sliderWrapper.addEventListener('mouseleave', startAutoSwap);
 
-            const audio = document.getElementById('backgroundAudio'); const audioControlBtn = document.getElementById('audioControlBtn');
-            audioControlBtn.addEventListener('click', () => { if (audio.paused) { audio.play().catch(e => { }); audioControlBtn.innerHTML = '<i class="fas fa-pause"></i>'; } else { audio.pause(); audioControlBtn.innerHTML = '<i class="fas fa-play"></i>'; } });
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    currentIndex = (currentIndex + 1) % sliderItems.length;
+                } else if (touchEndX > touchStartX + swipeThreshold) {
+                    currentIndex = (currentIndex - 1 + sliderItems.length) % sliderItems.length;
+                }
+                updateSliderState();
+            }
+            
+            // Inisialisasi slider
+            goToItem(1);
         });
     </script>
 </body>
-
 </html>
- 
