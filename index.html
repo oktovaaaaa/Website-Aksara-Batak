@@ -1661,7 +1661,48 @@
 
             applyTheme(savedTheme);
 
-            const quizData = [{ aksara: "ᯀ", answer: "a", options: ["ha", "ba", "a", "i"] }, { aksara: "ᯅ", answer: "ba", options: ["da", "ga", "ba", "ma"] }, { aksara: "ᯎ", answer: "ga", options: ["ga", "ja", "da", "ra"] }, { aksara: "ᯑ", answer: "da", options: ["la", "da", "na", "pa"] }, { aksara: "ᯂ", answer: "ha", options: ["a", "ka", "ha", "sa"] }, { aksara: "ᯄ", answer: "ka", options: ["ta", "ka", "pa", "nga"] }, { aksara: "ᯉ", answer: "na", options: ["ma", "na", "nya", "nga"] }, { aksara: "ᯇ", answer: "pa", options: ["ba", "da", "pa", "ra"] }, { aksara: "ᯒ", answer: "ra", options: ["ra", "sa", "ta", "ya"] }, { aksara: "ᯘ", answer: "sa", options: ["ha", "sa", "wa", "ya"] },];
+            const quizData = [
+    // Soal 1 
+    { question: 'Aksara Batak untuk "pa" adalah...', options: ['ᯅ', 'ᯇ', 'ᯑ', 'ᯎ'], answer: 'ᯇ' },
+    // Soal 2 
+    { question: 'Aksara `ᯉ᯲` dibaca...', options: ['na', 'n', 'ni', 'nga'], answer: 'n' },
+    // Soal 3 
+    { question: 'Bagaimana cara menulis "lima" dalam Aksara Batak?', options: ['ᯞᯔ', 'ᯞᯪᯔ', 'ᯞᯔᯪ', 'ᯒᯪᯔ'], answer: 'ᯞᯪᯔ' },
+    // Soal 4 
+    { question: 'Aksara Batak untuk "ga" adalah...', options: ['ᯎ', 'ᯐ', 'ᯑ', 'ᯂ'], answer: 'ᯎ' },
+    // Soal 5 
+    { question: 'Aksara `ᯂᯬ` dibaca...', options: ['ha', 'hi', 'hu', 'ho'], answer: 'ho' },
+    // Soal 6 
+    { question: 'Bagaimana cara menulis "anak" dalam Aksara Batak?', options: ['ᯀᯉᯂ', 'ᯀᯉᯄ᯲', 'ᯀᯉᯄ', 'ᯀᯉ᯲ᯄ'], answer: 'ᯀᯉᯄ᯲' },
+    // Soal 7 
+    { question: 'Aksara Batak untuk "ta" adalah...', options: ['ᯖ', 'ᯑ', 'ᯐ', 'ᯘ'], answer: 'ᯖ' },
+    // Soal 8 
+    { question: 'Aksara `ᯘᯮ` dibaca...', options: ['sa', 'si', 'su', 'so'], answer: 'su' },
+    // Soal 9 
+    { question: 'Bagaimana cara menulis "surat" dalam Aksara Batak?', options: ['ᯘᯮᯒᯖ', 'ᯘᯒᯖ᯲', 'ᯘᯮᯒᯖ᯲', 'ᯘᯮᯒ᯲ᯖ'], answer: 'ᯘᯮᯒᯖ᯲' },
+    // Soal 10 
+    { question: 'Aksara Batak untuk "da" adalah...', options: ['ᯅ', 'ᯇ', 'ᯑ', 'ᯎ'], answer: 'ᯑ' },
+    // Soal 11 
+    { question: 'Gabungan aksara `ᯇᯒ᯲` dibaca...', options: ['para', 'par', 'pira', 'pa + ra'], answer: 'par' },
+    // Soal 12 
+    { question: 'Bagaimana cara menulis "boru" dalam Aksara Batak?', options: ['ᯅᯬᯒᯮ', 'ᯅᯒᯮ', 'ᯅᯬᯒ', 'ᯅᯒ'], answer: 'ᯅᯬᯒᯮ' },
+    // Soal 13 
+    { question: 'Aksara Batak untuk "ra" adalah...', options: ['ᯞ', 'ᯛ', 'ᯒ', 'ᯘ'], answer: 'ᯒ' },
+    // Soal 14 
+    { question: 'Gabungan aksara `ᯀᯔ᯲` dibaca...', options: ['ama', 'am', 'um', 'ma'], answer: 'am' },
+    // Soal 15 
+    { question: 'Bagaimana cara menulis "dalan" dalam Aksara Batak?', options: ['ᯑᯞᯉ', 'ᯑᯞᯉ᯲', 'ᯑᯞᯪᯉ', 'ᯑ᯲ᯞᯉ'], answer: 'ᯑᯞᯉ᯲' },
+    // Soal 16 
+    { question: 'Aksara Batak untuk "sa" adalah...', options: ['ᯘ', 'ᯂ', 'ᯛ', 'ᯓ'], answer: 'ᯘ' },
+    // Soal 17 
+    { question: 'Aksara `ᯅᯬᯑᯖ᯲` dibaca...', options: ['bodata', 'bodat', 'badat', 'bodta'], answer: 'bodat' },
+    // Soal 18 
+    { question: 'Bagaimana cara menulis "horbo" (kerbau) dalam Aksara Batak?', options: ['ᯂᯬᯒᯅᯬ', 'ᯂᯒᯅ', 'ᯂᯬᯒ᯲ᯅᯬ', 'ᯂᯬᯒ᯲ᯅ'], answer: 'ᯂᯬᯒ᯲ᯅᯬ' },
+    // Soal 19 
+    { question: 'Aksara Batak untuk "ma" adalah...', options: ['ᯉ', 'ᯔ', 'ᯝ', 'ᯐ'], answer: 'ᯔ' },
+    // Soal 20 
+    { question: 'Aksara `ᯂᯮᯖ` dibaca...', options: ['hata', 'hut', 'huta', 'hota'], answer: 'huta' }
+];
             const quizQuestionEl = document.getElementById('quiz-question'); const quizOptionsEl = document.getElementById('quiz-options'); const quizFeedbackEl = document.getElementById('quiz-feedback'); const quizScoreEl = document.getElementById('quiz-score'); const quizProgressEl = document.getElementById('quiz-progress'); const nextQuestionBtn = document.getElementById('nextQuestionBtn');
             let currentQuestionIndex = 0; let score = 0;
             function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[array[i], array[j]] = [array[j], array[i]]; } }
