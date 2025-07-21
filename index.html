@@ -181,6 +181,7 @@
             line-height: 1;
         }
 
+        /* PERBAIKAN NAVBAR: Z-INDEX DAN LATAR BELAKANG SOLID */
         .nav-links-mobile {
             display: none;
             flex-direction: column;
@@ -188,11 +189,14 @@
             top: 100%;
             left: 0;
             width: 100%;
-            background: var(--nav-bg);
+            background: var(--background);
+            /* Diubah ke background solid */
             padding: 1rem 0;
             border-bottom: 1px solid var(--border-color);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             animation: fadeInDown 0.3s ease;
+            z-index: 998;
+            /* Memastikan di atas konten lain */
         }
 
         @keyframes fadeInDown {
@@ -379,6 +383,39 @@
             line-height: 1.5;
             color: var(--primary-red);
         }
+
+        /* PENAMBAHAN: STYLE UNTUK TABEL INFO HARI & ANGKA */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .info-table th,
+        .info-table td {
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            vertical-align: middle;
+        }
+
+        .info-table th {
+            background-color: var(--primary-red);
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .info-table tr:hover {
+            background-color: rgba(225, 29, 72, 0.1);
+        }
+
+        .info-table .aksara-cell {
+            font-family: 'AksaraBatak', sans-serif;
+            font-size: 2rem;
+            color: var(--primary-red);
+        }
+
 
         /* === GAYA PANDUAN PENULISAN BARU === */
         #panduan h3 {
@@ -974,6 +1011,7 @@
         <div class="nav-links-desktop" id="navLinksDesktop">
             <a href="#sejarah"><i class="fas fa-scroll"></i>Sejarah</a>
             <a href="#pengenalan"><i class="fas fa-book-open"></i>Pengenalan</a>
+            <a href="#hari-angka"><i class="fas fa-calendar-day"></i>Hari & Angka</a> <!-- LINK BARU -->
             <a href="#panduan"><i class="fas fa-pen-ruler"></i>Panduan</a>
             <a href="#latihan"><i class="fas fa-pen-alt"></i>Latihan</a>
             <a href="#naskah"><i class="fas fa-book-skull"></i>Naskah</a>
@@ -987,17 +1025,19 @@
                 <i class="fas fa-bars"></i>
             </button>
         </div>
+        <!-- PERBAIKAN: NAV-LINKS-MOBILE DIPINDAHKAN KE DALAM NAV -->
+        <div class="nav-links-mobile" id="navLinksMobile">
+            <a href="#sejarah"><i class="fas fa-scroll"></i>Sejarah</a>
+            <a href="#pengenalan"><i class="fas fa-book-open"></i>Pengenalan</a>
+            <a href="#hari-angka"><i class="fas fa-calendar-day"></i>Hari & Angka</a> <!-- LINK BARU -->
+            <a href="#panduan"><i class="fas fa-pen-ruler"></i>Panduan</a>
+            <a href="#latihan"><i class="fas fa-pen-alt"></i>Latihan</a>
+            <a href="#naskah"><i class="fas fa-book-skull"></i>Naskah</a>
+            <a href="#destinasi"><i class="fas fa-map-marked-alt"></i>Destinasi</a>
+            <a href="#makanan"><i class="fas fa-utensils"></i>Kuliner</a>
+            <a href="#kuis"><i class="fas fa-question-circle"></i>Kuis</a>
+        </div>
     </nav>
-    <div class="nav-links-mobile" id="navLinksMobile">
-        <a href="#sejarah"><i class="fas fa-scroll"></i>Sejarah</a>
-        <a href="#pengenalan"><i class="fas fa-book-open"></i>Pengenalan</a>
-        <a href="#panduan"><i class="fas fa-pen-ruler"></i>Panduan</a>
-        <a href="#latihan"><i class="fas fa-pen-alt"></i>Latihan</a>
-        <a href="#naskah"><i class="fas fa-book-skull"></i>Naskah</a>
-        <a href="#destinasi"><i class="fas fa-map-marked-alt"></i>Destinasi</a>
-        <a href="#makanan"><i class="fas fa-utensils"></i>Kuliner</a>
-        <a href="#kuis"><i class="fas fa-question-circle"></i>Kuis</a>
-    </div>
 
     <header>
         <video autoplay muted loop playsinline>
@@ -1200,6 +1240,131 @@
                             <td>ᯥ</td>
                             <td>ᯥ</td>
                             <td>ᯥ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- PENAMBAHAN: SECTION BARU UNTUK HARI DAN ANGKA -->
+        <section id="hari-angka" class="section">
+            <h2 data-aos="fade-up">
+                <span class="section-icon"><i class="fas fa-calendar-day"></i></span>
+                <span class="aksara-hover">Hari & Angka Batak</span>
+            </h2>
+            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">
+                Masyarakat Batak memiliki sistem penanggalan (Parhalaan) dan penomoran unik yang merupakan bagian
+                penting dari budaya dan tradisi. Kenali nama-nama hari dan cara berhitung dalam Bahasa Batak.
+            </p>
+
+            <!-- Hari-hari dalam Seminggu -->
+            <h3 class="aksara-hover" data-aos="fade-up"
+                style="text-align:center; font-size: 1.8rem; margin-top: 3rem; margin-bottom: 1rem;">Nama-nama Hari
+                (Goar ni Ari)</h3>
+            <div class="table-container-responsive" data-aos="fade-up" data-aos-delay="200">
+                <table class="info-table">
+                    <thead>
+                        <tr>
+                            <th>Bahasa Indonesia</th>
+                            <th>Bahasa Batak Toba</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Minggu</td>
+                            <td>Artia</td>
+                        </tr>
+                        <tr>
+                            <td>Senin</td>
+                            <td>Soma</td>
+                        </tr>
+                        <tr>
+                            <td>Selasa</td>
+                            <td>Anggara</td>
+                        </tr>
+                        <tr>
+                            <td>Rabu</td>
+                            <td>Buda</td>
+                        </tr>
+                        <tr>
+                            <td>Kamis</td>
+                            <td>Boras Pati</td>
+                        </tr>
+                        <tr>
+                            <td>Jumat</td>
+                            <td>Singkora</td>
+                        </tr>
+                        <tr>
+                            <td>Sabtu</td>
+                            <td>Samisara</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Penomoran -->
+            <h3 class="aksara-hover" data-aos="fade-up"
+                style="text-align:center; font-size: 1.8rem; margin-top: 3rem; margin-bottom: 1rem;">Sistem Penomoran
+                (Pamillangon)</h3>
+            <div class="table-container-responsive" data-aos="fade-up" data-aos-delay="300">
+                <table class="info-table">
+                    <thead>
+                        <tr>
+                            <th>Angka</th>
+                            <th>Bahasa Batak Toba</th>
+                            <th>Aksara Batak</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Sada</td>
+                            <td class="aksara-cell">ᯘᯑ</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Dua</td>
+                            <td class="aksara-cell">ᯑᯮᯀ</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Tolu</td>
+                            <td class="aksara-cell">ᯖᯬᯞᯮ</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Opat</td>
+                            <td class="aksara-cell">ᯀᯬᯇᯖ᯲</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Lima</td>
+                            <td class="aksara-cell">ᯞᯪᯔ</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Onom</td>
+                            <td class="aksara-cell">ᯀᯬᯉᯔ᯲</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Pitu</td>
+                            <td class="aksara-cell">ᯇᯪᯖᯮ</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>Ualu</td>
+                            <td class="aksara-cell">ᯥᯀᯞᯮ</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>Sia</td>
+                            <td class="aksara-cell">ᯘᯪᯀ</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>Sampulu</td>
+                            <td class="aksara-cell">ᯘᯔ᯲ᯇᯮᯞᯮ</td>
                         </tr>
                     </tbody>
                 </table>
