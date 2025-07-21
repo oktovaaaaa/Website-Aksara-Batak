@@ -1662,53 +1662,129 @@
             applyTheme(savedTheme);
 
             const quizData = [
-    // Soal 1 
-    { question: 'Aksara Batak untuk "pa" adalah...', options: ['ᯅ', 'ᯇ', 'ᯑ', 'ᯎ'], answer: 'ᯇ' },
-    // Soal 2 
-    { question: 'Aksara `ᯉ᯲` dibaca...', options: ['na', 'n', 'ni', 'nga'], answer: 'n' },
-    // Soal 3 
-    { question: 'Bagaimana cara menulis "lima" dalam Aksara Batak?', options: ['ᯞᯔ', 'ᯞᯪᯔ', 'ᯞᯔᯪ', 'ᯒᯪᯔ'], answer: 'ᯞᯪᯔ' },
-    // Soal 4 
-    { question: 'Aksara Batak untuk "ga" adalah...', options: ['ᯎ', 'ᯐ', 'ᯑ', 'ᯂ'], answer: 'ᯎ' },
-    // Soal 5 
-    { question: 'Aksara `ᯂᯬ` dibaca...', options: ['ha', 'hi', 'hu', 'ho'], answer: 'ho' },
-    // Soal 6 
-    { question: 'Bagaimana cara menulis "anak" dalam Aksara Batak?', options: ['ᯀᯉᯂ', 'ᯀᯉᯄ᯲', 'ᯀᯉᯄ', 'ᯀᯉ᯲ᯄ'], answer: 'ᯀᯉᯄ᯲' },
-    // Soal 7 
-    { question: 'Aksara Batak untuk "ta" adalah...', options: ['ᯖ', 'ᯑ', 'ᯐ', 'ᯘ'], answer: 'ᯖ' },
-    // Soal 8 
-    { question: 'Aksara `ᯘᯮ` dibaca...', options: ['sa', 'si', 'su', 'so'], answer: 'su' },
-    // Soal 9 
-    { question: 'Bagaimana cara menulis "surat" dalam Aksara Batak?', options: ['ᯘᯮᯒᯖ', 'ᯘᯒᯖ᯲', 'ᯘᯮᯒᯖ᯲', 'ᯘᯮᯒ᯲ᯖ'], answer: 'ᯘᯮᯒᯖ᯲' },
-    // Soal 10 
-    { question: 'Aksara Batak untuk "da" adalah...', options: ['ᯅ', 'ᯇ', 'ᯑ', 'ᯎ'], answer: 'ᯑ' },
-    // Soal 11 
-    { question: 'Gabungan aksara `ᯇᯒ᯲` dibaca...', options: ['para', 'par', 'pira', 'pa + ra'], answer: 'par' },
-    // Soal 12 
-    { question: 'Bagaimana cara menulis "boru" dalam Aksara Batak?', options: ['ᯅᯬᯒᯮ', 'ᯅᯒᯮ', 'ᯅᯬᯒ', 'ᯅᯒ'], answer: 'ᯅᯬᯒᯮ' },
-    // Soal 13 
-    { question: 'Aksara Batak untuk "ra" adalah...', options: ['ᯞ', 'ᯛ', 'ᯒ', 'ᯘ'], answer: 'ᯒ' },
-    // Soal 14 
-    { question: 'Gabungan aksara `ᯀᯔ᯲` dibaca...', options: ['ama', 'am', 'um', 'ma'], answer: 'am' },
-    // Soal 15 
-    { question: 'Bagaimana cara menulis "dalan" dalam Aksara Batak?', options: ['ᯑᯞᯉ', 'ᯑᯞᯉ᯲', 'ᯑᯞᯪᯉ', 'ᯑ᯲ᯞᯉ'], answer: 'ᯑᯞᯉ᯲' },
-    // Soal 16 
-    { question: 'Aksara Batak untuk "sa" adalah...', options: ['ᯘ', 'ᯂ', 'ᯛ', 'ᯓ'], answer: 'ᯘ' },
-    // Soal 17 
-    { question: 'Aksara `ᯅᯬᯑᯖ᯲` dibaca...', options: ['bodata', 'bodat', 'badat', 'bodta'], answer: 'bodat' },
-    // Soal 18 
-    { question: 'Bagaimana cara menulis "horbo" (kerbau) dalam Aksara Batak?', options: ['ᯂᯬᯒᯅᯬ', 'ᯂᯒᯅ', 'ᯂᯬᯒ᯲ᯅᯬ', 'ᯂᯬᯒ᯲ᯅ'], answer: 'ᯂᯬᯒ᯲ᯅᯬ' },
-    // Soal 19 
-    { question: 'Aksara Batak untuk "ma" adalah...', options: ['ᯉ', 'ᯔ', 'ᯝ', 'ᯐ'], answer: 'ᯔ' },
-    // Soal 20 
-    { question: 'Aksara `ᯂᯮᯖ` dibaca...', options: ['hata', 'hut', 'huta', 'hota'], answer: 'huta' }
-];
-            const quizQuestionEl = document.getElementById('quiz-question'); const quizOptionsEl = document.getElementById('quiz-options'); const quizFeedbackEl = document.getElementById('quiz-feedback'); const quizScoreEl = document.getElementById('quiz-score'); const quizProgressEl = document.getElementById('quiz-progress'); const nextQuestionBtn = document.getElementById('nextQuestionBtn');
-            let currentQuestionIndex = 0; let score = 0;
-            function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[array[i], array[j]] = [array[j], array[i]]; } }
-            function loadQuestion() { if (currentQuestionIndex >= quizData.length) { quizQuestionEl.textContent = '🎉'; quizFeedbackEl.textContent = `Kuis Selesai! Skor Akhir Anda: ${score} dari ${quizData.length}`; quizOptionsEl.innerHTML = ''; nextQuestionBtn.style.display = 'none'; return; } quizFeedbackEl.textContent = ''; nextQuestionBtn.style.display = 'none'; quizOptionsEl.innerHTML = ''; const currentQuestion = quizData[currentQuestionIndex]; quizQuestionEl.textContent = currentQuestion.aksara; quizScoreEl.textContent = `Skor: ${score}`; quizProgressEl.textContent = `Soal ${currentQuestionIndex + 1}/${quizData.length}`; const options = [...currentQuestion.options]; shuffleArray(options); const optionsContainer = document.createElement('div'); optionsContainer.className = 'btn-group'; options.forEach(option => { const button = document.createElement('button'); button.textContent = option; button.classList.add('quiz-option'); button.addEventListener('click', () => checkAnswer(option, currentQuestion.answer)); optionsContainer.appendChild(button); }); quizOptionsEl.appendChild(optionsContainer); }
-            function checkAnswer(selectedOption, correctAnswer) { const buttons = quizOptionsEl.querySelectorAll('.quiz-option'); buttons.forEach(button => { button.disabled = true; if (button.textContent === correctAnswer) button.classList.add('correct'); }); if (selectedOption === correctAnswer) { score++; quizFeedbackEl.style.color = 'var(--correct-green)'; quizFeedbackEl.textContent = 'Benar! Jawaban Anda Tepat.'; } else { quizFeedbackEl.style.color = 'var(--incorrect-red)'; quizFeedbackEl.textContent = `Salah. Jawaban yang benar adalah "${correctAnswer}".`; buttons.forEach(button => { if (button.textContent === selectedOption) button.classList.add('incorrect'); }); } quizScoreEl.textContent = `Skor: ${score}`; nextQuestionBtn.style.display = 'block'; }
-            nextQuestionBtn.addEventListener('click', () => { currentQuestionIndex++; loadQuestion(); });
+                // Soal 1 
+                { question: 'Aksara Batak untuk "pa" adalah...', options: ['ᯅ', 'ᯇ', 'ᯑ', 'ᯎ'], answer: 'ᯇ' },
+                // Soal 2 
+                { question: 'Aksara `ᯉ᯲` dibaca...', options: ['na', 'n', 'ni', 'nga'], answer: 'n' },
+                // Soal 3 
+                { question: 'Bagaimana cara menulis "lima" dalam Aksara Batak?', options: ['ᯞᯔ', 'ᯞᯪᯔ', 'ᯞᯔᯪ', 'ᯒᯪᯔ'], answer: 'ᯞᯪᯔ' },
+                // Soal 4 
+                { question: 'Aksara Batak untuk "ga" adalah...', options: ['ᯎ', 'ᯐ', 'ᯑ', 'ᯂ'], answer: 'ᯎ' },
+                // Soal 5 
+                { question: 'Aksara `ᯂᯬ` dibaca...', options: ['ha', 'hi', 'hu', 'ho'], answer: 'ho' },
+                // Soal 6 
+                { question: 'Bagaimana cara menulis "anak" dalam Aksara Batak?', options: ['ᯀᯉᯂ', 'ᯀᯉᯄ᯲', 'ᯀᯉᯄ', 'ᯀᯉ᯲ᯄ'], answer: 'ᯀᯉᯄ᯲' },
+                // Soal 7 
+                { question: 'Aksara Batak untuk "ta" adalah...', options: ['ᯖ', 'ᯑ', 'ᯐ', 'ᯘ'], answer: 'ᯖ' },
+                // Soal 8 
+                { question: 'Aksara `ᯘᯮ` dibaca...', options: ['sa', 'si', 'su', 'so'], answer: 'su' },
+                // Soal 9 
+                { question: 'Bagaimana cara menulis "surat" dalam Aksara Batak?', options: ['ᯘᯮᯒᯖ', 'ᯘᯒᯖ᯲', 'ᯘᯮᯒᯖ᯲', 'ᯘᯮᯒ᯲ᯖ'], answer: 'ᯘᯮᯒᯖ᯲' },
+                // Soal 10 
+                { question: 'Aksara Batak untuk "da" adalah...', options: ['ᯅ', 'ᯇ', 'ᯑ', 'ᯎ'], answer: 'ᯑ' },
+                // Soal 11 
+                { question: 'Gabungan aksara `ᯇᯒ᯲` dibaca...', options: ['para', 'par', 'pira', 'pa + ra'], answer: 'par' },
+                // Soal 12 
+                { question: 'Bagaimana cara menulis "boru" dalam Aksara Batak?', options: ['ᯅᯬᯒᯮ', 'ᯅᯒᯮ', 'ᯅᯬᯒ', 'ᯅᯒ'], answer: 'ᯅᯬᯒᯮ' },
+                // Soal 13 
+                { question: 'Aksara Batak untuk "ra" adalah...', options: ['ᯞ', 'ᯛ', 'ᯒ', 'ᯘ'], answer: 'ᯒ' },
+                // Soal 14 
+                { question: 'Gabungan aksara `ᯀᯔ᯲` dibaca...', options: ['ama', 'am', 'um', 'ma'], answer: 'am' },
+                // Soal 15 
+                { question: 'Bagaimana cara menulis "dalan" dalam Aksara Batak?', options: ['ᯑᯞᯉ', 'ᯑᯞᯉ᯲', 'ᯑᯞᯪᯉ', 'ᯑ᯲ᯞᯉ'], answer: 'ᯑᯞᯉ᯲' },
+                // Soal 16 
+                { question: 'Aksara Batak untuk "sa" adalah...', options: ['ᯘ', 'ᯂ', 'ᯛ', 'ᯓ'], answer: 'ᯘ' },
+                // Soal 17 
+                { question: 'Aksara `ᯅᯬᯑᯖ᯲` dibaca...', options: ['bodata', 'bodat', 'badat', 'bodta'], answer: 'bodat' },
+                // Soal 18 
+                { question: 'Bagaimana cara menulis "horbo" (kerbau) dalam Aksara Batak?', options: ['ᯂᯬᯒᯅᯬ', 'ᯂᯒᯅ', 'ᯂᯬᯒ᯲ᯅᯬ', 'ᯂᯬᯒ᯲ᯅ'], answer: 'ᯂᯬᯒ᯲ᯅᯬ' },
+                // Soal 19 
+                { question: 'Aksara Batak untuk "ma" adalah...', options: ['ᯉ', 'ᯔ', 'ᯝ', 'ᯐ'], answer: 'ᯔ' },
+                // Soal 20 
+                { question: 'Aksara `ᯂᯮᯖ` dibaca...', options: ['hata', 'hut', 'huta', 'hota'], answer: 'huta' }
+            ];
+            const quizQuestionEl = document.getElementById('quiz-question');
+            const quizOptionsEl = document.getElementById('quiz-options');
+            const quizFeedbackEl = document.getElementById('quiz-feedback');
+            const quizScoreEl = document.getElementById('quiz-score');
+            const quizProgressEl = document.getElementById('quiz-progress');
+            const nextQuestionBtn = document.getElementById('nextQuestionBtn');
+
+            let currentQuestionIndex = 0;
+            let score = 0;
+
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+
+            function loadQuestion() {
+                if (currentQuestionIndex >= quizData.length) {
+                    quizQuestionEl.textContent = '🎉';
+                    quizFeedbackEl.textContent = `Kuis Selesai! Skor Akhir Anda: ${score} dari ${quizData.length}`;
+                    quizOptionsEl.innerHTML = '';
+                    nextQuestionBtn.style.display = 'none';
+                    return;
+                }
+                quizFeedbackEl.textContent = '';
+                nextQuestionBtn.style.display = 'none';
+                quizOptionsEl.innerHTML = '';
+
+                const currentQuestion = quizData[currentQuestionIndex];
+
+                quizQuestionEl.textContent = currentQuestion.question;
+
+                quizScoreEl.textContent = `Skor: ${score}`;
+                quizProgressEl.textContent = `Soal ${currentQuestionIndex + 1}/${quizData.length}`;
+
+                const options = [...currentQuestion.options];
+                shuffleArray(options);
+
+                const optionsContainer = document.createElement('div');
+                optionsContainer.className = 'btn-group';
+                options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('quiz-option');
+                    button.addEventListener('click', () => checkAnswer(option, currentQuestion.answer));
+                    optionsContainer.appendChild(button);
+                });
+                quizOptionsEl.appendChild(optionsContainer);
+            }
+
+            function checkAnswer(selectedOption, correctAnswer) {
+                const buttons = quizOptionsEl.querySelectorAll('.quiz-option');
+                buttons.forEach(button => {
+                    button.disabled = true;
+                    if (button.textContent === correctAnswer) {
+                        button.classList.add('correct');
+                    }
+                });
+
+                if (selectedOption === correctAnswer) {
+                    score++;
+                    quizFeedbackEl.style.color = 'var(--correct-green)';
+                    quizFeedbackEl.textContent = 'Benar! Jawaban Anda Tepat.';
+                } else {
+                    quizFeedbackEl.style.color = 'var(--incorrect-red)';
+                    quizFeedbackEl.textContent = `Salah. Jawaban yang benar adalah "${correctAnswer}".`;
+                    buttons.forEach(button => {
+                        if (button.textContent === selectedOption) {
+                            button.classList.add('incorrect');
+                        }
+                    });
+                }
+                quizScoreEl.textContent = `Skor: ${score}`;
+                nextQuestionBtn.style.display = 'block';
+            }
+
+            nextQuestionBtn.addEventListener('click', () => {
+                currentQuestionIndex++;
+                loadQuestion();
+            });
+
             loadQuestion();
 
             const practiceCharacters = [{ latin: 'A', batak: 'ᯀ' }, { latin: 'Ha', batak: 'ᯂ' }, { latin: 'Ka', batak: 'ᯄ' }, { latin: 'Ba', batak: 'ᯅ' }, { latin: 'Pa', batak: 'ᯇ' }, { latin: 'Na', batak: 'ᯉ' }, { latin: 'Ga', batak: 'ᯎ' }, { latin: 'Ja', batak: 'ᯐ' }, { latin: 'Da', batak: 'ᯑ' }, { latin: 'Ra', batak: 'ᯒ' }, { latin: 'Ma', batak: 'ᯔ' }, { latin: 'Ta', batak: 'ᯖ' }, { latin: 'Sa', batak: 'ᯘ' }, { latin: 'Ya', batak: 'ᯛ' }, { latin: 'Nga', batak: 'ᯝ' }, { latin: 'La', batak: 'ᯞ' }];
