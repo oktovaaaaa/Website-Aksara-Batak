@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="light">
-<head>
+<html lang="id" data-theme="dark"> <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Carousel</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Menu Kuliner Khas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-
+        /* ================================================================== */
+        /* == VARIABEL WARNA & TEMA == */
+        /* ================================================================== */
         :root {
             --primary-red: #e11d48;
             --dark-red: #9f1239;
             --dark-bg: #111827;
             --light-bg: #f9fafb;
-            --card-bg-dark: #1f2937; 
+            --card-bg-dark: #1f2937;
             --card-bg-light: #ffffff;
             --text-light: #f3f4f6;
             --text-dark: #111827;
@@ -25,43 +25,98 @@
 
         [data-theme="light"] {
             --background: var(--light-bg);
-            --card-main-bg: var(--card-bg-light);
+            --card-bg: var(--card-bg-light);
             --text-color: var(--text-dark);
             --border-color: var(--border-color-light);
         }
 
         [data-theme="dark"] {
             --background: var(--dark-bg);
-            --card-main-bg: var(--card-bg-dark);
+            --card-bg: var(--card-bg-dark);
             --text-color: var(--text-light);
             --border-color: var(--border-color-dark);
         }
 
-        /*
-        ==================================================================
-        == GAYA DASAR BODY DAN KOMPONEN CAROUSEL ==
-        ==================================================================
-        */
+        /* ================================================================== */
+        /* == GAYA DASAR BODY & SECTION == */
+        /* ================================================================== */
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--background);
             color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
             transition: background-color 0.4s ease, color 0.4s ease;
+            padding: 2rem;
         }
 
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .section-icon {
+            color: var(--primary-red);
+        }
+
+        /* ================================================================== */
+        /* == GAYA UNTUK GRID MAKANAN (TIDAK BERUBAH) == */
+        /* ================================================================== */
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .food-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .food-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-red);
+        }
+
+        .food-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .food-content {
+            padding: 1.5rem;
+        }
+
+        .food-content h3 {
+            color: var(--primary-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .food-content p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0;
+            opacity: 0.8;
+        }
+
+        /* ================================================================== */
+        /* == GAYA BARU UNTUK SLIDER MINUMAN (THEME-AWARE) == */
+        /* ================================================================== */
         .bento-slider-container {
             position: relative;
-            width: 95%; /* Sedikit lebih lebar untuk mobile */
+            width: 95%;
             max-width: 1000px;
             height: 500px;
             display: flex;
             justify-content: center;
             align-items: center;
+            margin: 3rem auto 0 auto;
         }
 
         .bento-slider-wrapper {
@@ -71,20 +126,19 @@
             perspective: 1000px;
         }
 
-        /* [GAYA KARTU BARU] Menyesuaikan contoh "Tuak" */
         .bento-slider-item {
             position: absolute;
             width: 60%;
             max-width: 300px;
             height: auto;
-            background: var(--card-main-bg); /* Warna dasar kartu */
-            border: 1px solid var(--primary-red); /* Border merah marun */
+            background: var(--card-bg); /* Menggunakan background dari tema */
+            border: 1px solid var(--border-color); /* Menggunakan border dari tema */
             border-radius: 16px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
-            padding: 0; /* Padding dihilangkan dari container utama */
-            overflow: hidden; /* Penting agar konten tidak keluar dari border-radius */
+            padding: 0;
+            overflow: hidden;
             cursor: pointer;
             opacity: 0.5;
             transform: scale(0.8);
@@ -102,12 +156,10 @@
             width: 100%;
             height: 200px;
             object-fit: cover;
-            /* Tidak perlu border-radius karena item sudah di-overflow:hidden */
         }
-        
-        /* [BARU] Wrapper untuk konten teks dengan background gelap */
+
         .bento-slider-content {
-            background-color: var(--dark-bg); /* Latar belakang selalu gelap */
+            background-color: transparent; /* Dibuat transparan agar menyatu dengan kartu */
             padding: 20px;
             flex-grow: 1;
             text-align: center;
@@ -116,16 +168,17 @@
         .bento-slider-content h3 {
             font-size: 1.25rem;
             font-weight: 700;
-            color: var(--primary-red); /* Judul merah marun */
+            color: var(--primary-red);
             margin: 0 0 10px 0;
         }
-        
+
         .bento-slider-content p {
             font-size: 0.9rem;
             font-weight: 400;
-            color: var(--text-light); /* Teks deskripsi selalu terang */
+            color: var(--text-color); /* Menggunakan warna teks dari tema */
             line-height: 1.6;
             margin: 0;
+            opacity: 0.8; /* Menyamakan dengan opacity deskripsi makanan */
         }
 
         /* Status Item */
@@ -162,107 +215,136 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background-color: var(--border-color);
+            background-color: var(--border-color); /* Menggunakan border color dari tema */
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
             padding: 0;
         }
-        
+
         .bento-slider-dot.is-bento-dot-active {
             background-color: var(--primary-red);
         }
-
-        /* [PERUBAHAN RESPONSIVE] Menampilkan 3 kartu di HP */
+        
+        /* Responsive */
         @media (max-width: 768px) {
             .bento-slider-container {
-                height: 400px; /* Tinggi disesuaikan untuk mobile */
+                height: 400px;
             }
-            /* Ukuran kartu diatur kembali untuk mobile */
             .bento-slider-item {
-                 max-width: 200px; /* Perkecil lebar maksimum kartu */
+                max-width: 200px;
             }
             .bento-slider-item.is-bento-active {
                 transform: translateX(-50%) scale(1);
             }
             .bento-slider-item.is-bento-prev {
                 transform: translateX(-50%) scale(0.75);
-                left: 15%; /* Posisikan lebih ke tepi */
+                left: 15%;
             }
-             .bento-slider-item.is-bento-next {
+            .bento-slider-item.is-bento-next {
                 transform: translateX(-50%) scale(0.75);
-                left: 85%; /* Posisikan lebih ke tepi */
+                left: 85%;
             }
             .bento-slider-content h3 { font-size: 1rem; }
             .bento-slider-content p { font-size: 0.8rem; }
         }
     </style>
 </head>
+
 <body>
 
-    <div class="bento-slider-container">
-        <div class="bento-slider-wrapper" id="myUniqueSlider">
-            <div class="bento-slider-item" data-index="0">
-                <img src="aset/gambar/air.jpg" alt="Raw Material">
-                <div class="bento-slider-content">
-                    <h3>air</h3>
-                    <p>qwertyuioplkjhgfdsazxcvbnm</p>
+    <section id="makanan" class="section">
+        <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-utensils"></i></span><span
+                class="aksara-hover"> Sajian Kuliner Khas</span></h2>
+        <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Cita rasa masakan Batak dikenal kuat, pedas,
+            dan kaya akan rempah-rempah unik seperti andaliman, si merica Batak.</p>
+        
+        <div class="food-grid">
+            <div class="food-item" data-aos="fade-up"><img src="aset/gambar/arsik.jpg" alt="Arsik">
+                <div class="food-content">
+                    <h3 class="aksara-hover">Arsik</h3>
+                    <p class="aksara-hover">Ikan mas bumbu kuning kaya rempah, dimasak hingga kuahnya mengering.
+                        Sajian wajib dalam upacara adat.</p>
                 </div>
             </div>
-                       <div class="bento-slider-item" data-index="0">
-                <img src="aset/gambar/arsik.jpg" alt="Raw Material">
-                <div class="bento-slider-content">
-                    <h3>air</h3>
-                    <p>qwertyuioplkjhgfdsazxcvbnm</p>
+            <div class="food-item" data-aos="fade-up" data-aos-delay="100"><img src="aset/gambar/BPK.jpg"
+                    alt="Babi Panggang">
+                <div class="food-content">
+                    <h3 class="aksara-hover">Babi Panggang Karo (BPK)</h3>
+                    <p class="aksara-hover">Daging babi panggang renyah disajikan dengan sambal pedas andaliman dan
+                        saus khas dari darah.</p>
                 </div>
-            </div>            <div class="bento-slider-item" data-index="0">
-                <img src="aset/gambar/danau.png" alt="Raw Material">
-                <div class="bento-slider-content">
-                    <h3>air</h3>
-                    <p>qwertyuioplkjhgfdsazxcvbnm</p>
+            </div>
+            <div class="food-item" data-aos="fade-up" data-aos-delay="200"><img src="aset/gambar/napinadar.jpg"
+                    alt="Manuk Napinadar">
+                <div class="food-content">
+                    <h3 class="aksara-hover">Manuk Napinadar</h3>
+                    <p class="aksara-hover">Ayam panggang yang disiram dengan saus kental dari darah ayam itu
+                        sendiri, dibumbui andaliman dan rempah lainnya.</p>
                 </div>
-            </div>            <div class="bento-slider-item" data-index="0">
-                <img src="aset/gambar/gondang.jpg" alt="Raw Material">
-                <div class="bento-slider-content">
-                    <h3>air</h3>
-                    <p>qwertyuioplkjhgfdsazxcvbnm</p>
-                </div>
-            </div>            <div class="bento-slider-item" data-index="0">
-                <img src="aset/gambar/hare.png" alt="Raw Material">
-                <div class="bento-slider-content">
-                    <h3>air</h3>
-                    <p>qwertyuioplkjhgfdsazxcvbnm</p>
+            </div>
+            <div class="food-item" data-aos="fade-up" data-aos-delay="300"><img src="aset/gambar/lapet.jpeg"
+                    alt="Lapet">
+                <div class="food-content">
+                    <h3 class="aksara-hover">Lapet</h3>
+                    <p class="aksara-hover">Kue tradisional berbentuk piramida dari tepung beras dan kelapa parut,
+                        berisi gula merah, lalu dibungkus daun pisang dan dikukus.</p>
                 </div>
             </div>
         </div>
-        <div class="bento-slider-nav" id="myUniqueSliderNav"></div>
+
+       <h3 class="aksara-hover" style="text-align:center; margin-top:4rem;" data-aos="fade-up">Minuman Khas</h3>
+
+<div class="bento-slider-container">
+    <div class="bento-slider-wrapper" id="drinksSlider">
+
+        <div class="bento-slider-item" data-index="0">
+            <img src="aset/gambar/tuak.jpeg" alt="Tuak">
+            <div class="bento-slider-content">
+                <h3>Tuak</h3>
+                <p>Minuman beralkohol tradisional dari nira pohon aren atau kelapa yang difermentasi. Memiliki rasa manis sedikit asam dan peran sosial yang kuat.</p>
+            </div>
+        </div>
+
+        <div class="bento-slider-item" data-index="1">
+            <img src="aset/gambar/kopi.jpg" alt="Kopi Sidikalang">
+            <div class="bento-slider-content">
+                <h3>Kopi Sidikalang</h3>
+                <p>Salah satu kopi terbaik Indonesia dari dataran tinggi Dairi. Dikenal memiliki aroma kuat, keasaman rendah, dan cita rasa yang mantap.</p>
+            </div>
+        </div>
+
+        <div class="bento-slider-item" data-index="2">
+            <img src="aset/gambar/badak.jpg" alt="Minuman Badak"> <div class="bento-slider-content">
+                <h3>Minuman Badak</h3> <p>Minuman soda legendaris dari Pematangsiantar dengan rasa sarsaparilla yang unik dan menyegarkan.</p> </div>
+        </div>
+        
     </div>
+    <div class="bento-slider-nav" id="drinksSliderNav"></div>
+</div>
+    </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const sliderWrapper = document.getElementById('myUniqueSlider');
+            // Logika untuk slider minuman
+            const sliderWrapper = document.getElementById('drinksSlider');
             if (!sliderWrapper) return;
-            
+
             const sliderItems = Array.from(sliderWrapper.getElementsByClassName('bento-slider-item'));
-            const navContainer = document.getElementById('myUniqueSliderNav');
+            const navContainer = document.getElementById('drinksSliderNav');
 
             if (sliderItems.length === 0) return;
 
             let currentIndex = 0;
             let touchStartX = 0;
             let touchEndX = 0;
-            
-            // [LOGIKA AUTO-SWAP BARU]
             let autoSwapInterval = null;
 
-            // Fungsi untuk memulai auto-swap
             const startAutoSwap = () => {
-                // Hentikan interval yang sudah ada sebelum memulai yang baru
                 clearInterval(autoSwapInterval);
-                autoSwapInterval = setInterval(showNextItem, 4000); // 4000ms = 4 detik
+                autoSwapInterval = setInterval(showNextItem, 4000);
             };
-            
-            // Fungsi untuk menghentikan auto-swap
+
             const stopAutoSwap = () => {
                 clearInterval(autoSwapInterval);
             };
@@ -279,26 +361,36 @@
 
             function updateSliderState() {
                 const totalItems = sliderItems.length;
-                sliderItems.forEach((item, index) => {
+                if (totalItems <= 1) { // Jika hanya 1 item, jangan tampilkan prev/next
+                  sliderItems.forEach((item, index) => {
                     item.classList.remove('is-bento-active', 'is-bento-prev', 'is-bento-next');
                     if (index === currentIndex) {
-                        item.classList.add('is-bento-active');
-                    } else if (index === (currentIndex - 1 + totalItems) % totalItems) {
-                        item.classList.add('is-bento-prev');
-                    } else if (index === (currentIndex + 1) % totalItems) {
-                        item.classList.add('is-bento-next');
+                      item.classList.add('is-bento-active');
                     }
-                });
+                  });
+                } else {
+                  sliderItems.forEach((item, index) => {
+                      item.classList.remove('is-bento-active', 'is-bento-prev', 'is-bento-next');
+                      if (index === currentIndex) {
+                          item.classList.add('is-bento-active');
+                      } else if (index === (currentIndex - 1 + totalItems) % totalItems) {
+                          item.classList.add('is-bento-prev');
+                      } else if (index === (currentIndex + 1) % totalItems) {
+                          item.classList.add('is-bento-next');
+                      }
+                  });
+                }
+
                 dots.forEach((dot, index) => {
                     dot.classList.toggle('is-bento-dot-active', index === currentIndex);
                 });
             }
 
             function goToItem(index) {
-                stopAutoSwap(); // Hentikan timer saat interaksi manual
+                stopAutoSwap();
                 currentIndex = index;
                 updateSliderState();
-                startAutoSwap(); // Mulai lagi timer setelah selesai
+                if(sliderItems.length > 1) startAutoSwap();
             }
 
             function showNextItem() {
@@ -315,29 +407,31 @@
                 startAutoSwap();
             }
 
-            // Event listener untuk interaksi pengguna
             sliderWrapper.addEventListener('click', (e) => {
                 const targetItem = e.target.closest('.bento-slider-item');
-                if (!targetItem) return;
+                if (!targetItem || sliderItems.length <= 1) return;
 
                 if (targetItem.classList.contains('is-bento-next')) showNextItem();
                 else if (targetItem.classList.contains('is-bento-prev')) showPrevItem();
             });
-            
+
             sliderWrapper.addEventListener('touchstart', (e) => {
+                if(sliderItems.length <= 1) return;
                 stopAutoSwap();
                 touchStartX = e.changedTouches[0].screenX;
             }, { passive: true });
 
             sliderWrapper.addEventListener('touchend', (e) => {
+                if(sliderItems.length <= 1) return;
                 touchEndX = e.changedTouches[0].screenX;
                 handleSwipe();
-                startAutoSwap(); // Mulai lagi setelah swipe selesai
+                startAutoSwap();
             });
-            
-            // Berhenti saat mouse hover, mulai lagi saat mouse keluar
+
             sliderWrapper.addEventListener('mouseenter', stopAutoSwap);
-            sliderWrapper.addEventListener('mouseleave', startAutoSwap);
+            sliderWrapper.addEventListener('mouseleave', () => {
+                if(sliderItems.length > 1) startAutoSwap();
+            });
 
             function handleSwipe() {
                 const swipeThreshold = 50;
@@ -348,10 +442,11 @@
                 }
                 updateSliderState();
             }
-            
+
             // Inisialisasi slider
-            goToItem(1);
+            goToItem(0);
         });
     </script>
 </body>
+
 </html>
