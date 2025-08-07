@@ -41,6 +41,7 @@
         [data-theme="light"] {
             --background: var(--light-bg);
             --card-bg: var(--card-bg-light);
+            --card-main-bg: var(--card-bg-light);
             --text-color: var(--text-dark);
             --border-color: var(--border-color-light);
             --nav-bg: rgba(255, 255, 255, 0.85);
@@ -50,6 +51,7 @@
         [data-theme="dark"] {
             --background: var(--dark-bg);
             --card-bg: var(--card-bg-dark);
+            --card-main-bg: var(--card-bg-dark);
             --text-color: var(--text-light);
             --border-color: var(--border-color-dark);
             --nav-bg: rgba(17, 24, 39, 0.85);
@@ -181,7 +183,6 @@
             line-height: 1;
         }
 
-        /* PERBAIKAN NAVBAR: Z-INDEX DAN LATAR BELAKANG SOLID */
         .nav-links-mobile {
             display: none;
             flex-direction: column;
@@ -190,13 +191,11 @@
             left: 0;
             width: 100%;
             background: var(--background);
-            /* Diubah ke background solid */
             padding: 1rem 0;
             border-bottom: 1px solid var(--border-color);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             animation: fadeInDown 0.3s ease;
             z-index: 998;
-            /* Memastikan di atas konten lain */
         }
 
         @keyframes fadeInDown {
@@ -298,10 +297,8 @@
             letter-spacing: 2px;
             margin-bottom: 1rem;
             text-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
             line-height: 1.2;
+            /* PERBAIKAN: Hapus flexbox agar wrapping alami */
         }
 
         header p {
@@ -384,7 +381,6 @@
             color: var(--primary-red);
         }
 
-        /* PENAMBAHAN: STYLE UNTUK TABEL INFO HARI & ANGKA */
         .info-table {
             width: 100%;
             border-collapse: collapse;
@@ -416,8 +412,6 @@
             color: var(--primary-red);
         }
 
-
-        /* === GAYA PANDUAN PENULISAN BARU === */
         #panduan h3 {
             font-size: 1.8rem;
             font-weight: 600;
@@ -442,7 +436,6 @@
         }
 
         .panduan-table td {
-            /* Teks latin standar */
             font-family: 'Poppins', sans-serif;
             font-size: 1rem;
             vertical-align: middle;
@@ -450,7 +443,6 @@
 
         .panduan-table td:nth-child(2),
         .panduan-table td:nth-child(3) {
-            /* Kolom Aksara */
             font-family: 'AksaraBatak', sans-serif;
             font-size: 2.5rem;
             color: var(--primary-red);
@@ -486,7 +478,6 @@
             text-align: center !important;
         }
 
-        /* === GAYA LATIHAN MENULIS === */
         #writing-practice-container {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -942,6 +933,138 @@
             font-weight: 500;
         }
 
+        /* === CSS CAROUSEL DESTINASI YANG DISEMPURNAKAN === */
+        .bento-slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            height: 480px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .bento-slider-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            perspective: 1200px;
+        }
+
+        .bento-slider-item {
+            position: absolute;
+            width: 60%;
+            max-width: 320px;
+            background: var(--card-main-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.5;
+            transform: scale(0.8);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .bento-slider-item:hover {
+            border-color: var(--primary-red);
+        }
+
+        .bento-slider-item:not(.is-bento-active):not(.is-bento-prev):not(.is-bento-next) {
+            opacity: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bento-slider-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            -webkit-user-drag: none;
+        }
+
+        .bento-slider-content {
+            padding: 24px;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .bento-slider-content h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-red);
+            margin: 0 0 12px 0;
+        }
+
+        .bento-slider-content p {
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            opacity: 0.8;
+        }
+
+        .bento-slider-item.is-bento-active {
+            opacity: 1;
+            transform: translateX(-50%) scale(1.1);
+            z-index: 10;
+            left: 50%;
+            border-color: var(--primary-red);
+            box-shadow: 0 15px 35px rgba(225, 29, 72, 0.2);
+        }
+
+        .bento-slider-item.is-bento-prev {
+            left: 20%;
+            transform: translateX(-50%) scale(0.8);
+            z-index: 5;
+        }
+
+        .bento-slider-item.is-bento-next {
+            left: 80%;
+            transform: translateX(-50%) scale(0.8);
+            z-index: 5;
+        }
+
+        .bento-slider-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 20;
+        }
+
+        .bento-slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            padding: 0;
+        }
+
+        .bento-slider-dot:hover {
+            background-color: var(--dark-red);
+        }
+
+        .bento-slider-dot.is-bento-dot-active {
+            background-color: var(--primary-red);
+            transform: scale(1.2);
+        }
+
+        /* === AKHIR CSS CAROUSEL === */
+
         @media (max-width: 992px) {
             .nav-links-desktop {
                 display: none;
@@ -953,9 +1076,32 @@
         }
 
         @media (max-width: 768px) {
+
+            /* PERBAIKAN: Padding navbar di mobile */
+            nav {
+                padding: 0.75rem 1rem;
+            }
+
             header {
                 height: 80vh;
+                /* PERBAIKAN: Padding header di mobile */
+                padding: 2rem 1rem;
             }
+
+            /* === PERBAIKAN CSS UNTUK MOBILE HEADER === */
+            header h1 {
+                /* Ukuran font lebih adaptif dan spasi huruf dikurangi */
+                font-size: clamp(2.2rem, 8vw, 4rem);
+                letter-spacing: 1px;
+            }
+
+            header p {
+                /* Ukuran font paragraf juga disesuaikan */
+                font-size: clamp(0.9rem, 4vw, 1.1rem);
+                max-width: 95%;
+            }
+
+            /* === AKHIR PERBAIKAN HEADER === */
 
             .section {
                 padding: 4rem 5%;
@@ -991,6 +1137,41 @@
             #panduan h3 {
                 font-size: 1.5rem;
             }
+
+            /* Responsive untuk Carousel */
+            .bento-slider-container {
+                height: 420px;
+            }
+
+            .bento-slider-item {
+                max-width: 220px;
+            }
+
+            .bento-slider-item.is-bento-active {
+                transform: translateX(-50%) scale(1);
+            }
+
+            .bento-slider-item.is-bento-prev {
+                transform: translateX(-50%) scale(0.75);
+                left: 15%;
+            }
+
+            .bento-slider-item.is-bento-next {
+                transform: translateX(-50%) scale(0.75);
+                left: 85%;
+            }
+
+            .bento-slider-content h3 {
+                font-size: 1.1rem;
+            }
+
+            .bento-slider-content p {
+                font-size: 0.85rem;
+            }
+
+            .bento-slider-nav {
+                bottom: 10px;
+            }
         }
     </style>
 </head>
@@ -1011,7 +1192,7 @@
         <div class="nav-links-desktop" id="navLinksDesktop">
             <a href="#sejarah"><i class="fas fa-scroll"></i>Sejarah</a>
             <a href="#pengenalan"><i class="fas fa-book-open"></i>Pengenalan</a>
-            <a href="#hari-angka"><i class="fas fa-calendar-day"></i>Hari & Angka</a> <!-- LINK BARU -->
+            <a href="#hari-angka"><i class="fas fa-calendar-day"></i>Hari & Angka</a>
             <a href="#panduan"><i class="fas fa-pen-ruler"></i>Panduan</a>
             <a href="#latihan"><i class="fas fa-pen-alt"></i>Latihan</a>
             <a href="#naskah"><i class="fas fa-book-skull"></i>Naskah</a>
@@ -1025,11 +1206,10 @@
                 <i class="fas fa-bars"></i>
             </button>
         </div>
-        <!-- PERBAIKAN: NAV-LINKS-MOBILE DIPINDAHKAN KE DALAM NAV -->
         <div class="nav-links-mobile" id="navLinksMobile">
             <a href="#sejarah"><i class="fas fa-scroll"></i>Sejarah</a>
             <a href="#pengenalan"><i class="fas fa-book-open"></i>Pengenalan</a>
-            <a href="#hari-angka"><i class="fas fa-calendar-day"></i>Hari & Angka</a> <!-- LINK BARU -->
+            <a href="#hari-angka"><i class="fas fa-calendar-day"></i>Hari & Angka</a>
             <a href="#panduan"><i class="fas fa-pen-ruler"></i>Panduan</a>
             <a href="#latihan"><i class="fas fa-pen-alt"></i>Latihan</a>
             <a href="#naskah"><i class="fas fa-book-skull"></i>Naskah</a>
@@ -1049,6 +1229,7 @@
     </header>
 
     <main>
+        <!-- Konten lain dari <main> tetap sama -->
         <section id="sejarah" class="section">
             <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-scroll"></i></span><span
                     class="aksara-hover">Sejarah Aksara Batak</span></h2>
@@ -1246,7 +1427,6 @@
             </div>
         </section>
 
-        <!-- PENAMBAHAN: SECTION BARU UNTUK HARI DAN ANGKA -->
         <section id="hari-angka" class="section">
             <h2 data-aos="fade-up">
                 <span class="section-icon"><i class="fas fa-calendar-day"></i></span>
@@ -1257,7 +1437,6 @@
                 penting dari budaya dan tradisi. Kenali nama-nama hari dan cara berhitung dalam Bahasa Batak.
             </p>
 
-            <!-- Hari-hari dalam Seminggu -->
             <h3 class="aksara-hover" data-aos="fade-up"
                 style="text-align:center; font-size: 1.8rem; margin-top: 3rem; margin-bottom: 1rem;">Nama-nama Hari
                 (Goar ni Ari)</h3>
@@ -1302,7 +1481,6 @@
                 </table>
             </div>
 
-            <!-- Penomoran -->
             <h3 class="aksara-hover" data-aos="fade-up"
                 style="text-align:center; font-size: 1.8rem; margin-top: 3rem; margin-bottom: 1rem;">Sistem Penomoran
                 (Pamillangon)</h3>
@@ -1371,7 +1549,6 @@
             </div>
         </section>
 
-        <!-- === PERUBAHAN: KONTEN PANDUAN MENULIS BARU SESUAI GAMBAR === -->
         <section id="panduan" class="section">
             <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-pen-ruler"></i></span><span
                     class="aksara-hover">Panduan Menulis Aksara Batak</span></h2>
@@ -1536,7 +1713,7 @@
                 pulang, ikan itu secara ajaib berubah menjadi seorang putri jelita.</p>
             <p class="aksara-hover" data-aos="fade-up" data-aos-delay="150">Sang putri, yang mengaku dikutuk menjadi
                 ikan, setuju untuk menikah dengan Toba dengan satu syarat mutlak: Toba tidak boleh sekali pun mengungkap
-                asal-usulnya sebagai ikan kepada siapa pun. Toba menyanggupinya dengan sungguh-sungguh. Mereka pun hidup
+                asal-ulnya sebagai ikan kepada siapa pun. Toba menyanggupinya dengan sungguh-sungguh. Mereka pun hidup
                 bahagia dan dikaruniai seorang anak laki-laki yang diberi nama Samosir. Namun, Samosir tumbuh menjadi
                 anak yang sangat rakus dan pemalas. Ia selalu merasa lapar dan sering membuat ibunya kewalahan.</p>
             <p class="aksara-hover" data-aos="fade-up" data-aos-delay="200">Suatu siang, sang ibu meminta Samosir
@@ -1610,44 +1787,96 @@
                 </div>
             </div>
         </section>
+
+        <!-- === BAGIAN DESTINASI YANG DISEMPURNAKAN === -->
         <section id="destinasi" class="section">
             <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-map-marked-alt"></i></span><span
                     class="aksara-hover">Destinasi Wajib Kunjung</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Jelajahi pesona alam dan kekayaan budaya di
-                sekitar Danau Toba yang legendaris.</p>
-            <div class="galeri">
-                <div class="galeri-item" data-aos="fade-up"><img src="aset/gambar/samosir.jpg" alt="Pulau Samosir">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Pulau Samosir</h3>
-                        <p class="aksara-hover">Jantung budaya Batak dengan pemandangan dan desa adat yang indah.</p>
+            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Jelajahi pesona alam dan kekayaan
+                budaya di
+                sekitar Danau Toba yang legendaris melalui galeri interaktif kami.</p>
+
+            <div class="bento-slider-container" data-aos="fade-up" data-aos-delay="200">
+                <div class="bento-slider-wrapper" id="destinasiSlider">
+
+                    <div class="bento-slider-item" data-index="0">
+                        <img src="aset/gambar/samosir.jpg" alt="Pulau Samosir">
+                        <div class="bento-slider-content">
+                            <h3 class="aksara-hover">Pulau Samosir</h3>
+                            <p class="aksara-hover">Jantung budaya Batak dengan pemandangan danau yang memukau
+                                serta desa adat yang kaya sejarah.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="galeri-item" data-aos="fade-up" data-aos-delay="100"><img src="aset/gambar/siallagan.jpg"
-                        alt="Huta Siallagan">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Huta Siallagan</h3>
-                        <p class="aksara-hover">Desa kuno yang terkenal dengan 'Batu Parsidangan', tempat pengadilan dan
-                            eksekusi di masa lampau.</p>
+
+                    <div class="bento-slider-item" data-index="1">
+                        <img src="aset/gambar/air.jpg" alt="Air Terjun Sipiso-piso">
+                        <div class="bento-slider-content">
+                            <h3 class="aksara-hover">Air Terjun Sipiso-piso</h3>
+                            <p class="aksara-hover">Salah satu air terjun tertinggi di Indonesia, jatuh dari
+                                ketinggian 120 meter dengan pemandangan Danau Toba.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="galeri-item" data-aos="fade-up" data-aos-delay="200"><img src="aset/gambar/menara.jpg"
-                        alt="Menara Pandang Tele">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Menara Pandang Tele</h3>
-                        <p class="aksara-hover">Menawarkan salah satu pemandangan panorama Danau Toba dan Pulau Samosir
-                            yang paling spektakuler dari ketinggian.</p>
+
+                    <div class="bento-slider-item" data-index="2">
+                        <img src="aset/gambar/siallagan.jpg" alt="Huta Siallagan">
+                        <div class="bento-slider-content">
+                            <h3 class="aksara-hover">Huta Siallagan</h3>
+                            <p class="aksara-hover">Desa kuno yang terkenal dengan 'Batu Parsidangan', tempat
+                                pengadilan dan eksekusi di masa lampau.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="galeri-item" data-aos="fade-up" data-aos-delay="300"><img src="aset/gambar/air.jpg"
-                        alt="Air Terjun Sipiso-piso">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Air Terjun Sipiso-piso</h3>
-                        <p class="aksara-hover">Salah satu air terjun tertinggi di Indonesia, jatuh dari ketinggian 120
-                            meter ke ngarai yang dalam.</p>
+
+                    <div class="bento-slider-item" data-index="3">
+                        <img src="aset/gambar/menara.jpg" alt="Menara Pandang Tele">
+                        <div class="bento-slider-content">
+                            <h3 class="aksara-hover">Menara Pandang Tele</h3>
+                            <p class="aksara-hover">Menawarkan panorama spektakuler Danau Toba dan Pulau Samosir
+                                dari sudut pandang yang tinggi.</p>
+                        </div>
                     </div>
+
+                    <div class="bento-slider-item" data-index="4">
+                        <img src="aset/gambar/holbung.jpg" alt="Bukit Holbung">
+                        <div class="bento-slider-content">
+                            <h3 class="aksara-hover">Bukit Holbung</h3>
+                            <p class="aksara-hover">Dikenal sebagai "Bukit Teletubbies", menawarkan hamparan
+                                perbukitan hijau yang mempesona.</p>
+                        </div>
+                    </div>
+
+                    <div class="bento-slider-item" data-index="5">
+                        <img src="aset/gambar/meat by feli.jpg" alt="Desa Meat">
+                        <div class="bento-slider-content">
+                            <h3 class="aksara-hover">Desa Meat</h3>
+                            <p class="aksara-hover">Salah satu desa di tepi Danau Toba, menawarkan pemandangan
+                                alam yang memukau dan persawahan yang indah.</p>
+                        </div>
+                    </div>
+
+                    <div class="bento-slider-item" data-index="6">
+                        <img src="aset/gambar/maimun.jpg" alt="Istana Maimun">
+                        <div class="bento-slider-content">
+                            <h3 class="aksara-hover">Istana Maimun</h3>
+                            <p class="aksara-hover">Ikon kota Medan, istana Kesultanan Deli ini memadukan
+                                arsitektur Melayu, Islam, dan Eropa.</p>
+                        </div>
+                    </div>
+
+                    <div class="bento-slider-item" data-index="7">
+                        <img src="aset/gambar/pandan.jpg" alt="Pantai Pandan">
+                        <div class="bento-slider-content">
+                            <h3 class="aksara-hover">Pantai Pandan</h3>
+                            <p class="aksara-hover">Destinasi wisata pantai yang eksotis dengan hamparan pasir
+                                putih dan ombak yang menenangkan.</p>
+                        </div>
+                    </div>
+
                 </div>
+                <div class="bento-slider-nav" id="destinasiSliderNav"></div>
             </div>
         </section>
+        <!-- === AKHIR BAGIAN DESTINASI === -->
+
         <section id="makanan" class="section">
             <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-utensils"></i></span><span
                     class="aksara-hover">Sajian Kuliner Khas</span></h2>
@@ -1809,7 +2038,17 @@
 
             const titleEl = document.getElementById('interactive-title');
             const originalTitleText = titleEl.dataset.text;
-            titleEl.innerHTML = originalTitleText.split('').map((char, i) => { if (char.trim() === '') return `<span style="width: 0.5ch;"> </span>`; return `<span data-latin="${char}" data-aksara="${transliterate(char)}" style="transition-delay: ${i * 30}ms;">${char}</span>`; }).join('');
+
+            // PERBAIKAN WRAPPING JUDUL: Bungkus per kata, bukan per huruf
+            titleEl.innerHTML = originalTitleText.split(' ').map(word => {
+                const wordSpan = document.createElement('span');
+                wordSpan.style.display = 'inline-block'; // Agar kata tidak pecah
+                wordSpan.innerHTML = word.split('').map((char, i) =>
+                    `<span data-latin="${char}" data-aksara="${transliterate(char)}" style="transition-delay: ${i * 30}ms;">${char}</span>`
+                ).join('');
+                return wordSpan.outerHTML;
+            }).join(' '); // Tambahkan spasi antar kata
+
             titleEl.addEventListener('mouseenter', () => titleEl.querySelectorAll('span[data-aksara]').forEach(span => { span.textContent = span.dataset.aksara; span.classList.add('is-aksara-title'); }));
             titleEl.addEventListener('mouseleave', () => titleEl.querySelectorAll('span[data-latin]').forEach(span => { span.textContent = span.dataset.latin; span.classList.remove('is-aksara-title'); }));
 
@@ -1827,45 +2066,25 @@
             applyTheme(savedTheme);
 
             const quizData = [
-                // Soal 1 
                 { question: 'Aksara Batak untuk "pa" adalah...', options: ['ᯅ', 'ᯇ', 'ᯑ', 'ᯎ'], answer: 'ᯇ' },
-                // Soal 2 
                 { question: 'Aksara `ᯉ᯲` dibaca...', options: ['na', 'n', 'ni', 'nga'], answer: 'n' },
-                // Soal 3 
                 { question: 'Bagaimana cara menulis "lima" dalam Aksara Batak?', options: ['ᯞᯔ', 'ᯞᯪᯔ', 'ᯞᯔᯪ', 'ᯒᯪᯔ'], answer: 'ᯞᯪᯔ' },
-                // Soal 4 
                 { question: 'Aksara Batak untuk "ga" adalah...', options: ['ᯎ', 'ᯐ', 'ᯑ', 'ᯂ'], answer: 'ᯎ' },
-                // Soal 5 
                 { question: 'Aksara `ᯂᯬ` dibaca...', options: ['ha', 'hi', 'hu', 'ho'], answer: 'ho' },
-                // Soal 6 
                 { question: 'Bagaimana cara menulis "anak" dalam Aksara Batak?', options: ['ᯀᯉᯂ', 'ᯀᯉᯄ᯲', 'ᯀᯉᯄ', 'ᯀᯉ᯲ᯄ'], answer: 'ᯀᯉᯄ᯲' },
-                // Soal 7 
                 { question: 'Aksara Batak untuk "ta" adalah...', options: ['ᯖ', 'ᯑ', 'ᯐ', 'ᯘ'], answer: 'ᯖ' },
-                // Soal 8 
                 { question: 'Aksara `ᯘᯮ` dibaca...', options: ['sa', 'si', 'su', 'so'], answer: 'su' },
-                // Soal 9 
                 { question: 'Bagaimana cara menulis "surat" dalam Aksara Batak?', options: ['ᯘᯮᯒᯖ', 'ᯘᯒᯖ᯲', 'ᯘᯮᯒᯖ᯲', 'ᯘᯮᯒ᯲ᯖ'], answer: 'ᯘᯮᯒᯖ᯲' },
-                // Soal 10 
                 { question: 'Aksara Batak untuk "da" adalah...', options: ['ᯅ', 'ᯇ', 'ᯑ', 'ᯎ'], answer: 'ᯑ' },
-                // Soal 11 
                 { question: 'Gabungan aksara `ᯇᯒ᯲` dibaca...', options: ['para', 'par', 'pira', 'pa + ra'], answer: 'par' },
-                // Soal 12 
                 { question: 'Bagaimana cara menulis "boru" dalam Aksara Batak?', options: ['ᯅᯬᯒᯮ', 'ᯅᯒᯮ', 'ᯅᯬᯒ', 'ᯅᯒ'], answer: 'ᯅᯬᯒᯮ' },
-                // Soal 13 
                 { question: 'Aksara Batak untuk "ra" adalah...', options: ['ᯞ', 'ᯛ', 'ᯒ', 'ᯘ'], answer: 'ᯒ' },
-                // Soal 14 
                 { question: 'Gabungan aksara `ᯀᯔ᯲` dibaca...', options: ['ama', 'am', 'um', 'ma'], answer: 'am' },
-                // Soal 15 
                 { question: 'Bagaimana cara menulis "dalan" dalam Aksara Batak?', options: ['ᯑᯞᯉ', 'ᯑᯞᯉ᯲', 'ᯑᯞᯪᯉ', 'ᯑ᯲ᯞᯉ'], answer: 'ᯑᯞᯉ᯲' },
-                // Soal 16 
                 { question: 'Aksara Batak untuk "sa" adalah...', options: ['ᯘ', 'ᯂ', 'ᯛ', 'ᯓ'], answer: 'ᯘ' },
-                // Soal 17 
                 { question: 'Aksara `ᯅᯬᯑᯖ᯲` dibaca...', options: ['bodata', 'bodat', 'badat', 'bodta'], answer: 'bodat' },
-                // Soal 18 
                 { question: 'Bagaimana cara menulis "horbo" (kerbau) dalam Aksara Batak?', options: ['ᯂᯬᯒᯅᯬ', 'ᯂᯒᯅ', 'ᯂᯬᯒ᯲ᯅᯬ', 'ᯂᯬᯒ᯲ᯅ'], answer: 'ᯂᯬᯒ᯲ᯅᯬ' },
-                // Soal 19 
                 { question: 'Aksara Batak untuk "ma" adalah...', options: ['ᯉ', 'ᯔ', 'ᯝ', 'ᯐ'], answer: 'ᯔ' },
-                // Soal 20 
                 { question: 'Aksara `ᯂᯮᯖ` dibaca...', options: ['hata', 'hut', 'huta', 'hota'], answer: 'huta' }
             ];
             const quizQuestionEl = document.getElementById('quiz-question');
@@ -1968,6 +2187,113 @@
 
             const audio = document.getElementById('backgroundAudio'); const audioControlBtn = document.getElementById('audioControlBtn');
             audioControlBtn.addEventListener('click', () => { if (audio.paused) { audio.play().catch(e => { }); audioControlBtn.innerHTML = '<i class="fas fa-pause"></i>'; } else { audio.pause(); audioControlBtn.innerHTML = '<i class="fas fa-play"></i>'; } });
+
+            // === SCRIPT CAROUSEL DESTINASI ===
+            const sliderWrapper = document.getElementById('destinasiSlider');
+            if (sliderWrapper) {
+                const sliderItems = Array.from(sliderWrapper.getElementsByClassName('bento-slider-item'));
+                const navContainer = document.getElementById('destinasiSliderNav');
+
+                if (sliderItems.length > 0) {
+                    let currentIndex = 0;
+                    let touchStartX = 0;
+                    let touchEndX = 0;
+                    let autoSwapInterval = null;
+
+                    const startAutoSwap = () => {
+                        clearInterval(autoSwapInterval);
+                        autoSwapInterval = setInterval(showNextItem, 4000);
+                    };
+
+                    const stopAutoSwap = () => {
+                        clearInterval(autoSwapInterval);
+                    };
+
+                    sliderItems.forEach((_, index) => {
+                        const dot = document.createElement('button');
+                        dot.classList.add('bento-slider-dot');
+                        dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+                        dot.addEventListener('click', () => goToItem(index));
+                        navContainer.appendChild(dot);
+                    });
+
+                    const dots = Array.from(navContainer.getElementsByClassName('bento-slider-dot'));
+
+                    function updateSliderState() {
+                        const totalItems = sliderItems.length;
+                        sliderItems.forEach((item, index) => {
+                            item.classList.remove('is-bento-active', 'is-bento-prev', 'is-bento-next');
+                            if (index === currentIndex) {
+                                item.classList.add('is-bento-active');
+                            } else if (index === (currentIndex - 1 + totalItems) % totalItems) {
+                                item.classList.add('is-bento-prev');
+                            } else if (index === (currentIndex + 1) % totalItems) {
+                                item.classList.add('is-bento-next');
+                            }
+                        });
+                        dots.forEach((dot, index) => {
+                            dot.classList.toggle('is-bento-dot-active', index === currentIndex);
+                        });
+                    }
+
+                    function goToItem(index) {
+                        stopAutoSwap();
+                        currentIndex = index;
+                        updateSliderState();
+                        startAutoSwap();
+                    }
+
+                    function showNextItem() {
+                        stopAutoSwap();
+                        currentIndex = (currentIndex + 1) % sliderItems.length;
+                        updateSliderState();
+                        startAutoSwap();
+                    }
+
+                    function showPrevItem() {
+                        stopAutoSwap();
+                        currentIndex = (currentIndex - 1 + sliderItems.length) % sliderItems.length;
+                        updateSliderState();
+                        startAutoSwap();
+                    }
+
+                    sliderWrapper.addEventListener('click', (e) => {
+                        const targetItem = e.target.closest('.bento-slider-item');
+                        if (!targetItem) return;
+
+                        if (targetItem.classList.contains('is-bento-next')) showNextItem();
+                        else if (targetItem.classList.contains('is-bento-prev')) showPrevItem();
+                    });
+
+                    sliderWrapper.addEventListener('touchstart', (e) => {
+                        stopAutoSwap();
+                        touchStartX = e.changedTouches[0].screenX;
+                    }, { passive: true });
+
+                    sliderWrapper.addEventListener('touchend', (e) => {
+                        touchEndX = e.changedTouches[0].screenX;
+                        handleSwipe();
+                        startAutoSwap();
+                    });
+
+                    sliderWrapper.addEventListener('mouseenter', stopAutoSwap);
+                    sliderWrapper.addEventListener('mouseleave', startAutoSwap);
+
+                    function handleSwipe() {
+                        const swipeThreshold = 50;
+                        if (touchEndX < touchStartX - swipeThreshold) {
+                            currentIndex = (currentIndex + 1) % sliderItems.length;
+                        } else if (touchEndX > touchStartX + swipeThreshold) {
+                            currentIndex = (currentIndex - 1 + sliderItems.length) % sliderItems.length;
+                        }
+                        updateSliderState();
+                    }
+
+                    goToItem(0); // Mulai dari item pertama
+                }
+            }
+            // === AKHIR SCRIPT CAROUSEL ===
+
         });
     </script>
 </body>
