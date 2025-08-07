@@ -22,44 +22,46 @@
         }
 
         :root {
-            --primary-red: #e11d48;
-            --dark-red: #9f1239;
-            --black: #000000;
-            --white: #ffffff;
-            --dark-bg: #111827;
-            --light-bg: #f9fafb;
-            --card-bg-dark: #1f2937;
-            --card-bg-light: #ffffff;
-            --text-light: #f3f4f6;
-            --text-dark: #111827;
-            --border-color-dark: #374151;
-            --border-color-light: #e5e7eb;
-            --correct-green: #22c55e;
-            --incorrect-red: #ef4444;
+            --color-accent-primary: #e11d48;
+            --color-accent-dark: #9f1239;
+            --neutral-black: #000000;
+            --neutral-white: #ffffff;
+            --background-dark: #111827;
+            --background-light: #f9fafb;
+            --surface-dark: #1f2937;
+            --surface-light: #ffffff;
+            --text-on-dark: #f3f4f6;
+            --text-on-light: #111827;
+            --border-dark: #374151;
+            --border-light: #e5e7eb;
+            --feedback-correct: #22c55e;
+            --feedback-incorrect: #ef4444;
         }
 
         [data-theme="light"] {
-            --background: var(--light-bg);
-            --card-bg: var(--card-bg-light);
-            --text-color: var(--text-dark);
-            --border-color: var(--border-color-light);
-            --nav-bg: rgba(255, 255, 255, 0.85);
-            --textarea-bg: #f3f4f6;
+            --bg-color: var(--background-light);
+            --surface-color: var(--surface-light);
+            --surface-main-color: var(--surface-light);
+            --text-primary: var(--text-on-light);
+            --border-default: var(--border-light);
+            --navbar-bg: rgba(255, 255, 255, 0.85);
+            --input-field-bg: #f3f4f6;
         }
 
         [data-theme="dark"] {
-            --background: var(--dark-bg);
-            --card-bg: var(--card-bg-dark);
-            --text-color: var(--text-light);
-            --border-color: var(--border-color-dark);
-            --nav-bg: rgba(17, 24, 39, 0.85);
-            --textarea-bg: rgba(55, 65, 81, 0.5);
+            --bg-color: var(--background-dark);
+            --surface-color: var(--surface-dark);
+            --surface-main-color: var(--surface-dark);
+            --text-primary: var(--text-on-dark);
+            --border-default: var(--border-dark);
+            --navbar-bg: rgba(17, 24, 39, 0.85);
+            --input-field-bg: rgba(55, 65, 81, 0.5);
         }
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
         }
 
@@ -68,40 +70,40 @@
         }
 
         body {
-            background: var(--background);
-            color: var(--text-color);
+            background: var(--bg-color);
+            color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
             transition: background 0.4s ease, color 0.4s ease;
         }
 
-        #preloader {
+        #loading-screen {
             position: fixed;
+            z-index: 9999;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 9999;
-            background: var(--light-bg);
+            background: var(--background-light);
             display: flex;
             align-items: center;
             justify-content: center;
             transition: opacity 0.5s ease, visibility 0.5s ease;
         }
 
-        #preloader.loaded {
+        #loading-screen.hidden {
             opacity: 0;
             visibility: hidden;
         }
 
-        .preloader-content {
+        .loading-animation {
             font-family: 'AksaraBatak';
             font-size: 5rem;
-            color: var(--primary-red);
-            animation: pulse 1.5s infinite ease-in-out;
+            color: var(--color-accent-primary);
+            animation: throb 1.5s infinite ease-in-out;
         }
 
-        @keyframes pulse {
+        @keyframes throb {
 
             0%,
             100% {
@@ -115,125 +117,125 @@
             }
         }
 
-        nav {
+        .main-nav {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            background: var(--nav-bg);
+            justify-content: space-between;
+            background: var(--navbar-bg);
             backdrop-filter: blur(10px);
-            padding: 0.75rem 2rem;
+            padding: 12px 32px;
             position: sticky;
             top: 0;
             z-index: 999;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-default);
             transition: background 0.3s ease, border-color 0.3s ease;
         }
 
-        .nav-logo {
-            font-weight: 700;
+        .site-brand {
             font-size: 1.2rem;
-            color: var(--text-color);
+            font-weight: 700;
+            color: var(--text-primary);
             text-decoration: none;
             flex-shrink: 0;
         }
 
-        .nav-links-desktop {
+        .desktop-nav-links {
+            flex-grow: 1;
             display: flex;
             justify-content: center;
-            flex-grow: 1;
         }
 
-        .nav-links-desktop a {
-            color: var(--text-color);
-            margin: 0.5rem 0.6rem;
+        .desktop-nav-links a {
+            color: var(--text-primary);
             text-decoration: none;
+            margin: 8px 10px;
             font-weight: 500;
-            padding: 0.5rem 1rem;
+            padding: 8px 16px;
             border-radius: 25px;
             transition: all 0.3s ease;
             position: relative;
             font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 8px;
         }
 
-        .nav-links-desktop a:hover {
-            color: var(--primary-red);
+        .desktop-nav-links a:hover {
+            color: var(--color-accent-primary);
             transform: translateY(-2px);
         }
 
-        .nav-controls {
+        .nav-action-buttons {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 8px;
         }
 
-        .nav-toggle {
+        .mobile-menu-trigger {
             display: none;
             background: transparent;
             border: none;
-            color: var(--text-color);
+            color: var(--text-primary);
             font-size: 1.5rem;
             cursor: pointer;
             z-index: 1001;
-            padding: 0.25rem;
+            padding: 4px;
             line-height: 1;
         }
 
-        .nav-links-mobile {
+        .mobile-nav-menu {
             display: none;
             flex-direction: column;
             position: absolute;
             top: 100%;
             left: 0;
             width: 100%;
-            background: var(--background);
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-color);
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-default);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            animation: fadeInDown 0.3s ease;
+            animation: slideIn 0.3s ease;
             z-index: 998;
         }
 
-        @keyframes fadeInDown {
+        @keyframes slideIn {
             from {
-                opacity: 0;
                 transform: translateY(-10px);
+                opacity: 0;
             }
 
             to {
-                opacity: 1;
                 transform: translateY(0);
+                opacity: 1;
             }
         }
 
-        .nav-links-mobile.show {
+        .mobile-nav-menu.active {
             display: flex;
         }
 
-        .nav-links-mobile a {
+        .mobile-nav-menu a {
             width: 100%;
-            padding: 0.75rem 2rem;
-            color: var(--text-color);
+            padding: 12px 32px;
+            color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 12px;
             font-weight: 500;
             border-radius: 0;
             transition: all 0.3s ease;
         }
 
-        .nav-links-mobile a:hover {
+        .mobile-nav-menu a:hover {
             background-color: rgba(225, 29, 72, 0.1);
-            color: var(--primary-red);
+            color: var(--color-accent-primary);
             transform: translateX(5px);
         }
 
-        .theme-toggle {
+        .color-theme-switcher {
             background: transparent;
-            color: var(--text-color);
+            color: var(--text-primary);
             width: 42px;
             height: 42px;
             display: flex;
@@ -245,7 +247,7 @@
             border-radius: 50%;
         }
 
-        header {
+        .page-header {
             position: relative;
             height: 90vh;
             display: flex;
@@ -253,13 +255,13 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 2rem;
+            padding: 32px;
             overflow: hidden;
-            color: var(--white);
+            color: var(--neutral-white);
             perspective: 1000px;
         }
 
-        header video {
+        .page-header video {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -272,7 +274,7 @@
             filter: brightness(0.8);
         }
 
-        header::before {
+        .page-header::before {
             content: '';
             position: absolute;
             top: 0;
@@ -283,141 +285,136 @@
             z-index: -1;
         }
 
-        .header-content {
+        .header-text-container {
             will-change: transform;
             text-align: center;
             max-width: 90%;
         }
 
-        header h1 {
+        .page-header h1 {
             font-size: clamp(2.5rem, 6vw, 5rem);
             font-weight: 800;
             letter-spacing: 2px;
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
             text-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
             line-height: 1.2;
         }
 
-        header p {
+        .page-header p {
             font-size: clamp(1rem, 2vw, 1.3rem);
             max-width: 700px;
             opacity: 0.9;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        #interactive-title {
+        #dynamic-header-title {
             cursor: pointer;
         }
 
-        #interactive-title span {
+        #dynamic-header-title span {
             display: inline-block;
             transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), color 0.5s ease;
             will-change: transform, color;
         }
 
-        #interactive-title:hover span {
+        #dynamic-header-title:hover span {
             transform: translateY(-10px);
         }
 
-        #interactive-title span.is-aksara-title {
+        #dynamic-header-title span.title-in-aksara {
             font-family: 'AksaraBatak';
             font-size: 1.1em;
-            color: var(--primary-red);
+            color: var(--color-accent-primary);
             text-shadow: 0 0 15px rgba(225, 29, 72, 0.5);
         }
 
-        .section {
-            padding: 5rem 5%;
+        .content-section {
+            padding: 80px 5%;
             position: relative;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-default);
             overflow: hidden;
         }
 
-        .section h2 {
+        .content-section h2 {
             font-size: clamp(2.2rem, 4vw, 3.2rem);
-            margin-bottom: 1.5rem;
-            color: var(--primary-red);
+            margin-bottom: 24px;
+            color: var(--color-accent-primary);
             font-weight: 700;
             text-align: center;
             position: relative;
         }
 
-        .section-icon {
+        .background-icon {
             position: absolute;
+            z-index: -1;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 6em;
-            color: var(--border-color);
+            color: var(--border-default);
             opacity: 0.1;
-            z-index: -1;
             transition: opacity 0.3s;
         }
 
-        [data-theme="light"] .section-icon {
+        [data-theme="light"] .background-icon {
             opacity: 0.05;
         }
 
-        .section>p {
+        .content-section>p {
             font-size: 1.1rem;
             line-height: 1.8;
             max-width: 800px;
-            margin: 0 auto 2.5rem;
+            margin: 0 auto 40px;
             text-align: center;
             opacity: 0.8;
         }
 
-        .aksara-hover {
+        .interactive-aksara-text {
             transition: all 0.2s ease-in-out;
         }
 
-        .is-aksara {
+        .in-aksara-font {
             font-family: 'AksaraBatak', sans-serif;
             font-size: 1.25em;
             line-height: 1.5;
-            color: var(--primary-red);
+            color: var(--color-accent-primary);
         }
 
-        /* PENAMBAHAN: STYLE UNTUK TABEL INFO HARI & ANGKA */
-        .info-table {
+        .data-display-table {
             width: 100%;
             border-collapse: collapse;
             text-align: center;
         }
 
-        .info-table th,
-        .info-table td {
-            padding: 1rem;
-            border: 1px solid var(--border-color);
+        .data-display-table th,
+        .data-display-table td {
+            padding: 16px;
+            border: 1px solid var(--border-default);
             font-family: 'Poppins', sans-serif;
             font-size: 1rem;
             vertical-align: middle;
         }
 
-        .info-table th {
-            background-color: var(--primary-red);
-            color: var(--white);
+        .data-display-table th {
+            background-color: var(--color-accent-primary);
+            color: var(--neutral-white);
             font-weight: 600;
         }
 
-        .info-table tr:hover {
+        .data-display-table tr:hover {
             background-color: rgba(225, 29, 72, 0.1);
         }
 
-        .info-table .aksara-cell {
+        .data-display-table .aksara-font-cell {
             font-family: 'AksaraBatak', sans-serif;
             font-size: 2rem;
-            color: var(--primary-red);
+            color: var(--color-accent-primary);
         }
-
 
         #panduan h3 {
             font-size: 1.8rem;
             font-weight: 600;
-            margin: 3rem 0 1rem 0;
+            margin: 48px 0 16px 0;
             text-align: left;
             max-width: 800px;
             margin-left: auto;
@@ -431,177 +428,174 @@
             margin-right: auto;
         }
 
-        .panduan-table {
+        .guide-table {
             max-width: 800px;
-            margin: 2rem auto;
+            margin: 32px auto;
             min-width: unset;
         }
 
-        .panduan-table td {
-            /* Teks latin standar */
+        .guide-table td {
             font-family: 'Poppins', sans-serif;
             font-size: 1rem;
             vertical-align: middle;
         }
 
-        .panduan-table td:nth-child(2),
-        .panduan-table td:nth-child(3) {
-            /* Kolom Aksara */
+        .guide-table td:nth-child(2),
+        .guide-table td:nth-child(3) {
             font-family: 'AksaraBatak', sans-serif;
             font-size: 2.5rem;
-            color: var(--primary-red);
+            color: var(--color-accent-primary);
         }
 
-        .panduan-example-box {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+        .guide-example-container {
+            background: var(--surface-color);
+            border: 1px solid var(--border-default);
             border-radius: 16px;
-            padding: 2.5rem;
-            margin: 2rem auto;
+            padding: 40px;
+            margin: 32px auto;
             max-width: 800px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
         }
 
-        .panduan-example-box hr {
+        .guide-example-container hr {
             border: 0;
             height: 1px;
-            background-color: var(--border-color);
-            margin: 2rem 0;
+            background-color: var(--border-default);
+            margin: 32px 0;
         }
 
-        .aksara-equation {
+        .aksara-math-display {
             font-family: 'AksaraBatak', sans-serif;
             font-size: 3rem;
-            color: var(--primary-red);
+            color: var(--color-accent-primary);
             text-align: center;
-            margin: 1.5rem 0;
-            word-spacing: 1.5rem;
+            margin: 24px 0;
+            word-spacing: 24px;
         }
 
-        .panduan-example-box p {
+        .guide-example-container p {
             text-align: center !important;
         }
 
-        /* === GAYA LATIHAN MENULIS === */
-        #writing-practice-container {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+        #handwriting-module {
+            background: var(--surface-color);
+            border: 1px solid var(--border-default);
             border-radius: 16px;
-            padding: 2rem;
+            padding: 32px;
             max-width: 600px;
-            margin: 2rem auto;
+            margin: 32px auto;
             text-align: center;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
         }
 
-        #practice-canvas {
-            border: 2px dashed var(--border-color);
+        #drawing-surface {
+            border: 2px dashed var(--border-default);
             border-radius: 12px;
             cursor: crosshair;
             touch-action: none;
-            background-color: var(--textarea-bg);
+            background-color: var(--input-field-bg);
             width: 100%;
             height: 300px;
         }
 
-        .practice-info {
+        .handwriting-prompt {
             font-size: 1.2rem;
             font-weight: 500;
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
         }
 
-        .practice-controls {
-            margin-top: 1.5rem;
+        .handwriting-buttons {
+            margin-top: 24px;
             display: flex;
-            gap: 1rem;
+            gap: 16px;
             justify-content: center;
             flex-wrap: wrap;
         }
 
-        .practice-controls button {
-            background: var(--textarea-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
+        .handwriting-buttons button {
+            background: var(--input-field-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-default);
             box-shadow: none;
         }
 
-        .practice-controls button:hover {
-            background: var(--primary-red);
-            border-color: var(--primary-red);
-            color: var(--white);
+        .handwriting-buttons button:hover {
+            background: var(--color-accent-primary);
+            border-color: var(--color-accent-primary);
+            color: var(--neutral-white);
             transform: translateY(-2px);
             box-shadow: 0 8px 15px rgba(220, 38, 38, 0.2);
         }
 
-        .konversi,
-        .quiz-container {
-            background: var(--card-bg);
-            padding: 2rem;
+        .converter-module,
+        .quiz-module {
+            background: var(--surface-color);
+            padding: 32px;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            margin: 3rem auto;
-            border: 1px solid var(--border-color);
+            margin: 48px auto;
+            border: 1px solid var(--border-default);
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
             max-width: 800px;
         }
 
-        .konversi:hover,
-        .quiz-container:hover {
-            border-color: var(--primary-red);
+        .converter-module:hover,
+        .quiz-module:hover {
+            border-color: var(--color-accent-primary);
         }
 
-        .input-group {
-            margin-bottom: 2rem;
+        .form-field-group {
+            margin-bottom: 32px;
         }
 
-        .input-group label {
+        .form-field-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
             font-weight: 500;
-            color: var(--primary-red);
+            color: var(--color-accent-primary);
         }
 
         textarea,
         input {
             width: 100%;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            border: 1px solid var(--border-color);
+            padding: 16px;
+            margin: 8px 0;
+            border: 1px solid var(--border-default);
             border-radius: 12px;
             font-size: 1rem;
-            background: var(--textarea-bg);
-            color: var(--text-color);
+            background: var(--input-field-bg);
+            color: var(--text-primary);
             transition: all 0.3s ease;
         }
 
         textarea:focus,
         input:focus {
             outline: none;
-            border-color: var(--primary-red);
+            border-color: var(--color-accent-primary);
             box-shadow: 0 0 15px rgba(220, 38, 38, 0.2);
         }
 
-        #outputText {
+        #conversion-output {
             font-family: 'AksaraBatak', sans-serif;
             font-size: 1.5rem;
             background: rgba(220, 38, 38, 0.05);
-            border-color: var(--primary-red);
+            border-color: var(--color-accent-primary);
         }
 
-        .btn-group {
+        .button-cluster {
             display: flex;
-            gap: 1rem;
+            gap: 16px;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 1rem;
+            margin-top: 16px;
         }
 
         button {
-            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
-            color: var(--white);
-            padding: 0.8rem 1.8rem;
+            background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-dark));
+            color: var(--neutral-white);
+            padding: 13px 29px;
             border: none;
             border-radius: 50px;
             font-size: 1rem;
@@ -618,58 +612,58 @@
             box-shadow: 0 12px 25px rgba(220, 38, 38, 0.3);
         }
 
-        .card-grid {
+        .info-grid-layout {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            gap: 32px;
+            margin-top: 48px;
         }
 
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+        .info-panel {
+            background: var(--surface-color);
+            border: 1px solid var(--border-default);
             border-radius: 16px;
-            padding: 2rem;
+            padding: 32px;
             transition: all 0.3s ease;
         }
 
-        .card:hover {
+        .info-panel:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary-red);
+            border-color: var(--color-accent-primary);
         }
 
-        .card .aksara-besar {
+        .info-panel .large-aksara-char {
             font-family: 'AksaraBatak';
             font-size: 4rem;
-            color: var(--primary-red);
+            color: var(--color-accent-primary);
             float: left;
-            margin-right: 1rem;
+            margin-right: 16px;
             line-height: 1;
         }
 
-        .card h3 {
-            color: var(--primary-red);
-            margin-bottom: 1rem;
+        .info-panel h3 {
+            color: var(--color-accent-primary);
+            margin-bottom: 16px;
             font-size: 1.5rem;
         }
 
-        .card p {
-            color: var(--text-color);
+        .info-panel p {
+            color: var(--text-primary);
             line-height: 1.6;
             margin: 0;
             text-align: left;
             opacity: 0.9;
         }
 
-        .galeri {
+        .photo-gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
+            gap: 24px;
+            margin-top: 48px;
         }
 
-        .galeri-item {
+        .gallery-photo-item {
             position: relative;
             overflow: hidden;
             border-radius: 16px;
@@ -677,347 +671,138 @@
             transition: all 0.4s ease;
         }
 
-        .galeri-item:hover {
+        .gallery-photo-item:hover {
             transform: translateY(-10px) scale(1.03);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
         }
 
-        .galeri img {
+        .photo-gallery-grid img {
             width: 100%;
             height: 300px;
             object-fit: cover;
             transition: transform 0.4s ease;
         }
 
-        .galeri-item:hover img {
+        .gallery-photo-item:hover img {
             transform: scale(1.1);
         }
 
-        .galeri-overlay {
+        .photo-caption-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
             background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-            color: var(--white);
-            padding: 2rem 1.5rem 1.5rem;
+            color: var(--neutral-white);
+            padding: 32px 24px 24px;
             transform: translateY(100%);
             transition: transform 0.4s ease;
         }
 
-        .galeri-item:hover .galeri-overlay {
+        .gallery-photo-item:hover .photo-caption-overlay {
             transform: translateY(0);
         }
 
-
-        :root {
-            --primary-red: #e11d48;
-            --dark-red: #9f1239;
-            --dark-bg: #111827;
-            --light-bg: #f9fafb;
-            --card-bg-dark: #1f2937;
-            --card-bg-light: #ffffff;
-            --text-light: #f3f4f6;
-            --text-dark: #111827;
-            --border-color-dark: #374151;
-            --border-color-light: #e5e7eb;
-        }
-
-        [data-theme="light"] {
-            --background: var(--light-bg);
-            --card-bg: var(--card-bg-light);
-            --text-color: var(--text-dark);
-            --border-color: var(--border-color-light);
-        }
-
-        [data-theme="dark"] {
-            --background: var(--dark-bg);
-            --card-bg: var(--card-bg-dark);
-            --text-color: var(--text-light);
-            --border-color: var(--border-color-dark);
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--background);
-            color: var(--text-color);
-            transition: background-color 0.4s ease, color 0.4s ease;
-            padding: 2rem;
-            margin: 0;
-        }
-
-        .section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-            text-align: center;
-        }
-        
-        .section h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .section p {
-            font-size: 1.1rem;
-            max-width: 800px;
-            margin: 0 auto 3rem auto;
-            opacity: 0.9;
-        }
-
-        .section-icon {
-            color: var(--primary-red);
-            margin-right: 0.5rem;
-        }
-        
-        h3.aksara-hover {
-            color: var(--text-color);
-            font-size: 1.75rem;
-            font-weight: 700;
-        }
-        
-        h3.aksara-hover.title-minuman {
-             text-align:center; 
-             margin-top:4rem;
-             margin-bottom: -1rem;
-        }
-
-
-        .food-grid {
+        .culinary-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
+            gap: 24px;
+            margin-top: 48px;
         }
 
-        .food-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+        .beverages-grid {
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .culinary-item {
+            background: var(--surface-color);
+            border: 1px solid var(--border-default);
             border-radius: 16px;
             overflow: hidden;
             transition: all 0.3s ease;
             text-align: center;
         }
 
-        .food-item:hover {
+        .culinary-item:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            border-color: var(--primary-red);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--color-accent-primary);
         }
 
-        .food-item img {
+        .culinary-item img {
             width: 100%;
             height: 200px;
             object-fit: cover;
         }
 
-        .food-content {
-            padding: 1.5rem;
+        .culinary-description {
+            padding: 24px;
         }
 
-        .food-content h3 {
-            color: var(--primary-red);
-            margin-top: 0;
-            margin-bottom: 0.5rem;
+        .culinary-description h3 {
+            color: var(--color-accent-primary);
+            margin-bottom: 8px;
         }
 
-        .food-content p {
+        .culinary-description p {
             font-size: 0.9rem;
             line-height: 1.5;
             margin: 0;
             opacity: 0.8;
         }
 
-
-        .bento-slider-container {
-            position: relative;
-            width: 95%;
-            max-width: 1000px;
-            height: 500px; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 3rem auto 0 auto;
-        }
-
-        .bento-slider-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            perspective: 1000px;
-        }
-
-        .bento-slider-item {
-            position: absolute;
-            width: 60%;
-            max-width: 300px;
-            height: auto;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-            overflow: hidden;
-            cursor: pointer;
-            opacity: 0.5;
-            transform: scale(0.8);
-            transition: all 0.5s ease;
-            user-select: none;
-        }
-
-        .bento-slider-item:not(.is-bento-active):not(.is-bento-prev):not(.is-bento-next) {
-            opacity: 0;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .bento-slider-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .bento-slider-content {
-            background-color: transparent;
-            padding: 20px;
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        .bento-slider-content h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--primary-red);
-            margin: 0 0 10px 0;
-        }
-
-        .bento-slider-content p {
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: var(--text-color);
-            line-height: 1.6;
-            margin: 0;
-            opacity: 0.8;
-        }
-
-        .bento-slider-item.is-bento-active {
-            opacity: 1;
-            transform: translateX(-50%) scale(1.1);
-            z-index: 10;
-            left: 50%;
-        }
-
-        .bento-slider-item.is-bento-prev {
-            left: 20%;
-            transform: translateX(-50%) scale(0.8);
-            z-index: 5;
-        }
-
-        .bento-slider-item.is-bento-next {
-            left: 80%;
-            transform: translateX(-50%) scale(0.8);
-            z-index: 5;
-        }
-
-        .bento-slider-nav {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-        }
-
-        .bento-slider-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--border-color);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            padding: 0;
-        }
-
-        .bento-slider-dot.is-bento-dot-active {
-            background-color: var(--primary-red);
-        }
-        
-        /* Penyesuaian untuk layar kecil (Responsive) */
-        @media (max-width: 768px) {
-            .bento-slider-container {
-                height: 400px;
-            }
-            .bento-slider-item {
-                max-width: 200px;
-            }
-            .bento-slider-item.is-bento-active {
-                transform: translateX(-50%) scale(1);
-            }
-            .bento-slider-item.is-bento-prev {
-                transform: translateX(-50%) scale(0.75);
-                left: 15%;
-            }
-            .bento-slider-item.is-bento-next {
-                transform: translateX(-50%) scale(0.75);
-                left: 85%;
-            }
-            .bento-slider-content h3 { font-size: 1rem; }
-            .bento-slider-content p { font-size: 0.8rem; }
-        }
-        #map {
+        #interactive-map-area {
             height: 450px;
             border-radius: 16px;
-            margin-top: 3rem;
-            border: 1px solid var(--border-color);
+            margin-top: 48px;
+            border: 1px solid var(--border-default);
         }
 
-        footer {
+        .main-footer {
             background: #111827;
-            color: var(--text-light);
-            padding: 4rem 2rem 2rem;
-            margin-top: 3rem;
+            color: var(--text-on-dark);
+            padding: 64px 32px 32px;
+            margin-top: 48px;
             position: relative;
-            border-top: 3px solid var(--primary-red);
+            border-top: 3px solid var(--color-accent-primary);
         }
 
-        .footer-content {
+        .footer-layout {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
+            gap: 48px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .footer-section a:hover {
-            color: var(--primary-red);
+        .footer-column a:hover {
+            color: var(--color-accent-primary);
         }
 
-        .footer-section i {
-            color: var(--primary-red);
+        .footer-column i {
+            color: var(--color-accent-primary);
             width: 20px;
             margin-right: 10px;
         }
 
-        .footer-bottom {
+        .footer-credit-line {
             text-align: center;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-color-dark);
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-dark);
             opacity: 0.7;
         }
 
-        .audio-control {
+        .music-player-button {
             position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
+            bottom: 24px;
+            right: 24px;
             width: 50px;
             height: 50px;
-            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
-            color: var(--white);
+            background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-dark));
+            color: var(--neutral-white);
             border: none;
             border-radius: 50%;
             font-size: 1.2rem;
@@ -1030,41 +815,41 @@
             justify-content: center;
         }
 
-        .audio-control:hover {
+        .music-player-button:hover {
             transform: scale(1.1);
             box-shadow: 0 15px 30px rgba(220, 38, 38, 0.4);
         }
 
-        .table-container-responsive {
+        .responsive-table-wrapper {
             width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-default);
             border-radius: 12px;
-            margin: 2rem auto;
-            background: var(--card-bg);
+            margin: 32px auto;
+            background: var(--surface-color);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .aksara-table {
+        .main-aksara-chart {
             width: 100%;
             min-width: 600px;
             border-collapse: collapse;
             text-align: center;
         }
 
-        .aksara-table th,
-        .aksara-table td {
-            padding: 1rem;
-            border: 1px solid var(--border-color);
+        .main-aksara-chart th,
+        .main-aksara-chart td {
+            padding: 16px;
+            border: 1px solid var(--border-default);
             font-size: 1.5rem;
             font-family: 'AksaraBatak', sans-serif;
             vertical-align: middle;
         }
 
-        .aksara-table th {
-            background-color: var(--primary-red);
-            color: var(--white);
+        .main-aksara-chart th {
+            background-color: var(--color-accent-primary);
+            color: var(--neutral-white);
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
             font-size: 1rem;
@@ -1073,109 +858,253 @@
             z-index: 1;
         }
 
-        .aksara-table tr:hover {
+        .main-aksara-chart tr:hover {
             background-color: rgba(225, 29, 72, 0.1);
         }
 
-        .aksara-table td:first-child,
-        .aksara-table th:first-child {
+        .main-aksara-chart td:first-child,
+        .main-aksara-chart th:first-child {
             font-family: 'Poppins', sans-serif;
             font-size: 1rem;
             font-weight: 500;
         }
 
-        #quiz-question {
+        #quiz-prompt-display {
             font-family: 'AksaraBatak';
             font-size: 2.5rem;
             text-align: center;
-            color: var(--primary-red);
-            margin-bottom: 2rem;
+            color: var(--color-accent-primary);
+            margin-bottom: 32px;
             min-height: 120px;
         }
 
-        #quiz-options .btn-group {
+        #quiz-choices-area .button-cluster {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
+            gap: 16px;
         }
 
-        .quiz-option {
+        .quiz-answer-button {
             font-size: 1.2rem;
-            padding: 1rem;
-            background: var(--textarea-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
+            padding: 16px;
+            background: var(--input-field-bg);
+            border: 1px solid var(--border-default);
+            color: var(--text-primary);
         }
 
-        .quiz-option:hover {
-            border-color: var(--primary-red);
-            color: var(--primary-red);
+        .quiz-answer-button:hover {
+            border-color: var(--color-accent-primary);
+            color: var(--color-accent-primary);
             transform: translateY(-2px);
         }
 
-        .quiz-option.correct {
-            background: var(--correct-green);
-            color: var(--white);
-            border-color: var(--correct-green);
+        .quiz-answer-button.correct {
+            background: var(--feedback-correct);
+            color: var(--neutral-white);
+            border-color: var(--feedback-correct);
         }
 
-        .quiz-option.incorrect {
-            background: var(--incorrect-red);
-            color: var(--white);
-            border-color: var(--incorrect-red);
+        .quiz-answer-button.incorrect {
+            background: var(--feedback-incorrect);
+            color: var(--neutral-white);
+            border-color: var(--feedback-incorrect);
         }
 
-        .quiz-option:disabled {
+        .quiz-answer-button:disabled {
             opacity: 0.7;
             cursor: not-allowed;
         }
 
-        #quiz-feedback {
+        #quiz-result-message {
             text-align: center;
             font-size: 1.2rem;
             font-weight: 600;
-            margin-top: 2rem;
-            min-height: 2rem;
+            margin-top: 32px;
+            min-height: 32px;
         }
 
-        #quiz-info {
+        #quiz-status-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 32px;
             font-size: 1.1rem;
             font-weight: 500;
         }
 
+        .destination-carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            height: 480px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 32px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .destination-carousel-track {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            perspective: 1200px;
+        }
+
+        .carousel-card {
+            position: absolute;
+            width: 60%;
+            max-width: 320px;
+            background: var(--surface-main-color);
+            border: 1px solid var(--border-default);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.5;
+            transform: scale(0.8);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .carousel-card:hover {
+            border-color: var(--color-accent-primary);
+        }
+
+        .carousel-card:not(.is-carousel-center):not(.is-carousel-left):not(.is-carousel-right) {
+            opacity: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .carousel-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            -webkit-user-drag: none;
+        }
+
+        .carousel-card-body {
+            padding: 24px;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .carousel-card-body h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--color-accent-primary);
+            margin: 0 0 12px 0;
+        }
+
+        .carousel-card-body p {
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            opacity: 0.8;
+        }
+
+        .carousel-card.is-carousel-center {
+            opacity: 1;
+            transform: translateX(-50%) scale(1.1);
+            z-index: 10;
+            left: 50%;
+            border-color: var(--color-accent-primary);
+            box-shadow: 0 15px 35px rgba(225, 29, 72, 0.2);
+        }
+
+        .carousel-card.is-carousel-left {
+            left: 20%;
+            transform: translateX(-50%) scale(0.8);
+            z-index: 5;
+        }
+
+        .carousel-card.is-carousel-right {
+            left: 80%;
+            transform: translateX(-50%) scale(0.8);
+            z-index: 5;
+        }
+
+        .carousel-pagination {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 20;
+        }
+
+        .pagination-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--border-default);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            padding: 0;
+        }
+
+        .pagination-indicator:hover {
+            background-color: var(--color-accent-dark);
+        }
+
+        .pagination-indicator.is-indicator-active {
+            background-color: var(--color-accent-primary);
+            transform: scale(1.2);
+        }
+
         @media (max-width: 992px) {
-            .nav-links-desktop {
+            .desktop-nav-links {
                 display: none;
             }
 
-            .nav-toggle {
+            .mobile-menu-trigger {
                 display: block;
             }
         }
 
         @media (max-width: 768px) {
-            header {
+            .main-nav {
+                padding: 12px 16px;
+            }
+
+            .page-header {
                 height: 80vh;
+                padding: 32px 16px;
             }
 
-            .section {
-                padding: 4rem 5%;
+            .page-header h1 {
+                font-size: clamp(2.2rem, 8vw, 4rem);
+                letter-spacing: 1px;
             }
 
-            .konversi,
-            .quiz-container {
-                padding: 2rem;
+            .page-header p {
+                font-size: clamp(0.9rem, 4vw, 1.1rem);
+                max-width: 95%;
             }
 
-            #writing-practice-container {
-                padding: 1.5rem;
+            .content-section {
+                padding: 64px 5%;
             }
 
-            .btn-group {
+            .converter-module,
+            .quiz-module {
+                padding: 32px;
+            }
+
+            #handwriting-module {
+                padding: 24px;
+            }
+
+            .button-cluster {
                 flex-direction: column;
                 align-items: center;
             }
@@ -1185,16 +1114,50 @@
                 max-width: 300px;
             }
 
-            #quiz-options .btn-group {
+            #quiz-choices-area .button-cluster {
                 grid-template-columns: 1fr;
             }
 
-            .aksara-equation {
+            .aksara-math-display {
                 font-size: 2.2rem;
             }
 
             #panduan h3 {
                 font-size: 1.5rem;
+            }
+
+            .destination-carousel-container {
+                height: 420px;
+            }
+
+            .carousel-card {
+                max-width: 220px;
+            }
+
+            .carousel-card.is-carousel-center {
+                transform: translateX(-50%) scale(1);
+            }
+
+            .carousel-card.is-carousel-left {
+                transform: translateX(-50%) scale(0.75);
+                left: 15%;
+            }
+
+            .carousel-card.is-carousel-right {
+                transform: translateX(-50%) scale(0.75);
+                left: 85%;
+            }
+
+            .carousel-card-body h3 {
+                font-size: 1.1rem;
+            }
+
+            .carousel-card-body p {
+                font-size: 0.85rem;
+            }
+
+            .carousel-pagination {
+                bottom: 10px;
             }
         }
     </style>
@@ -1202,21 +1165,21 @@
 
 <body data-theme="light">
 
-    <div id="preloader">
-        <div class="preloader-content">ᯀ</div>
+    <div id="loading-screen">
+        <div class="loading-animation">ᯀ</div>
     </div>
 
-    <audio id="backgroundAudio" loop>
+    <audio id="background-track" loop>
         <source src="aset/musik_dohot_video/TobaDream (Theme Song).mp3" type="audio/mpeg" />
     </audio>
-    <button class="audio-control" id="audioControlBtn"><i class="fas fa-play"></i></button>
+    <button class="music-player-button" id="music-toggle"><i class="fas fa-play"></i></button>
 
-    <nav>
-        <a href="#" class="nav-logo">Aksara Batak</a>
-        <div class="nav-links-desktop" id="navLinksDesktop">
+    <nav class="main-nav">
+        <a href="#" class="site-brand">Aksara Batak</a>
+        <div class="desktop-nav-links" id="desktop-links-container">
             <a href="#sejarah"><i class="fas fa-scroll"></i>Sejarah</a>
             <a href="#pengenalan"><i class="fas fa-book-open"></i>Pengenalan</a>
-            <a href="#hari-angka"><i class="fas fa-calendar-day"></i>Hari & Angka</a> <!-- LINK BARU -->
+            <a href="#hari-angka"><i class="fas fa-calendar-day"></i>Hari & Angka</a>
             <a href="#panduan"><i class="fas fa-pen-ruler"></i>Panduan</a>
             <a href="#latihan"><i class="fas fa-pen-alt"></i>Latihan</a>
             <a href="#naskah"><i class="fas fa-book-skull"></i>Naskah</a>
@@ -1224,17 +1187,17 @@
             <a href="#makanan"><i class="fas fa-utensils"></i>Kuliner</a>
             <a href="#kuis"><i class="fas fa-question-circle"></i>Kuis</a>
         </div>
-        <div class="nav-controls">
-            <button class="theme-toggle" id="themeToggleBtn"><i id="themeIcon" class="fas fa-moon"></i></button>
-            <button class="nav-toggle" id="navToggleBtn" aria-label="Toggle navigation">
+        <div class="nav-action-buttons">
+            <button class="color-theme-switcher" id="theme-button"><i id="theme-display-icon"
+                    class="fas fa-moon"></i></button>
+            <button class="mobile-menu-trigger" id="mobile-nav-toggler" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
-        <!-- PERBAIKAN: NAV-LINKS-MOBILE DIPINDAHKAN KE DALAM NAV -->
-        <div class="nav-links-mobile" id="navLinksMobile">
+        <div class="mobile-nav-menu" id="mobile-links-container">
             <a href="#sejarah"><i class="fas fa-scroll"></i>Sejarah</a>
             <a href="#pengenalan"><i class="fas fa-book-open"></i>Pengenalan</a>
-            <a href="#hari-angka"><i class="fas fa-calendar-day"></i>Hari & Angka</a> <!-- LINK BARU -->
+            <a href="#hari-angka"><i class="fas fa-calendar-day"></i>Hari & Angka</a>
             <a href="#panduan"><i class="fas fa-pen-ruler"></i>Panduan</a>
             <a href="#latihan"><i class="fas fa-pen-alt"></i>Latihan</a>
             <a href="#naskah"><i class="fas fa-book-skull"></i>Naskah</a>
@@ -1244,20 +1207,21 @@
         </div>
     </nav>
 
-    <header>
+    <header class="page-header">
         <video autoplay muted loop playsinline>
             <source src="aset/musik_dohot_video/HEADER.mp4" type="video/mp4" />
         </video>
-        <div class="header-content">
-            <h1 id="interactive-title" data-text="SELAMAT DATANG DI WEBSITE AKSARA BATAK"></h1>
+        <div class="header-text-container">
+            <h1 id="dynamic-header-title" data-text="SELAMAT DATANG DI WEBSITE AKSARA BATAK"></h1>
         </div>
     </header>
 
     <main>
-        <section id="sejarah" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-scroll"></i></span><span
-                    class="aksara-hover">Sejarah Aksara Batak</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Aksara Batak, atau Surat Batak, adalah
+        <section id="sejarah" class="content-section">
+            <h2 data-aos="fade-up"><span class="background-icon"><i class="fas fa-scroll"></i></span><span
+                    class="interactive-aksara-text">Sejarah Aksara Batak</span></h2>
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">Aksara Batak, atau Surat Batak,
+                adalah
                 warisan intelektual agung dari leluhur masyarakat Batak. Berakar dari aksara Brahmi di India, aksara ini
                 menyebar ke Nusantara dan berevolusi melalui aksara Pallawa dan Kawi kuno. Selama berabad-abad, Surat
                 Batak menjadi medium utama untuk mencatat pengetahuan, mulai dari surat-menyurat antar kerajaan, hukum
@@ -1267,14 +1231,15 @@
                 semangat revitalisasi membara untuk memastikan warisan ini tidak akan pernah padam.</p>
         </section>
 
-        <section id="pengenalan" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-book-open"></i></span><span
-                    class="aksara-hover">Pengenalan Aksara Batak</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Aksara Batak adalah sistem tulisan abugida,
+        <section id="pengenalan" class="content-section">
+            <h2 data-aos="fade-up"><span class="background-icon"><i class="fas fa-book-open"></i></span><span
+                    class="interactive-aksara-text">Pengenalan Aksara Batak</span></h2>
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">Aksara Batak adalah sistem
+                tulisan abugida,
                 di mana setiap huruf dasar (Ina ni Surat) memiliki vokal /a/ yang dapat diubah menggunakan diakritik
                 (Anak ni Surat).</p>
-            <div class="table-container-responsive" data-aos="fade-up" data-aos-delay="200">
-                <table class="aksara-table">
+            <div class="responsive-table-wrapper" data-aos="fade-up" data-aos-delay="200">
+                <table class="main-aksara-chart">
                     <thead>
                         <tr>
                             <th>Latin</th>
@@ -1451,23 +1416,21 @@
             </div>
         </section>
 
-        <!-- PENAMBAHAN: SECTION BARU UNTUK HARI DAN ANGKA -->
-        <section id="hari-angka" class="section">
+        <section id="hari-angka" class="content-section">
             <h2 data-aos="fade-up">
-                <span class="section-icon"><i class="fas fa-calendar-day"></i></span>
-                <span class="aksara-hover">Hari & Angka Batak</span>
+                <span class="background-icon"><i class="fas fa-calendar-day"></i></span>
+                <span class="interactive-aksara-text">Hari & Angka Batak</span>
             </h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">
                 Masyarakat Batak memiliki sistem penanggalan (Parhalaan) dan penomoran unik yang merupakan bagian
                 penting dari budaya dan tradisi. Kenali nama-nama hari dan cara berhitung dalam Bahasa Batak.
             </p>
 
-            <!-- Hari-hari dalam Seminggu -->
-            <h3 class="aksara-hover" data-aos="fade-up"
-                style="text-align:center; font-size: 1.8rem; margin-top: 3rem; margin-bottom: 1rem;">Nama-nama Hari
+            <h3 class="interactive-aksara-text" data-aos="fade-up"
+                style="text-align:center; font-size: 1.8rem; margin-top: 48px; margin-bottom: 16px;">Nama-nama Hari
                 (Goar ni Ari)</h3>
-            <div class="table-container-responsive" data-aos="fade-up" data-aos-delay="200">
-                <table class="info-table">
+            <div class="responsive-table-wrapper" data-aos="fade-up" data-aos-delay="200">
+                <table class="data-display-table">
                     <thead>
                         <tr>
                             <th>Bahasa Indonesia</th>
@@ -1507,12 +1470,11 @@
                 </table>
             </div>
 
-            <!-- Penomoran -->
-            <h3 class="aksara-hover" data-aos="fade-up"
-                style="text-align:center; font-size: 1.8rem; margin-top: 3rem; margin-bottom: 1rem;">Sistem Penomoran
+            <h3 class="interactive-aksara-text" data-aos="fade-up"
+                style="text-align:center; font-size: 1.8rem; margin-top: 48px; margin-bottom: 16px;">Sistem Penomoran
                 (Pamillangon)</h3>
-            <div class="table-container-responsive" data-aos="fade-up" data-aos-delay="300">
-                <table class="info-table">
+            <div class="responsive-table-wrapper" data-aos="fade-up" data-aos-delay="300">
+                <table class="data-display-table">
                     <thead>
                         <tr>
                             <th>Angka</th>
@@ -1524,77 +1486,79 @@
                         <tr>
                             <td>1</td>
                             <td>Sada</td>
-                            <td class="aksara-cell">ᯘᯑ</td>
+                            <td class="aksara-font-cell">ᯘᯑ</td>
                         </tr>
                         <tr>
                             <td>2</td>
                             <td>Dua</td>
-                            <td class="aksara-cell">ᯑᯮᯀ</td>
+                            <td class="aksara-font-cell">ᯑᯮᯀ</td>
                         </tr>
                         <tr>
                             <td>3</td>
                             <td>Tolu</td>
-                            <td class="aksara-cell">ᯖᯬᯞᯮ</td>
+                            <td class="aksara-font-cell">ᯖᯬᯞᯮ</td>
                         </tr>
                         <tr>
                             <td>4</td>
                             <td>Opat</td>
-                            <td class="aksara-cell">ᯀᯬᯇᯖ᯲</td>
+                            <td class="aksara-font-cell">ᯀᯬᯇᯖ᯲</td>
                         </tr>
                         <tr>
                             <td>5</td>
                             <td>Lima</td>
-                            <td class="aksara-cell">ᯞᯪᯔ</td>
+                            <td class="aksara-font-cell">ᯞᯪᯔ</td>
                         </tr>
                         <tr>
                             <td>6</td>
                             <td>Onom</td>
-                            <td class="aksara-cell">ᯀᯬᯉᯔ᯲</td>
+                            <td class="aksara-font-cell">ᯀᯬᯉᯔ᯲</td>
                         </tr>
                         <tr>
                             <td>7</td>
                             <td>Pitu</td>
-                            <td class="aksara-cell">ᯇᯪᯖᯮ</td>
+                            <td class="aksara-font-cell">ᯇᯪᯖᯮ</td>
                         </tr>
                         <tr>
                             <td>8</td>
                             <td>Ualu</td>
-                            <td class="aksara-cell">ᯥᯀᯞᯮ</td>
+                            <td class="aksara-font-cell">ᯥᯀᯞᯮ</td>
                         </tr>
                         <tr>
                             <td>9</td>
                             <td>Sia</td>
-                            <td class="aksara-cell">ᯘᯪᯀ</td>
+                            <td class="aksara-font-cell">ᯘᯪᯀ</td>
                         </tr>
                         <tr>
                             <td>10</td>
                             <td>Sampulu</td>
-                            <td class="aksara-cell">ᯘᯔ᯲ᯇᯮᯞᯮ</td>
+                            <td class="aksara-font-cell">ᯘᯔ᯲ᯇᯮᯞᯮ</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- === PERUBAHAN: KONTEN PANDUAN MENULIS BARU SESUAI GAMBAR === -->
-        <section id="panduan" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-pen-ruler"></i></span><span
-                    class="aksara-hover">Panduan Menulis Aksara Batak</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Belajar menulis Aksara Batak itu mudah!
+        <section id="panduan" class="content-section">
+            <h2 data-aos="fade-up"><span class="background-icon"><i class="fas fa-pen-ruler"></i></span><span
+                    class="interactive-aksara-text">Panduan Menulis Aksara Batak</span></h2>
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">Belajar menulis Aksara Batak itu
+                mudah!
                 Ikuti 3 langkah sederhana ini untuk mulai merangkai kata-kata Anda sendiri.</p>
 
-            <h3 class="aksara-hover" data-aos="fade-up">Langkah 1: Pahami 'Ina ni Surat'</h3>
-            <p class="aksara-hover" data-aos="fade-up">Setiap huruf dasar (seperti yang ada di tabel Pengenalan) secara
+            <h3 class="interactive-aksara-text" data-aos="fade-up">Langkah 1: Pahami 'Ina ni Surat'</h3>
+            <p class="interactive-aksara-text" data-aos="fade-up">Setiap huruf dasar (seperti yang ada di tabel
+                Pengenalan) secara
                 default memiliki bunyi vokal /a/. Sebagai contoh, aksara ᯅ tidak dibaca 'b', melainkan 'ba'. Aksara ᯖ
                 dibaca 'ta', dan seterusnya. Ini adalah fondasi dari seluruh sistem penulisan.</p>
 
-            <h3 class="aksara-hover" data-aos="fade-up">Langkah 2: Ubah Vokal dengan 'Anak ni Surat'</h3>
-            <p class="aksara-hover" data-aos="fade-up">Untuk mengubah vokal /a/ menjadi /i/, /u/, /e/, atau /o/, kita
+            <h3 class="interactive-aksara-text" data-aos="fade-up">Langkah 2: Ubah Vokal dengan 'Anak ni Surat'</h3>
+            <p class="interactive-aksara-text" data-aos="fade-up">Untuk mengubah vokal /a/ menjadi /i/, /u/, /e/, atau
+                /o/, kita
                 menggunakan tanda baca yang disebut 'Anak ni Surat'. Perhatikan tabel di bawah ini dengan contoh
                 menggunakan 'Ina ni Surat' <strong>Ba (ᯅ)</strong>.</p>
 
-            <div class="table-container-responsive" data-aos="fade-up">
-                <table class="aksara-table panduan-table">
+            <div class="responsive-table-wrapper" data-aos="fade-up">
+                <table class="main-aksara-chart guide-table">
                     <thead>
                         <tr>
                             <th>Keterangan</th>
@@ -1605,151 +1569,165 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="aksara-hover">Mengubah vokal menjadi /i/</td>
+                            <td class="interactive-aksara-text">Mengubah vokal menjadi /i/</td>
                             <td>ᯪ</td>
                             <td>ᯅᯪ</td>
-                            <td class="aksara-hover">bi</td>
+                            <td class="interactive-aksara-text">bi</td>
                         </tr>
                         <tr>
-                            <td class="aksara-hover">Mengubah vokal menjadi /u/</td>
+                            <td class="interactive-aksara-text">Mengubah vokal menjadi /u/</td>
                             <td>ᯫ</td>
                             <td>ᯅᯫ</td>
-                            <td class="aksara-hover">bu</td>
+                            <td class="interactive-aksara-text">bu</td>
                         </tr>
                         <tr>
-                            <td class="aksara-hover">Mengubah vokal menjadi /e/</td>
+                            <td class="interactive-aksara-text">Mengubah vokal menjadi /e/</td>
                             <td>ᯭ</td>
                             <td>ᯅᯭ</td>
-                            <td class="aksara-hover">be</td>
+                            <td class="interactive-aksara-text">be</td>
                         </tr>
                         <tr>
-                            <td class="aksara-hover">Mengubah vokal menjadi /o/</td>
+                            <td class="interactive-aksara-text">Mengubah vokal menjadi /o/</td>
                             <td>ᯬ</td>
                             <td>ᯅᯬ</td>
-                            <td class="aksara-hover">bo</td>
+                            <td class="interactive-aksara-text">bo</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <h3 class="aksara-hover" data-aos="fade-up">Langkah 3: Matikan Vokal dengan 'Pangolat'</h3>
-            <p class="aksara-hover" data-aos="fade-up">Bagaimana jika kita butuh konsonan saja, tanpa vokal? Gunakan
+            <h3 class="interactive-aksara-text" data-aos="fade-up">Langkah 3: Matikan Vokal dengan 'Pangolat'</h3>
+            <p class="interactive-aksara-text" data-aos="fade-up">Bagaimana jika kita butuh konsonan saja, tanpa vokal?
+                Gunakan
                 'Pangolat' (tanda virama). Tanda ini berfungsi untuk "mematikan" vokal /a/ pada 'Ina ni Surat'.</p>
-            <p class="aksara-hover" data-aos="fade-up">Contoh paling jelas adalah saat menulis kata
+            <p class="interactive-aksara-text" data-aos="fade-up">Contoh paling jelas adalah saat menulis kata
                 <strong>"Batak"</strong>:
             </p>
 
-            <div class="panduan-example-box" data-aos="fade-up">
+            <div class="guide-example-container" data-aos="fade-up">
                 <div>
-                    <p class="aksara-hover">Jika kita hanya menggabungkan 'Ina ni Surat':</p>
-                    <p class="aksara-equation">ᯅ + ᯖ + ᯄ</p>
-                    <p class="aksara-hover">Akan terbaca: <b>ba - ta - ka</b> (salah).</p>
+                    <p class="interactive-aksara-text">Jika kita hanya menggabungkan 'Ina ni Surat':</p>
+                    <p class="aksara-math-display">ᯅ + ᯖ + ᯄ</p>
+                    <p class="interactive-aksara-text">Akan terbaca: <b>ba - ta - ka</b> (salah).</p>
                 </div>
                 <hr>
                 <div>
-                    <p class="aksara-hover">Kita perlu mematikan vokal pada huruf 'k' terakhir. Maka, kita tambahkan
+                    <p class="interactive-aksara-text">Kita perlu mematikan vokal pada huruf 'k' terakhir. Maka, kita
+                        tambahkan
                         'Pangolat' (᯲).</p>
-                    <p class="aksara-equation">ᯅ + ᯖ + ᯄ᯲</p>
-                    <p class="aksara-hover">Maka akan terbaca: <b>ba - ta - k</b> (benar).</p>
+                    <p class="aksara-math-display">ᯅ + ᯖ + ᯄ᯲</p>
+                    <p class="interactive-aksara-text">Maka akan terbaca: <b>ba - ta - k</b> (benar).</p>
                 </div>
             </div>
         </section>
 
-        <section id="latihan" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-pen-alt"></i></span><span
-                    class="aksara-hover">Latihan Menulis Tangan</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Saatnya mempraktikkan tulisan tangan Anda!
+        <section id="latihan" class="content-section">
+            <h2 data-aos="fade-up"><span class="background-icon"><i class="fas fa-pen-alt"></i></span><span
+                    class="interactive-aksara-text">Latihan Menulis Tangan</span></h2>
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">Saatnya mempraktikkan tulisan
+                tangan Anda!
                 Coba ikuti bentuk aksara yang ditampilkan di kanvas. Gunakan mouse di desktop atau jari di perangkat
                 sentuh.</p>
-            <div id="writing-practice-container" data-aos="fade-up" data-aos-delay="200">
-                <div id="practice-info" class="practice-info aksara-hover">Latihan: A (ᯀ)</div>
-                <canvas id="practice-canvas" width="550" height="300"></canvas>
-                <div class="practice-controls">
-                    <button id="clear-canvas-btn"><i class="fas fa-eraser"></i> Bersihkan</button>
-                    <button id="prev-char-btn"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+            <div id="handwriting-module" data-aos="fade-up" data-aos-delay="200">
+                <div id="handwriting-prompt" class="handwriting-prompt interactive-aksara-text">Latihan: A (ᯀ)</div>
+                <canvas id="drawing-surface" width="550" height="300"></canvas>
+                <div class="handwriting-buttons">
+                    <button id="clear-drawing-btn"><i class="fas fa-eraser"></i> Bersihkan</button>
+                    <button id="previous-char-btn"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
                     <button id="next-char-btn"><i class="fas fa-arrow-right"></i> Berikutnya</button>
                 </div>
             </div>
         </section>
 
-        <section id="naskah" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-book-skull"></i></span><span
-                    class="aksara-hover">Galeri Naskah Kuno</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Lihatlah keindahan Pustaha Laklak, naskah
+        <section id="naskah" class="content-section">
+            <h2 data-aos="fade-up"><span class="background-icon"><i class="fas fa-book-skull"></i></span><span
+                    class="interactive-aksara-text">Galeri Naskah Kuno</span></h2>
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">Lihatlah keindahan Pustaha
+                Laklak, naskah
                 kuno Batak yang ditulis di atas kulit kayu alim. Naskah-naskah ini berisi pengetahuan tentang sihir,
                 ramalan, pengobatan, dan hukum adat.</p>
-            <div class="galeri">
-                <div class="galeri-item" data-aos="fade-up"><img src="aset/gambar/Naskah.jpg" alt="Naskah Kuno Batak 1">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Pustaha Laklak</h3>
-                        <p class="aksara-hover">Naskah yang dilipat seperti akordeon, berisi catatan magis dan kalender
+            <div class="photo-gallery-grid">
+                <div class="gallery-photo-item" data-aos="fade-up"><img src="aset/gambar/Naskah.jpg"
+                        alt="Naskah Kuno Batak 1">
+                    <div class="photo-caption-overlay">
+                        <h3 class="interactive-aksara-text">Pustaha Laklak</h3>
+                        <p class="interactive-aksara-text">Naskah yang dilipat seperti akordeon, berisi catatan magis
+                            dan kalender
                             (porhalaan).</p>
                     </div>
                 </div>
-                <div class="galeri-item" data-aos="fade-up" data-aos-delay="100"><img
+                <div class="gallery-photo-item" data-aos="fade-up" data-aos-delay="100"><img
                         src="aset/gambar/Bamboo_with_Batak_script.jpg" alt="Naskah Bambu">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Naskah pada Bambu</h3>
-                        <p class="aksara-hover">Selain kulit kayu, bambu juga sering digunakan sebagai media tulis untuk
+                    <div class="photo-caption-overlay">
+                        <h3 class="interactive-aksara-text">Naskah pada Bambu</h3>
+                        <p class="interactive-aksara-text">Selain kulit kayu, bambu juga sering digunakan sebagai media
+                            tulis untuk
                             surat atau puisi cinta.</p>
                     </div>
                 </div>
-                <div class="galeri-item" data-aos="fade-up" data-aos-delay="200"><img
+                <div class="gallery-photo-item" data-aos="fade-up" data-aos-delay="200"><img
                         src="aset/gambar/naskah_pada_tulang.jpg" alt="Ukiran Aksara">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Aksara pada Tulang</h3>
-                        <p class="aksara-hover">Tulang iga kerbau terkadang diukir dengan aksara untuk mantra atau
+                    <div class="photo-caption-overlay">
+                        <h3 class="interactive-aksara-text">Aksara pada Tulang</h3>
+                        <p class="interactive-aksara-text">Tulang iga kerbau terkadang diukir dengan aksara untuk mantra
+                            atau
                             catatan penting lainnya.</p>
                     </div>
                 </div>
-                <div class="galeri-item" data-aos="fade-up" data-aos-delay="300"><img
+                <div class="gallery-photo-item" data-aos="fade-up" data-aos-delay="300"><img
                         src="aset/gambar/cover_pustaha.jpg" alt="Naskah Kuno Batak 2">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Sampul Pustaha</h3>
-                        <p class="aksara-hover">Sampul naskah seringkali terbuat dari kayu yang diukir dengan motif
+                    <div class="photo-caption-overlay">
+                        <h3 class="interactive-aksara-text">Sampul Pustaha</h3>
+                        <p class="interactive-aksara-text">Sampul naskah seringkali terbuat dari kayu yang diukir dengan
+                            motif
                             mistis untuk melindungi isinya.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="konversi" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-exchange-alt"></i></span><span
-                    class="aksara-hover">Konverter Teks Cepat</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Gunakan alat ini untuk mengubah teks Latin
+        <section id="konversi" class="content-section">
+            <h2 data-aos="fade-up"><span class="background-icon"><i class="fas fa-exchange-alt"></i></span><span
+                    class="interactive-aksara-text">Konverter Teks Cepat</span></h2>
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">Gunakan alat ini untuk mengubah
+                teks Latin
                 menjadi Aksara Batak Toba secara instan.</p>
-            <div class="konversi" data-aos="fade-up" data-aos-delay="200">
-                <div class="input-group"><label for="inputText"><i class="fas fa-edit"></i> Masukkan Teks
-                        Latin</label><textarea id="inputText" placeholder="Ketik teks yang ingin dikonversi..."
+            <div class="converter-module" data-aos="fade-up" data-aos-delay="200">
+                <div class="form-field-group"><label for="latin-input-field"><i class="fas fa-edit"></i> Masukkan Teks
+                        Latin</label><textarea id="latin-input-field" placeholder="Ketik teks yang ingin dikonversi..."
                         rows="4"></textarea></div>
-                <div class="btn-group"><button onclick="konversiAksara()"><i class="fas fa-sync-alt"></i>
-                        Konversi</button><button onclick="clearText()"><i class="fas fa-eraser"></i>
-                        Hapus</button><button onclick="copyText()"><i class="fas fa-copy"></i> Salin</button></div>
-                <div class="input-group"><label for="outputText"><i class="fas fa-star"></i> Hasil Aksara
-                        Batak</label><textarea id="outputText" placeholder="Hasil konversi akan muncul di sini..."
-                        rows="4" readonly></textarea></div>
+                <div class="button-cluster"><button id="convert-action-button"><i class="fas fa-sync-alt"></i>
+                        Konversi</button><button id="clear-action-button"><i class="fas fa-eraser"></i>
+                        Hapus</button><button id="copy-action-button"><i class="fas fa-copy"></i> Salin</button></div>
+                <div class="form-field-group"><label for="conversion-output"><i class="fas fa-star"></i> Hasil Aksara
+                        Batak</label><textarea id="conversion-output"
+                        placeholder="Hasil konversi akan muncul di sini..." rows="4" readonly></textarea></div>
             </div>
         </section>
 
-        <section id="legenda" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-dragon"></i></span><span
-                    class="aksara-hover">Kisah Legendaris Danau Toba</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Alkisah, di sebuah lembah subur di Sumatera
+        <section id="legenda" class="content-section">
+            <h2 data-aos="fade-up"><span class="background-icon"><i class="fas fa-dragon"></i></span><span
+                    class="interactive-aksara-text">Kisah Legendaris Danau Toba</span></h2>
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">Alkisah, di sebuah lembah subur
+                di Sumatera
                 Utara, hiduplah seorang petani yatim piatu yang rajin bernama Toba. Selain bertani, ia gemar memancing
                 di sungai terdekat. Suatu hari yang terik, kailnya disambar oleh sesuatu yang luar biasa kuat. Dengan
                 susah payah, ia berhasil menarik seekor ikan mas raksasa bersisik emas berkilauan. Ketika ia membawanya
                 pulang, ikan itu secara ajaib berubah menjadi seorang putri jelita.</p>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="150">Sang putri, yang mengaku dikutuk menjadi
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="150">Sang putri, yang mengaku dikutuk
+                menjadi
                 ikan, setuju untuk menikah dengan Toba dengan satu syarat mutlak: Toba tidak boleh sekali pun mengungkap
-                asal-usulnya sebagai ikan kepada siapa pun. Toba menyanggupinya dengan sungguh-sungguh. Mereka pun hidup
+                asal-ulnya sebagai ikan kepada siapa pun. Toba menyanggupinya dengan sungguh-sungguh. Mereka pun hidup
                 bahagia dan dikaruniai seorang anak laki-laki yang diberi nama Samosir. Namun, Samosir tumbuh menjadi
                 anak yang sangat rakus dan pemalas. Ia selalu merasa lapar dan sering membuat ibunya kewalahan.</p>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="200">Suatu siang, sang ibu meminta Samosir
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="200">Suatu siang, sang ibu meminta
+                Samosir
                 mengantarkan bekal makanan untuk Toba yang sedang bekerja di ladang. Di tengah perjalanan, karena tak
                 tahan menahan lapar, Samosir melahap habis bekal untuk ayahnya. Setibanya di ladang, Toba yang sudah
                 sangat lelah dan lapar mendapati bekalnya kosong. Murka karena ulah anaknya, Toba kehilangan kendali dan
                 membentak, "Pantas kelakuanmu begini, dasar kau anak ikan!"</p>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="250">Seketika, langit menjadi gelap dan petir
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="250">Seketika, langit menjadi gelap
+                dan petir
                 menyambar. Samosir berlari pulang sambil menangis dan mengadukan perkataan ayahnya. Hati sang ibu hancur
                 karena sumpahnya telah dilanggar. Ia menyuruh Samosir untuk segera lari ke bukit tertinggi. Setelah itu,
                 sang ibu berlari menuju sungai. Dari bekas telapak kakinya, menyemburlah mata air yang sangat deras.
@@ -1758,469 +1736,522 @@
                 bukit tempat Samosir berlindung menjadi Pulau Samosir.</p>
         </section>
 
-        <section id="falsafah" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-hands-holding-circle"></i></span><span
-                    class="aksara-hover">Falsafah Hidup Orang Batak</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Di balik adat dan budayanya yang kaya,
+        <section id="falsafah" class="content-section">
+            <h2 data-aos="fade-up"><span class="background-icon"><i class="fas fa-hands-holding-circle"></i></span><span
+                    class="interactive-aksara-text">Falsafah Hidup Orang Batak</span></h2>
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">Di balik adat dan budayanya yang
+                kaya,
                 masyarakat Batak memegang teguh falsafah hidup yang menjadi pedoman dalam kehidupan sehari-hari.</p>
-            <div class="card-grid">
-                <div class="card" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="aksara-hover">Dalihan Na Tolu</h3>
-                    <p class="aksara-hover">Secara harfiah berarti "Tungku Nan Tiga", ini adalah pilar sistem sosial
+            <div class="info-grid-layout">
+                <div class="info-panel" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="interactive-aksara-text">Dalihan Na Tolu</h3>
+                    <p class="interactive-aksara-text">Secara harfiah berarti "Tungku Nan Tiga", ini adalah pilar sistem
+                        sosial
                         Batak. Terdiri dari: <strong>Hula-hula</strong> (keluarga pihak istri, yang dihormati sebagai
                         sumber berkat), <strong>Dongan Tubu</strong> (saudara semarga, sebagai teman dan sekutu), dan
                         <strong>Boru</strong> (keluarga pihak perempuan, yang harus dilindungi dan disayangi).
                     </p>
                 </div>
-                <div class="card" data-aos="fade-up" data-aos-delay="300">
-                    <h3 class="aksara-hover">Hamoraon, Hagabeon, Hasangapon</h3>
-                    <p class="aksara-hover">Tiga cita-cita utama dalam hidup orang Batak. <strong>Hamoraon</strong>
+                <div class="info-panel" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="interactive-aksara-text">Hamoraon, Hagabeon, Hasangapon</h3>
+                    <p class="interactive-aksara-text">Tiga cita-cita utama dalam hidup orang Batak.
+                        <strong>Hamoraon</strong>
                         (Kekayaan) bukan hanya materi, tetapi juga kebaikan hati. <strong>Hagabeon</strong> (Memiliki
                         Keturunan) adalah harapan akan kelangsungan generasi. <strong>Hasangapon</strong> (Kehormatan)
-                        adalah martabat yang diraih melalui perbuatan baik dan kebijaksanaan.</p>
+                        adalah martabat yang diraih melalui perbuatan baik dan kebijaksanaan.
+                    </p>
                 </div>
-                <div class="card" data-aos="fade-up" data-aos-delay="400">
-                    <h3 class="aksara-hover">Marsirimpa, Masialoan</h3>
-                    <p class="aksara-hover">Prinsip gotong royong dan saling membantu. <strong>Marsirimpa</strong>
+                <div class="info-panel" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="interactive-aksara-text">Marsirimpa, Masialoan</h3>
+                    <p class="interactive-aksara-text">Prinsip gotong royong dan saling membantu.
+                        <strong>Marsirimpa</strong>
                         berarti memikul beban bersama-sama, sementara <strong>Masialoan</strong> berarti saling memberi
-                        dan menerima. Ini adalah fondasi kekuatan komunal masyarakat Batak dalam suka dan duka.</p>
+                        dan menerima. Ini adalah fondasi kekuatan komunal masyarakat Batak dalam suka dan duka.
+                    </p>
                 </div>
             </div>
         </section>
-        <section id="adat" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-gopuram"></i></span><span
-                    class="aksara-hover">Adat Istiadat</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Adat Batak adalah sebuah sistem kompleks
+        <section id="adat" class="content-section">
+            <h2 data-aos="fade-up"><span class="background-icon"><i class="fas fa-gopuram"></i></span><span
+                    class="interactive-aksara-text">Adat Istiadat</span></h2>
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">Adat Batak adalah sebuah sistem
+                kompleks
                 yang mengatur setiap siklus kehidupan, dari lahir hingga meninggal, dengan upacara yang sarat makna.</p>
-            <div class="card-grid">
-                <div class="card" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="aksara-hover">Perkawinan Adat (Pesta Unjuk)</h3>
-                    <p class="aksara-hover">Sebuah prosesi panjang dan sakral yang melibatkan beberapa tahapan seperti
+            <div class="info-grid-layout">
+                <div class="info-panel" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="interactive-aksara-text">Perkawinan Adat (Pesta Unjuk)</h3>
+                    <p class="interactive-aksara-text">Sebuah prosesi panjang dan sakral yang melibatkan beberapa
+                        tahapan seperti
                         Marhusip (perundingan rahasia), Martumpol (pertunangan di gereja), hingga puncaknya Pesta Unjuk,
                         di mana keluarga besar berkumpul, manortor (menari), dan memberikan Ulos sebagai simbol restu.
                     </p>
                 </div>
-                <div class="card" data-aos="fade-up" data-aos-delay="300">
-                    <h3 class="aksara-hover">Kelahiran Anak (Mangharoan)</h3>
-                    <p class="aksara-hover">Upacara syukuran atas kelahiran seorang anak, di mana keluarga dari pihak
+                <div class="info-panel" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="interactive-aksara-text">Kelahiran Anak (Mangharoan)</h3>
+                    <p class="interactive-aksara-text">Upacara syukuran atas kelahiran seorang anak, di mana keluarga
+                        dari pihak
                         ibu (Hula-hula) akan datang membawa makanan khas dan Ulos Parompa (kain gendongan) sebagai
                         simbol doa dan harapan agar anak tersebut tumbuh sehat dan menjadi berkat.</p>
                 </div>
-                <div class="card" data-aos="fade-up" data-aos-delay="400">
-                    <h3 class="aksara-hover">Upacara Kematian (Saur Matua)</h3>
-                    <p class="aksara-hover">Upacara pemakaman yang paling terhormat, diperuntukkan bagi orang tua yang
+                <div class="info-panel" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="interactive-aksara-text">Upacara Kematian (Saur Matua)</h3>
+                    <p class="interactive-aksara-text">Upacara pemakaman yang paling terhormat, diperuntukkan bagi orang
+                        tua yang
                         meninggal setelah melihat anak-anaknya menikah dan memiliki cucu. Pesta ini bisa berlangsung
                         berhari-hari, diiringi musik gondang dan tarian sebagai bentuk penghormatan terakhir atas
                         kehidupan yang paripurna.</p>
                 </div>
             </div>
         </section>
-        <section id="destinasi" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-map-marked-alt"></i></span><span
-                    class="aksara-hover">Destinasi Wajib Kunjung</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Jelajahi pesona alam dan kekayaan budaya di
-                sekitar Danau Toba yang legendaris.</p>
-            <div class="galeri">
-                <div class="galeri-item" data-aos="fade-up"><img src="aset/gambar/samosir.jpg" alt="Pulau Samosir">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Pulau Samosir</h3>
-                        <p class="aksara-hover">Jantung budaya Batak dengan pemandangan dan desa adat yang indah.</p>
+
+        <section id="destinasi" class="content-section">
+            <h2 data-aos="fade-up"><span class="background-icon"><i class="fas fa-map-marked-alt"></i></span><span
+                    class="interactive-aksara-text">Destinasi Wajib Kunjung</span></h2>
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">Jelajahi pesona alam dan kekayaan
+                budaya di
+                sekitar Danau Toba yang legendaris melalui galeri interaktif kami.</p>
+
+            <div class="destination-carousel-container" data-aos="fade-up" data-aos-delay="200">
+                <div class="destination-carousel-track" id="destination-carousel">
+
+                    <div class="carousel-card" data-index="0">
+                        <img src="aset/gambar/samosir.jpg" alt="Pulau Samosir">
+                        <div class="carousel-card-body">
+                            <h3 class="interactive-aksara-text">Pulau Samosir</h3>
+                            <p class="interactive-aksara-text">Jantung budaya Batak dengan pemandangan danau yang
+                                memukau
+                                serta desa adat yang kaya sejarah.</p>
+                        </div>
+                    </div>
+
+                    <div class="carousel-card" data-index="1">
+                        <img src="aset/gambar/air.jpg" alt="Air Terjun Sipiso-piso">
+                        <div class="carousel-card-body">
+                            <h3 class="interactive-aksara-text">Air Terjun Sipiso-piso</h3>
+                            <p class="interactive-aksara-text">Salah satu air terjun tertinggi di Indonesia, jatuh dari
+                                ketinggian 120 meter dengan pemandangan Danau Toba.</p>
+                        </div>
+                    </div>
+
+                    <div class="carousel-card" data-index="2">
+                        <img src="aset/gambar/siallagan.jpg" alt="Huta Siallagan">
+                        <div class="carousel-card-body">
+                            <h3 class="interactive-aksara-text">Huta Siallagan</h3>
+                            <p class="interactive-aksara-text">Desa kuno yang terkenal dengan 'Batu Parsidangan', tempat
+                                pengadilan dan eksekusi di masa lampau.</p>
+                        </div>
+                    </div>
+
+                    <div class="carousel-card" data-index="3">
+                        <img src="aset/gambar/menara.jpg" alt="Menara Pandang Tele">
+                        <div class="carousel-card-body">
+                            <h3 class="interactive-aksara-text">Menara Pandang Tele</h3>
+                            <p class="interactive-aksara-text">Menawarkan panorama spektakuler Danau Toba dan Pulau
+                                Samosir
+                                dari sudut pandang yang tinggi.</p>
+                        </div>
+                    </div>
+
+                    <div class="carousel-card" data-index="4">
+                        <img src="aset/gambar/holbung.jpg" alt="Bukit Holbung">
+                        <div class="carousel-card-body">
+                            <h3 class="interactive-aksara-text">Bukit Holbung</h3>
+                            <p class="interactive-aksara-text">Dikenal sebagai "Bukit Teletubbies", menawarkan hamparan
+                                perbukitan hijau yang mempesona.</p>
+                        </div>
+                    </div>
+
+                    <div class="carousel-card" data-index="5">
+                        <img src="aset/gambar/meat by feli.jpg" alt="Desa Meat">
+                        <div class="carousel-card-body">
+                            <h3 class="interactive-aksara-text">Desa Meat</h3>
+                            <p class="interactive-aksara-text">Salah satu desa di tepi Danau Toba, menawarkan
+                                pemandangan
+                                alam yang memukau dan persawahan yang indah.</p>
+                        </div>
+                    </div>
+
+                    <div class="carousel-card" data-index="6">
+                        <img src="aset/gambar/maimun.jpg" alt="Istana Maimun">
+                        <div class="carousel-card-body">
+                            <h3 class="interactive-aksara-text">Istana Maimun</h3>
+                            <p class="interactive-aksara-text">Ikon kota Medan, istana Kesultanan Deli ini memadukan
+                                arsitektur Melayu, Islam, dan Eropa.</p>
+                        </div>
+                    </div>
+
+                    <div class="carousel-card" data-index="7">
+                        <img src="aset/gambar/pandan.jpg" alt="Pantai Pandan">
+                        <div class="carousel-card-body">
+                            <h3 class="interactive-aksara-text">Pantai Pandan</h3>
+                            <p class="interactive-aksara-text">Destinasi wisata pantai yang eksotis dengan hamparan
+                                pasir
+                                putih dan ombak yang menenangkan.</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="carousel-pagination" id="destination-carousel-pagination"></div>
+            </div>
+        </section>
+
+        <section id="makanan" class="content-section">
+            <h2 data-aos="fade-up"><span class="background-icon"><i class="fas fa-utensils"></i></span><span
+                    class="interactive-aksara-text">Sajian Kuliner Khas</span></h2>
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">Cita rasa masakan Batak dikenal
+                kuat, pedas,
+                dan kaya akan rempah-rempah unik seperti andaliman, si merica Batak.</p>
+            <div class="culinary-grid">
+                <div class="culinary-item" data-aos="fade-up"><img src="aset/gambar/arsik.jpg" alt="Arsik">
+                    <div class="culinary-description">
+                        <h3 class="interactive-aksara-text">Arsik</h3>
+                        <p class="interactive-aksara-text">Ikan mas bumbu kuning kaya rempah, dimasak hingga kuahnya
+                            mengering.
+                            Sajian wajib dalam upacara adat.</p>
                     </div>
                 </div>
-                <div class="galeri-item" data-aos="fade-up" data-aos-delay="100"><img src="aset/gambar/siallagan.jpg"
-                        alt="Huta Siallagan">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Huta Siallagan</h3>
-                        <p class="aksara-hover">Desa kuno yang terkenal dengan 'Batu Parsidangan', tempat pengadilan dan
-                            eksekusi di masa lampau.</p>
+                <div class="culinary-item" data-aos="fade-up" data-aos-delay="100"><img src="aset/gambar/BPK.jpg"
+                        alt="Babi Panggang">
+                    <div class="culinary-description">
+                        <h3 class="interactive-aksara-text">Babi Panggang Karo (BPK)</h3>
+                        <p class="interactive-aksara-text">Daging babi panggang renyah disajikan dengan sambal pedas
+                            andaliman dan
+                            saus khas dari darah.</p>
                     </div>
                 </div>
-                <div class="galeri-item" data-aos="fade-up" data-aos-delay="200"><img src="aset/gambar/menara.jpg"
-                        alt="Menara Pandang Tele">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Menara Pandang Tele</h3>
-                        <p class="aksara-hover">Menawarkan salah satu pemandangan panorama Danau Toba dan Pulau Samosir
-                            yang paling spektakuler dari ketinggian.</p>
+                <div class="culinary-item" data-aos="fade-up" data-aos-delay="200"><img src="aset/gambar/napinadar.jpg"
+                        alt="Manuk Napinadar">
+                    <div class="culinary-description">
+                        <h3 class="interactive-aksara-text">Manuk Napinadar</h3>
+                        <p class="interactive-aksara-text">Ayam panggang yang disiram dengan saus kental dari darah ayam
+                            itu
+                            sendiri, dibumbui andaliman dan rempah lainnya.</p>
                     </div>
                 </div>
-                <div class="galeri-item" data-aos="fade-up" data-aos-delay="300"><img src="aset/gambar/air.jpg"
-                        alt="Air Terjun Sipiso-piso">
-                    <div class="galeri-overlay">
-                        <h3 class="aksara-hover">Air Terjun Sipiso-piso</h3>
-                        <p class="aksara-hover">Salah satu air terjun tertinggi di Indonesia, jatuh dari ketinggian 120
-                            meter ke ngarai yang dalam.</p>
+                <div class="culinary-item" data-aos="fade-up" data-aos-delay="300"><img src="aset/gambar/lapet.jpeg"
+                        alt="Lapet">
+                    <div class="culinary-description">
+                        <h3 class="interactive-aksara-text">Lapet</h3>
+                        <p class="interactive-aksara-text">Kue tradisional berbentuk piramida dari tepung beras dan
+                            kelapa parut,
+                            berisi gula merah, lalu dibungkus daun pisang dan dikukus.</p>
+                    </div>
+                </div>
+            </div>
+            <h3 class="interactive-aksara-text" style="text-align:center; margin-top:64px;" data-aos="fade-up">Minuman
+                Khas</h3>
+            <div class="culinary-grid beverages-grid">
+                <div class="culinary-item" data-aos="fade-up" data-aos-delay="100"><img src="aset/gambar/tuak.jpeg"
+                        alt="Tuak">
+                    <div class="culinary-description">
+                        <h3 class="interactive-aksara-text">Tuak</h3>
+                        <p class="interactive-aksara-text">Minuman beralkohol tradisional dari nira pohon aren atau
+                            kelapa yang
+                            difermentasi. Memiliki rasa manis sedikit asam dan peran sosial yang kuat.</p>
+                    </div>
+                </div>
+                <div class="culinary-item" data-aos="fade-up" data-aos-delay="200"><img src="aset/gambar/kopi.jpg"
+                        alt="Kopi">
+                    <div class="culinary-description">
+                        <h3 class="interactive-aksara-text">Kopi Sidikalang</h3>
+                        <p class="interactive-aksara-text">Salah satu kopi terbaik Indonesia dari dataran tinggi Dairi.
+                            Dikenal
+                            memiliki aroma kuat, keasaman rendah, dan cita rasa yang mantap.</p>
                     </div>
                 </div>
             </div>
         </section>
-       
-         <section id="makanan" class="section">
-        <h2 data-aos="fade-up">
-            <span class="section-icon"><i class="fas fa-utensils"></i></span>
-            <span class="aksara-hover">Sajian Kuliner Khas</span>
-        </h2>
-        <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">
-            Cita rasa masakan Batak dikenal kuat, pedas, dan kaya akan rempah-rempah unik seperti andaliman, si merica Batak.
-        </p>
-        
-        <div class="food-grid">
-            <div class="food-item" data-aos="fade-up">
-                <img src="aset/gambar/arsik.jpg" alt="Arsik">
-                <div class="food-content">
-                    <h3 class="aksara-hover">Arsik</h3>
-                    <p class="aksara-hover">Ikan mas bumbu kuning kaya rempah, dimasak hingga kuahnya mengering. Sajian wajib dalam upacara adat.</p>
-                </div>
-            </div>
-            <div class="food-item" data-aos="fade-up" data-aos-delay="100">
-                <img src="aset/gambar/BPK.jpg" alt="Babi Panggang">
-                <div class="food-content">
-                    <h3 class="aksara-hover">Babi Panggang Karo (BPK)</h3>
-                    <p class="aksara-hover">Daging babi panggang renyah disajikan dengan sambal pedas andaliman dan saus khas dari darah.</p>
-                </div>
-            </div>
-            <div class="food-item" data-aos="fade-up" data-aos-delay="200">
-                <img src="aset/gambar/napinadar.jpg" alt="Manuk Napinadar">
-                <div class="food-content">
-                    <h3 class="aksara-hover">Manuk Napinadar</h3>
-                    <p class="aksara-hover">Ayam panggang yang disiram dengan saus kental dari darah ayam itu sendiri, dibumbui andaliman dan rempah lainnya.</p>
-                </div>
-            </div>
-            <div class="food-item" data-aos="fade-up" data-aos-delay="300">
-                <img src="aset/gambar/lapet.jpeg" alt="Lapet">
-                <div class="food-content">
-                    <h3 class="aksara-hover">Lapet</h3>
-                    <p class="aksara-hover">Kue tradisional berbentuk piramida dari tepung beras dan kelapa parut, berisi gula merah, lalu dibungkus daun pisang dan dikukus.</p>
-                </div>
-            </div>
-        </div>
-
-        <h3 class="aksara-hover title-minuman" data-aos="fade-up">Minuman Khas</h3>
-        
-        <div class="bento-slider-container">
-            <div class="bento-slider-wrapper" id="drinksSlider">
-
-                <div class="bento-slider-item" data-index="0">
-                    <img src="aset/gambar/tuak.jpeg" alt="Tuak">
-                    <div class="bento-slider-content">
-                        <h3>Tuak</h3>
-                        <p>Minuman beralkohol tradisional dari nira pohon aren atau kelapa yang difermentasi. Memiliki rasa manis sedikit asam dan peran sosial yang kuat.</p>
-                    </div>
-                </div>
-
-                <div class="bento-slider-item" data-index="1">
-                    <img src="aset/gambar/kopi.jpg" alt="Kopi Sidikalang">
-                    <div class="bento-slider-content">
-                        <h3>Kopi Sidikalang</h3>
-                        <p>Salah satu kopi terbaik Indonesia dari dataran tinggi Dairi. Dikenal memiliki aroma kuat, keasaman rendah, dan cita rasa yang mantap.</p>
-                    </div>
-                </div>
-
-                <div class="bento-slider-item" data-index="1">
-                    <img src="aset/gambar/SusuKitik.jpg" alt="Susu Kitik">
-                    <div class="bento-slider-content">
-                        <h3>Tawar Karo dan Susu Kitik</h3>
-                        <p>adalah teh susu telur dan campuran rempah-rempah khas Karo, yang umumnya disajikan di warung kopi daerah tersebut. </p>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="bento-slider-nav" id="drinksSliderNav"></div>
-        </div>
-    </section>
-
-        <section id="peta" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-map"></i></span><span
-                    class="aksara-hover">Peta Budaya Interaktif</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Jelajahi lokasi-lokasi budaya penting di
+        <section id="peta" class="content-section">
+            <h2 data-aos="fade-up"><span class="background-icon"><i class="fas fa-map"></i></span><span
+                    class="interactive-aksara-text">Peta Budaya Interaktif</span></h2>
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">Jelajahi lokasi-lokasi budaya
+                penting di
                 sekitar Danau Toba. Klik pin pada peta untuk melihat informasi.</p>
-            <div id="map" data-aos="zoom-in" data-aos-delay="200"></div>
+            <div id="interactive-map-area" data-aos="zoom-in" data-aos-delay="200"></div>
         </section>
-        <section id="kuis" class="section">
-            <h2 data-aos="fade-up"><span class="section-icon"><i class="fas fa-question-circle"></i></span><span
-                    class="aksara-hover">Kuis Aksara Batak</span></h2>
-            <p class="aksara-hover" data-aos="fade-up" data-aos-delay="100">Uji pengetahuanmu! Tebak arti dari aksara
+        <section id="kuis" class="content-section">
+            <h2 data-aos="fade-up"><span class="background-icon"><i class="fas fa-question-circle"></i></span><span
+                    class="interactive-aksara-text">Kuis Aksara Batak</span></h2>
+            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">Uji pengetahuanmu! Tebak arti
+                dari aksara
                 Batak yang ditampilkan.</p>
-            <div class="quiz-container" data-aos="fade-up" data-aos-delay="200">
-                <div id="quiz-info"><span id="quiz-progress">Soal 1/10</span><span id="quiz-score">Skor: 0</span></div>
-                <div id="quiz-question">ᯀ</div>
-                <div id="quiz-options" class="btn-group"></div>
-                <div id="quiz-feedback"></div>
-                <div class="btn-group" style="margin-top: 2rem;"><button id="nextQuestionBtn" style="display: none;"><i
-                            class="fas fa-arrow-right"></i> Soal Berikutnya</button></div>
+            <div class="quiz-module" data-aos="fade-up" data-aos-delay="200">
+                <div id="quiz-status-bar"><span id="quiz-counter">Soal 1/10</span><span id="quiz-score-display">Skor:
+                        0</span></div>
+                <div id="quiz-prompt-display">ᯀ</div>
+                <div id="quiz-choices-area" class="button-cluster"></div>
+                <div id="quiz-result-message"></div>
+                <div class="button-cluster" style="margin-top: 32px;"><button id="quiz-next-button"
+                        style="display: none;"><i class="fas fa-arrow-right"></i> Soal Berikutnya</button></div>
             </div>
         </section>
 
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3 class="aksara-hover">Tentang Website Ini</h3>
-                <p class="aksara-hover">Website Aksara Batak ini dibangun untuk melestarikan dan mempromosikan
+    <footer class="main-footer">
+        <div class="footer-layout">
+            <div class="footer-column">
+                <h3 class="interactive-aksara-text">Tentang Website Ini</h3>
+                <p class="interactive-aksara-text">Website Aksara Batak ini dibangun untuk melestarikan dan
+                    mempromosikan
                     keanekaragaman budaya Batak melalui teknologi digital.</p>
             </div>
-            <div class="footer-section">
-                <h3 class="aksara-hover">Kontak</h3>
+            <div class="footer-column">
+                <h3 class="interactive-aksara-text">Kontak</h3>
                 <p><i class="fas fa-map-marker-alt"></i> Danau Toba, Indonesia</p><a
                     href="mailto:felicyapanjaitan790@gmail.com"><i class="fas fa-envelope"></i>
                     felicyapanjaitan790@gmail.com</a><br><a href="mailto:oktovaaaaa@gmail.com"><i
                         class="fas fa-envelope"></i> oktovaaaaa@gmail.com</a>
             </div>
-            <div class="footer-section">
-                <h3 class="aksara-hover">Ikuti Kami</h3><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a><a
-                    href="#"><i class="fab fa-instagram"></i> Instagram</a><a href="#"><i class="fab fa-youtube"></i>
-                    YouTube</a>
+            <div class="footer-column">
+                <h3 class="interactive-aksara-text">Ikuti Kami</h3>
+                <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
             </div>
+
         </div>
-        <div class="footer-bottom">
+        <div class="footer-credit-line">
             <p>© 2025 Aksara Batak. Dibuat dengan untuk melestarikan Budaya Batak.</p>
         </div>
     </footer>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // PRELOADER & AOS
-        const preloader = document.getElementById('preloader');
-        window.addEventListener('load', () => { preloader.classList.add('loaded'); });
-        AOS.init({ duration: 800, once: true, easing: 'ease-in-out-cubic' });
 
-        // NAVIGASI MOBILE
-        const navToggleBtn = document.getElementById('navToggleBtn');
-        const navLinksMobile = document.getElementById('navLinksMobile');
-        const navIcon = navToggleBtn.querySelector('i');
-        navToggleBtn.addEventListener('click', () => { navLinksMobile.classList.toggle('show'); navIcon.className = navLinksMobile.classList.contains('show') ? 'fas fa-times' : 'fas fa-bars'; });
-        document.querySelectorAll('.nav-links-mobile a').forEach(link => { link.addEventListener('click', () => { if (navLinksMobile.classList.contains('show')) { navLinksMobile.classList.remove('show'); navIcon.className = 'fas fa-bars'; } }); });
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const loadingOverlay = document.getElementById('loading-screen');
+            window.addEventListener('load', () => { loadingOverlay.classList.add('hidden'); });
+            AOS.init({ duration: 800, once: true, easing: 'ease-in-out-cubic' });
 
-        // PENGATUR TEMA
-        const themeToggleBtn = document.getElementById('themeToggleBtn');
-        const body = document.body;
-        const applyTheme = (theme) => {
-            body.setAttribute('data-theme', theme);
-            document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-            localStorage.setItem('theme', theme);
-            if (window.map) {
-                const mapTileUrl = theme === 'dark' ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png' : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-                window.map.eachLayer(layer => { if (layer instanceof L.TileLayer) layer.setUrl(mapTileUrl); });
-            }
-        };
-        themeToggleBtn.addEventListener('click', () => applyTheme(body.dataset.theme === 'dark' ? 'light' : 'dark'));
-        const savedTheme = localStorage.getItem('theme') || 'light';
-
-        // EFEK PARALLAX HEADER
-        const headerContent = document.querySelector('.header-content');
-        window.addEventListener('scroll', () => { headerContent.style.transform = `translateY(${window.scrollY * 0.4}px)`; });
-
-        // FUNGSI TRANSLITERASI AKSARA
-        const aksaraMap = { 'h': 'ᯂ', 'k': 'ᯄ', 'b': 'ᯅ', 'p': 'ᯇ', 'n': 'ᯉ', 'w': 'ᯋ', 'g': 'ᯎ', 'j': 'ᯐ', 'd': 'ᯑ', 'r': 'ᯒ', 'm': 'ᯔ', 't': 'ᯖ', 's': 'ᯘ', 'y': 'ᯛ', 'l': 'ᯞ', 'ng': 'ᯝ', 'ny': 'ᯠ', 'a': 'ᯀ', 'i': 'ᯤ', 'u': 'ᯥ', 'diacritics': { 'i': 'ᯪ', 'u': 'ᯫ', 'e': 'ᯭ', 'o': 'ᯬ' }, 'pangolat': '᯲' };
-        const transliterate = (text) => {
-            text = text.toLowerCase().replace(/c/g, 'k').replace(/f/g, 'p').replace(/v/g, 'b').replace(/z/g, 'j').replace(/q/g, 'k').replace(/x/g, 'ks').replace(/[^a-z0-9\s]/g, '');
-            let result = ''; const vowels = 'aiueo'; let i = 0;
-            while (i < text.length) {
-                let twoChar = text.substring(i, i + 2); let oneChar = text[i];
-                let consonant = (aksaraMap[twoChar] && !vowels.includes(twoChar)) ? twoChar : oneChar;
-                if (aksaraMap[consonant] && !vowels.includes(consonant)) {
-                    const len = consonant.length; const vowel = text[i + len];
-                    if (vowel && 'ioue'.includes(vowel)) { result += aksaraMap[consonant] + aksaraMap.diacritics[vowel]; i += len + 1; }
-                    else if (vowel && 'a' === vowel) { result += aksaraMap[consonant]; i += len + 1; }
-                    else { result += aksaraMap[consonant] + aksaraMap.pangolat; i += len; }
-                } else {
-                    const char = text[i];
-                    if ('aiu'.includes(char)) result += aksaraMap[char];
-                    else if ('eo'.includes(char)) result += aksaraMap['a'] + aksaraMap.diacritics[char];
-                    else result += char;
-                    i++;
-                }
-            }
-            return result;
-        };
-
-        const titleEl = document.getElementById('interactive-title');
-        const originalTitleText = titleEl.dataset.text;
-        titleEl.innerHTML = originalTitleText.split('').map((char, i) => { if (char.trim() === '') return `<span style="width: 0.5ch;"> </span>`; return `<span data-latin="${char}" data-aksara="${transliterate(char)}" style="transition-delay: ${i * 30}ms;">${char}</span>`; }).join('');
-        titleEl.addEventListener('mouseenter', () => titleEl.querySelectorAll('span[data-aksara]').forEach(span => { span.textContent = span.dataset.aksara; span.classList.add('is-aksara-title'); }));
-        titleEl.addEventListener('mouseleave', () => titleEl.querySelectorAll('span[data-latin]').forEach(span => { span.textContent = span.dataset.latin; span.classList.remove('is-aksara-title'); }));
-        document.querySelectorAll('.aksara-hover').forEach(el => { const originalText = el.textContent; el.setAttribute('data-latin', originalText); el.addEventListener('mouseenter', () => { el.textContent = transliterate(el.getAttribute('data-latin')); el.classList.add('is-aksara'); }); el.addEventListener('mouseleave', () => { el.textContent = el.getAttribute('data-latin'); el.classList.remove('is-aksara'); }); });
-
-        window.konversiAksara = () => { document.getElementById('outputText').value = transliterate(document.getElementById('inputText').value); };
-        window.clearText = () => { document.getElementById('inputText').value = ''; document.getElementById('outputText').value = ''; };
-        window.copyText = () => { navigator.clipboard.writeText(document.getElementById('outputText').value).then(() => alert('Teks berhasil disalin!')); };
-
-
-
-        const sliderWrapper = document.getElementById('drinksSlider');
-        if (sliderWrapper) {
-            const sliderItems = Array.from(sliderWrapper.getElementsByClassName('bento-slider-item'));
-            const navContainer = document.getElementById('drinksSliderNav');
-            let currentIndex = 0;
-            let touchStartX = 0;
-            let touchEndX = 0;
-            let autoSwapInterval = null;
-
-            const startAutoSwap = () => {
-                clearInterval(autoSwapInterval);
-                if (sliderItems.length > 1) {
-                    autoSwapInterval = setInterval(showNextItem, 4000);
-                }
-            };
-
-            const stopAutoSwap = () => {
-                clearInterval(autoSwapInterval);
-            };
-
-            if (sliderItems.length > 0) {
-                sliderItems.forEach((_, index) => {
-                    const dot = document.createElement('button');
-                    dot.classList.add('bento-slider-dot');
-                    dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
-                    dot.addEventListener('click', () => goToItem(index));
-                    navContainer.appendChild(dot);
-                });
-            }
-            
-            const dots = Array.from(navContainer.getElementsByClassName('bento-slider-dot'));
-
-            function updateSliderState() {
-                const totalItems = sliderItems.length;
-                if (totalItems <= 1) {
-                    sliderItems.forEach((item) => {
-                        item.classList.remove('is-bento-prev', 'is-bento-next');
-                        item.classList.add('is-bento-active');
-                    });
-                    if(navContainer) navContainer.style.display = 'none';
-                    return;
-                }
-                 if(navContainer) navContainer.style.display = 'flex';
-
-                sliderItems.forEach((item, index) => {
-                    item.classList.remove('is-bento-active', 'is-bento-prev', 'is-bento-next');
-                    if (index === currentIndex) {
-                        item.classList.add('is-bento-active');
-                    } else if (index === (currentIndex - 1 + totalItems) % totalItems) {
-                        item.classList.add('is-bento-prev');
-                    } else if (index === (currentIndex + 1) % totalItems) {
-                        item.classList.add('is-bento-next');
+            const mobileNavToggler = document.getElementById('mobile-nav-toggler');
+            const mobileLinksContainer = document.getElementById('mobile-links-container');
+            const mobileNavIcon = mobileNavToggler.querySelector('i');
+            mobileNavToggler.addEventListener('click', function () {
+                mobileLinksContainer.classList.toggle('active');
+                mobileNavIcon.className = mobileLinksContainer.classList.contains('active') ? 'fas fa-times' : 'fas fa-bars';
+            });
+            document.querySelectorAll('.mobile-nav-menu a').forEach(item => {
+                item.addEventListener('click', () => {
+                    if (mobileLinksContainer.classList.contains('active')) {
+                        mobileLinksContainer.classList.remove('active');
+                        mobileNavIcon.className = 'fas fa-bars';
                     }
                 });
+            });
 
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('is-bento-dot-active', index === currentIndex);
+            const themeButton = document.getElementById('theme-button');
+            const documentBody = document.body;
+            const setSiteTheme = (selectedTheme) => {
+                documentBody.setAttribute('data-theme', selectedTheme);
+                document.getElementById('theme-display-icon').className = selectedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                localStorage.setItem('userTheme', selectedTheme);
+                if (window.interactiveMap) {
+                    const tileLayerUrl = selectedTheme === 'dark' ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png' : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                    window.interactiveMap.eachLayer(layer => { if (layer instanceof L.TileLayer) layer.setUrl(tileLayerUrl); });
+                }
+            };
+            themeButton.addEventListener('click', () => setSiteTheme(documentBody.dataset.theme === 'dark' ? 'light' : 'dark'));
+            const preferredTheme = localStorage.getItem('userTheme') || 'light';
+
+            const headerTextWrapper = document.querySelector('.header-text-container');
+            window.addEventListener('scroll', () => { headerTextWrapper.style.transform = `translateY(${window.scrollY * 0.4}px)`; });
+
+            const scriptMapping = { 'h': 'ᯂ', 'k': 'ᯄ', 'b': 'ᯅ', 'p': 'ᯇ', 'n': 'ᯉ', 'w': 'ᯋ', 'g': 'ᯎ', 'j': 'ᯐ', 'd': 'ᯑ', 'r': 'ᯒ', 'm': 'ᯔ', 't': 'ᯖ', 's': 'ᯘ', 'y': 'ᯛ', 'l': 'ᯞ', 'ng': 'ᯝ', 'ny': 'ᯠ', 'a': 'ᯀ', 'i': 'ᯤ', 'u': 'ᯥ', 'marks': { 'i': 'ᯪ', 'u': 'ᯫ', 'e': 'ᯭ', 'o': 'ᯬ' }, 'vowelKiller': '᯲' };
+            const convertToBatakScript = (latinString) => {
+                latinString = latinString.toLowerCase().replace(/c/g, 'k').replace(/f/g, 'p').replace(/v/g, 'b').replace(/z/g, 'j').replace(/q/g, 'k').replace(/x/g, 'ks').replace(/[^a-z0-9\s]/g, '');
+                let batakResult = ''; const vowelChars = 'aiueo'; let index = 0;
+                while (index < latinString.length) {
+                    let twoChars = latinString.substring(index, index + 2); let oneChar = latinString[index];
+                    let consonantBase = (scriptMapping[twoChars] && !vowelChars.includes(twoChars)) ? twoChars : oneChar;
+                    if (scriptMapping[consonantBase] && !vowelChars.includes(consonantBase)) {
+                        const baseLength = consonantBase.length; const nextVowel = latinString[index + baseLength];
+                        if (nextVowel && 'ioue'.includes(nextVowel)) { batakResult += scriptMapping[consonantBase] + scriptMapping.marks[nextVowel]; index += baseLength + 1; }
+                        else if (nextVowel && 'a' === nextVowel) { batakResult += scriptMapping[consonantBase]; index += baseLength + 1; }
+                        else { batakResult += scriptMapping[consonantBase] + scriptMapping.vowelKiller; index += baseLength; }
+                    } else {
+                        const current_char = latinString[index];
+                        if ('aiu'.includes(current_char)) batakResult += scriptMapping[current_char];
+                        else if ('eo'.includes(current_char)) batakResult += scriptMapping['a'] + scriptMapping.marks[current_char];
+                        else batakResult += current_char;
+                        index++;
+                    }
+                }
+                return batakResult;
+            };
+
+            const headerTitleElement = document.getElementById('dynamic-header-title');
+            const titleSourceText = headerTitleElement.dataset.text;
+
+            headerTitleElement.innerHTML = titleSourceText.split(' ').map(word => {
+                const spanForWord = document.createElement('span');
+                spanForWord.style.display = 'inline-block';
+                spanForWord.innerHTML = word.split('').map((character, i) =>
+                    `<span data-latin-char="${character}" data-aksara-char="${convertToBatakScript(character)}" style="transition-delay: ${i * 30}ms;">${character}</span>`
+                ).join('');
+                return spanForWord.outerHTML;
+            }).join(' ');
+
+            headerTitleElement.addEventListener('mouseenter', () => headerTitleElement.querySelectorAll('span[data-aksara-char]').forEach(span => { span.textContent = span.dataset.aksaraChar; span.classList.add('title-in-aksara'); }));
+            headerTitleElement.addEventListener('mouseleave', () => headerTitleElement.querySelectorAll('span[data-latin-char]').forEach(span => { span.textContent = span.dataset.latinChar; span.classList.remove('title-in-aksara'); }));
+
+            document.querySelectorAll('.interactive-aksara-text').forEach(element => { const baseText = element.textContent; element.setAttribute('data-original-text', baseText); element.addEventListener('mouseenter', () => { element.textContent = convertToBatakScript(element.getAttribute('data-original-text')); element.classList.add('in-aksara-font'); }); element.addEventListener('mouseleave', () => { element.textContent = element.getAttribute('data-original-text'); element.classList.remove('in-aksara-font'); }); });
+
+            document.getElementById('convert-action-button').onclick = () => { document.getElementById('conversion-output').value = convertToBatakScript(document.getElementById('latin-input-field').value); };
+            document.getElementById('clear-action-button').onclick = () => { document.getElementById('latin-input-field').value = ''; document.getElementById('conversion-output').value = ''; };
+            document.getElementById('copy-action-button').onclick = () => { navigator.clipboard.writeText(document.getElementById('conversion-output').value).then(() => alert('Teks berhasil disalin!')); };
+
+            window.interactiveMap = L.map('interactive-map-area').setView([2.6, 98.9], 9);
+            const tileLayerUrl = preferredTheme === 'dark' ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png' : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            L.tileLayer(tileLayerUrl, { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>' }).addTo(window.interactiveMap);
+            [{ lat: 2.659, lon: 98.835, name: "Pulau Samosir" }, { lat: 2.668, lon: 98.868, name: "Desa Tomok" }, { lat: 2.553, lon: 98.683, name: "Parapat" }, { lat: 2.868, lon: 98.535, name: "Air Terjun Sipiso-piso" }, { lat: 2.500, lon: 99.066, name: "Bukit Holbung" }].forEach(point => { L.marker([point.lat, point.lon]).addTo(window.interactiveMap).bindPopup(`<b>${point.name}</b>`); });
+
+            setSiteTheme(preferredTheme);
+
+            const allQuizQuestions = [
+                { prompt: 'Aksara Batak untuk "pa" adalah...', choices: ['ᯅ', 'ᯇ', 'ᯑ', 'ᯎ'], correct: 'ᯇ' },
+                { prompt: 'Aksara `ᯉ᯲` dibaca...', choices: ['na', 'n', 'ni', 'nga'], correct: 'n' },
+                { prompt: 'Bagaimana cara menulis "lima" dalam Aksara Batak?', choices: ['ᯞᯔ', 'ᯞᯪᯔ', 'ᯞᯔᯪ', 'ᯒᯪᯔ'], correct: 'ᯞᯪᯔ' },
+                { prompt: 'Aksara Batak untuk "ga" adalah...', choices: ['ᯎ', 'ᯐ', 'ᯑ', 'ᯂ'], correct: 'ᯎ' },
+                { prompt: 'Aksara `ᯂᯬ` dibaca...', choices: ['ha', 'hi', 'hu', 'ho'], correct: 'ho' },
+                { prompt: 'Bagaimana cara menulis "anak" dalam Aksara Batak?', choices: ['ᯀᯉᯂ', 'ᯀᯉᯄ᯲', 'ᯀᯉᯄ', 'ᯀᯉ᯲ᯄ'], correct: 'ᯀᯉᯄ᯲' },
+                { prompt: 'Aksara Batak untuk "ta" adalah...', choices: ['ᯖ', 'ᯑ', 'ᯐ', 'ᯘ'], correct: 'ᯖ' },
+                { prompt: 'Aksara `ᯘᯮ` dibaca...', choices: ['sa', 'si', 'su', 'so'], correct: 'su' },
+                { prompt: 'Bagaimana cara menulis "surat" dalam Aksara Batak?', choices: ['ᯘᯮᯒᯖ', 'ᯘᯒᯖ᯲', 'ᯘᯮᯒᯖ᯲', 'ᯘᯮᯒ᯲ᯖ'], correct: 'ᯘᯮᯒᯖ᯲' },
+                { prompt: 'Aksara Batak untuk "da" adalah...', choices: ['ᯅ', 'ᯇ', 'ᯑ', 'ᯎ'], correct: 'ᯑ' },
+                { prompt: 'Gabungan aksara `ᯇᯒ᯲` dibaca...', choices: ['para', 'par', 'pira', 'pa + ra'], correct: 'par' },
+                { prompt: 'Bagaimana cara menulis "boru" dalam Aksara Batak?', choices: ['ᯅᯬᯒᯮ', 'ᯅᯒᯮ', 'ᯅᯬᯒ', 'ᯅᯒ'], correct: 'ᯅᯬᯒᯮ' },
+                { prompt: 'Aksara Batak untuk "ra" adalah...', choices: ['ᯞ', 'ᯛ', 'ᯒ', 'ᯘ'], correct: 'ᯒ' },
+                { prompt: 'Gabungan aksara `ᯀᯔ᯲` dibaca...', choices: ['ama', 'am', 'um', 'ma'], correct: 'am' },
+                { prompt: 'Bagaimana cara menulis "dalan" dalam Aksara Batak?', choices: ['ᯑᯞᯉ', 'ᯑᯞᯉ᯲', 'ᯑᯞᯪᯉ', 'ᯑ᯲ᯞᯉ'], correct: 'ᯑᯞᯉ᯲' },
+                { prompt: 'Aksara Batak untuk "sa" adalah...', choices: ['ᯘ', 'ᯂ', 'ᯛ', 'ᯓ'], correct: 'ᯘ' },
+                { prompt: 'Aksara `ᯅᯬᯑᯖ᯲` dibaca...', choices: ['bodata', 'bodat', 'badat', 'bodta'], correct: 'bodat' },
+                { prompt: 'Bagaimana cara menulis "horbo" (kerbau) dalam Aksara Batak?', choices: ['ᯂᯬᯒᯅᯬ', 'ᯂᯒᯅ', 'ᯂᯬᯒ᯲ᯅᯬ', 'ᯂᯬᯒ᯲ᯅ'], correct: 'ᯂᯬᯒ᯲ᯅᯬ' },
+                { prompt: 'Aksara Batak untuk "ma" adalah...', choices: ['ᯉ', 'ᯔ', 'ᯝ', 'ᯐ'], correct: 'ᯔ' },
+                { prompt: 'Aksara `ᯂᯮᯖ` dibaca...', choices: ['hata', 'hut', 'huta', 'hota'], correct: 'huta' }
+            ];
+            const quizPromptEl = document.getElementById('quiz-prompt-display');
+            const quizChoicesEl = document.getElementById('quiz-choices-area');
+            const quizFeedbackEl = document.getElementById('quiz-result-message');
+            const quizScoreEl = document.getElementById('quiz-score-display');
+            const quizProgressEl = document.getElementById('quiz-counter');
+            const quizNextButton = document.getElementById('quiz-next-button');
+            let quizCurrentIndex = 0, userScore = 0;
+
+            function randomizeArray(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[arr[i], arr[j]] = [arr[j], arr[i]]; } }
+            function renderQuizCard() {
+                if (quizCurrentIndex >= allQuizQuestions.length) {
+                    quizPromptEl.textContent = '🎉';
+                    quizFeedbackEl.textContent = `Kuis Selesai! Skor Akhir Anda: ${userScore} dari ${allQuizQuestions.length}`;
+                    quizChoicesEl.innerHTML = '';
+                    quizNextButton.style.display = 'none'; return;
+                }
+                quizFeedbackEl.textContent = '';
+                quizNextButton.style.display = 'none';
+                quizChoicesEl.innerHTML = '';
+                const currentItem = allQuizQuestions[quizCurrentIndex];
+                quizPromptEl.textContent = currentItem.prompt;
+                quizScoreEl.textContent = `Skor: ${userScore}`;
+                quizProgressEl.textContent = `Soal ${quizCurrentIndex + 1}/${allQuizQuestions.length}`;
+                const answerOptions = [...currentItem.choices];
+                randomizeArray(answerOptions);
+                const choicesWrapper = document.createElement('div');
+                choicesWrapper.className = 'button-cluster';
+                answerOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('quiz-answer-button');
+                    button.addEventListener('click', () => validateAnswer(option, currentItem.correct));
+                    choicesWrapper.appendChild(button);
                 });
+                quizChoicesEl.appendChild(choicesWrapper);
             }
-
-            function goToItem(index) {
-                stopAutoSwap();
-                currentIndex = index;
-                updateSliderState();
-                startAutoSwap();
+            function validateAnswer(userChoice, correctChoice) {
+                const choiceButtons = quizChoicesEl.querySelectorAll('.quiz-answer-button');
+                choiceButtons.forEach(btn => {
+                    btn.disabled = true;
+                    if (btn.textContent === correctChoice) btn.classList.add('correct');
+                });
+                if (userChoice === correctChoice) {
+                    userScore++;
+                    quizFeedbackEl.style.color = 'var(--feedback-correct)';
+                    quizFeedbackEl.textContent = 'Benar! Jawaban Anda Tepat.';
+                } else {
+                    quizFeedbackEl.style.color = 'var(--feedback-incorrect)';
+                    quizFeedbackEl.textContent = `Salah. Jawaban yang benar adalah "${correctChoice}".`;
+                    choiceButtons.forEach(btn => { if (btn.textContent === userChoice) btn.classList.add('incorrect'); });
+                }
+                quizScoreEl.textContent = `Skor: ${userScore}`;
+                quizNextButton.style.display = 'block';
             }
+            quizNextButton.addEventListener('click', () => { quizCurrentIndex++; renderQuizCard(); });
+            renderQuizCard();
 
-            function showNextItem() {
-                currentIndex = (currentIndex + 1) % sliderItems.length;
-                updateSliderState();
+            const practiceCharSet = [{ latin: 'A', batak: 'ᯀ' }, { latin: 'Ha', batak: 'ᯂ' }, { latin: 'Ka', batak: 'ᯄ' }, { latin: 'Ba', batak: 'ᯅ' }, { latin: 'Pa', batak: 'ᯇ' }, { latin: 'Na', batak: 'ᯉ' }, { latin: 'Ga', batak: 'ᯎ' }, { latin: 'Ja', batak: 'ᯐ' }, { latin: 'Da', batak: 'ᯑ' }, { latin: 'Ra', batak: 'ᯒ' }, { latin: 'Ma', batak: 'ᯔ' }, { latin: 'Ta', batak: 'ᯖ' }, { latin: 'Sa', batak: 'ᯘ' }, { latin: 'Ya', batak: 'ᯛ' }, { latin: 'Nga', batak: 'ᯝ' }, { latin: 'La', batak: 'ᯞ' }];
+            let practiceCurrentIndex = 0; const drawingCanvas = document.getElementById('drawing-surface'); const canvasContext = drawingCanvas.getContext('2d'); let isUserDrawing = false;
+            const resizeDrawingCanvas = () => { const container = document.getElementById('handwriting-module'); drawingCanvas.width = container.clientWidth - 40; drawingCanvas.height = 300; displayPracticeCharacter(); };
+            const displayPracticeCharacter = () => { canvasContext.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height); const charData = practiceCharSet[practiceCurrentIndex]; document.getElementById('handwriting-prompt').textContent = `Latihan: ${charData.latin} (${charData.batak})`; canvasContext.font = '200px AksaraBatak'; canvasContext.fillStyle = 'rgba(128, 128, 128, 0.2)'; canvasContext.textAlign = 'center'; canvasContext.textBaseline = 'middle'; canvasContext.fillText(charData.batak, drawingCanvas.width / 2, drawingCanvas.height / 2); };
+            const getPointerPosition = (event) => { const rect = drawingCanvas.getBoundingClientRect(); const scaleX = drawingCanvas.width / rect.width; const scaleY = drawingCanvas.height / rect.height; if (event.touches) return { x: (event.touches[0].clientX - rect.left) * scaleX, y: (event.touches[0].clientY - rect.top) * scaleY }; return { x: (event.clientX - rect.left) * scaleX, y: (event.clientY - rect.top) * scaleY }; };
+            const beginDrawing = (e) => { e.preventDefault(); isUserDrawing = true; const { x, y } = getPointerPosition(e); canvasContext.beginPath(); canvasContext.moveTo(x, y); };
+            const continueDrawing = (e) => { if (!isUserDrawing) return; e.preventDefault(); const { x, y } = getPointerPosition(e); canvasContext.lineTo(x, y); canvasContext.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--color-accent-primary'); canvasContext.lineWidth = 4; canvasContext.lineCap = 'round'; canvasContext.lineJoin = 'round'; canvasContext.stroke(); };
+            const finishDrawing = () => { isUserDrawing = false; };
+            drawingCanvas.addEventListener('mousedown', beginDrawing); drawingCanvas.addEventListener('mousemove', continueDrawing); drawingCanvas.addEventListener('mouseup', finishDrawing); drawingCanvas.addEventListener('mouseleave', finishDrawing); drawingCanvas.addEventListener('touchstart', beginDrawing); drawingCanvas.addEventListener('touchmove', continueDrawing); drawingCanvas.addEventListener('touchend', finishDrawing);
+            document.getElementById('clear-drawing-btn').addEventListener('click', () => { canvasContext.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height); displayPracticeCharacter(); });
+            document.getElementById('next-char-btn').addEventListener('click', () => { practiceCurrentIndex = (practiceCurrentIndex + 1) % practiceCharSet.length; displayPracticeCharacter(); });
+            document.getElementById('previous-char-btn').addEventListener('click', () => { practiceCurrentIndex = (practiceCurrentIndex - 1 + practiceCharSet.length) % practiceCharSet.length; displayPracticeCharacter(); });
+            window.addEventListener('resize', resizeDrawingCanvas); resizeDrawingCanvas();
+
+            const musicPlayer = document.getElementById('background-track'); const musicToggleButton = document.getElementById('music-toggle');
+            musicToggleButton.addEventListener('click', function () { if (musicPlayer.paused) { musicPlayer.play().catch(e => { }); musicToggleButton.innerHTML = '<i class="fas fa-pause"></i>'; } else { musicPlayer.pause(); musicToggleButton.innerHTML = '<i class="fas fa-play"></i>'; } });
+
+            const carouselTrack = document.getElementById('destination-carousel');
+            if (carouselTrack) {
+                const carouselPanels = Array.from(carouselTrack.getElementsByClassName('carousel-card'));
+                const paginationContainer = document.getElementById('destination-carousel-pagination');
+                if (carouselPanels.length > 0) {
+                    let activeSlideIndex = 0; let touchStartCoord = 0; let touchEndCoord = 0; let autoPlayTimer = null;
+                    const beginAutoPlay = () => { clearInterval(autoPlayTimer); autoPlayTimer = setInterval(advanceCarousel, 4000); };
+                    const pauseAutoPlay = () => { clearInterval(autoPlayTimer); };
+                    for (let i = 0; i < carouselPanels.length; i++) {
+                        const indicator = document.createElement('button');
+                        indicator.classList.add('pagination-indicator');
+                        indicator.setAttribute('aria-label', `Go to slide ${i + 1}`);
+                        indicator.addEventListener('click', () => navigateToPanel(i));
+                        paginationContainer.appendChild(indicator);
+                    }
+                    const paginationIndicators = Array.from(paginationContainer.getElementsByClassName('pagination-indicator'));
+                    function refreshCarouselView() {
+                        const panelCount = carouselPanels.length;
+                        carouselPanels.forEach((panel, i) => {
+                            panel.classList.remove('is-carousel-center', 'is-carousel-left', 'is-carousel-right');
+                            if (i === activeSlideIndex) panel.classList.add('is-carousel-center');
+                            else if (i === (activeSlideIndex - 1 + panelCount) % panelCount) panel.classList.add('is-carousel-left');
+                            else if (i === (activeSlideIndex + 1) % panelCount) panel.classList.add('is-carousel-right');
+                        });
+                        paginationIndicators.forEach((dot, i) => { dot.classList.toggle('is-indicator-active', i === activeSlideIndex); });
+                    }
+                    function navigateToPanel(index) { pauseAutoPlay(); activeSlideIndex = index; refreshCarouselView(); beginAutoPlay(); }
+                    function advanceCarousel() { pauseAutoPlay(); activeSlideIndex = (activeSlideIndex + 1) % carouselPanels.length; refreshCarouselView(); beginAutoPlay(); }
+                    function regressCarousel() { pauseAutoPlay(); activeSlideIndex = (activeSlideIndex - 1 + carouselPanels.length) % carouselPanels.length; refreshCarouselView(); beginAutoPlay(); }
+                    carouselTrack.addEventListener('click', (event) => {
+                        const clickedPanel = event.target.closest('.carousel-card');
+                        if (!clickedPanel) return;
+                        if (clickedPanel.classList.contains('is-carousel-right')) advanceCarousel();
+                        else if (clickedPanel.classList.contains('is-carousel-left')) regressCarousel();
+                    });
+                    carouselTrack.addEventListener('touchstart', (e) => { pauseAutoPlay(); touchStartCoord = e.changedTouches[0].screenX; }, { passive: true });
+                    carouselTrack.addEventListener('touchend', (e) => { touchEndCoord = e.changedTouches[0].screenX; processSwipe(); beginAutoPlay(); });
+                    carouselTrack.addEventListener('mouseenter', pauseAutoPlay);
+                    carouselTrack.addEventListener('mouseleave', beginAutoPlay);
+                    function processSwipe() {
+                        const swipeDistance = 50;
+                        if (touchEndCoord < touchStartCoord - swipeDistance) { activeSlideIndex = (activeSlideIndex + 1) % carouselPanels.length; }
+                        else if (touchEndCoord > touchStartCoord + swipeDistance) { activeSlideIndex = (activeSlideIndex - 1 + carouselPanels.length) % carouselPanels.length; }
+                        refreshCarouselView();
+                    }
+                    navigateToPanel(0);
+                }
             }
-
-            function showPrevItem() {
-                currentIndex = (currentIndex - 1 + sliderItems.length) % sliderItems.length;
-                updateSliderState();
-            }
-
-            sliderWrapper.addEventListener('click', (e) => {
-                const targetItem = e.target.closest('.bento-slider-item');
-                if (!targetItem || sliderItems.length <= 1) return;
-                stopAutoSwap();
-                if (targetItem.classList.contains('is-bento-next')) showNextItem();
-                else if (targetItem.classList.contains('is-bento-prev')) showPrevItem();
-                startAutoSwap();
-            });
-
-            sliderWrapper.addEventListener('touchstart', (e) => { if (sliderItems.length > 1) { stopAutoSwap(); touchStartX = e.changedTouches[0].screenX; } }, { passive: true });
-            sliderWrapper.addEventListener('touchend', (e) => { if (sliderItems.length > 1) { touchEndX = e.changedTouches[0].screenX; handleSwipe(); startAutoSwap(); } });
-            sliderWrapper.addEventListener('mouseenter', stopAutoSwap);
-            sliderWrapper.addEventListener('mouseleave', startAutoSwap);
-
-            function handleSwipe() {
-                const swipeThreshold = 50;
-                if (touchEndX < touchStartX - swipeThreshold) showNextItem();
-                else if (touchEndX > touchStartX + swipeThreshold) showPrevItem();
-            }
-            
-            if (sliderItems.length > 0) {
-                updateSliderState();
-                startAutoSwap();
-            }
-        }
-
-        window.map = L.map('map').setView([2.6, 98.9], 9);
-        const mapTileUrl = savedTheme === 'dark' ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png' : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        L.tileLayer(mapTileUrl, { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>' }).addTo(window.map);
-        [{ lat: 2.659, lon: 98.835, name: "Pulau Samosir" }, { lat: 2.668, lon: 98.868, name: "Desa Tomok" }, { lat: 2.553, lon: 98.683, name: "Parapat" }, { lat: 2.868, lon: 98.535, name: "Air Terjun Sipiso-piso" }, { lat: 2.500, lon: 99.066, name: "Bukit Holbung" }].forEach(loc => { L.marker([loc.lat, loc.lon]).addTo(window.map).bindPopup(`<b>${loc.name}</b>`); });
-
-        applyTheme(savedTheme);
-
-        const quizData = [
-             { question: 'Aksara Batak untuk "pa" adalah...', options: ['ᯅ', 'ᯇ', 'ᯑ', 'ᯎ'], answer: 'ᯇ' }, { question: 'Aksara `ᯉ᯲` dibaca...', options: ['na', 'n', 'ni', 'nga'], answer: 'n' }, { question: 'Bagaimana cara menulis "lima" dalam Aksara Batak?', options: ['ᯞᯔ', 'ᯞᯪᯔ', 'ᯞᯔᯪ', 'ᯒᯪᯔ'], answer: 'ᯞᯪᯔ' }, { question: 'Aksara Batak untuk "ga" adalah...', options: ['ᯎ', 'ᯐ', 'ᯑ', 'ᯂ'], answer: 'ᯎ' }, { question: 'Aksara `ᯂᯬ` dibaca...', options: ['ha', 'hi', 'hu', 'ho'], answer: 'ho' }, { question: 'Bagaimana cara menulis "anak" dalam Aksara Batak?', options: ['ᯀᯉᯂ', 'ᯀᯉᯄ᯲', 'ᯀᯉᯄ', 'ᯀᯉ᯲ᯄ'], answer: 'ᯀᯉᯄ᯲' }, { question: 'Aksara Batak untuk "ta" adalah...', options: ['ᯖ', 'ᯑ', 'ᯐ', 'ᯘ'], answer: 'ᯖ' }, { question: 'Aksara `ᯘᯮ` dibaca...', options: ['sa', 'si', 'su', 'so'], answer: 'su' }, { question: 'Bagaimana cara menulis "surat" dalam Aksara Batak?', options: ['ᯘᯮᯒᯖ', 'ᯘᯒᯖ᯲', 'ᯘᯮᯒᯖ᯲', 'ᯘᯮᯒ᯲ᯖ'], answer: 'ᯘᯮᯒᯖ᯲' }, { question: 'Aksara Batak untuk "da" adalah...', options: ['ᯅ', 'ᯇ', 'ᯑ', 'ᯎ'], answer: 'ᯑ' }, { question: 'Gabungan aksara `ᯇᯒ᯲` dibaca...', options: ['para', 'par', 'pira', 'pa + ra'], answer: 'par' }, { question: 'Bagaimana cara menulis "boru" dalam Aksara Batak?', options: ['ᯅᯬᯒᯮ', 'ᯅᯒᯮ', 'ᯅᯬᯒ', 'ᯅᯒ'], answer: 'ᯅᯬᯒᯮ' }, { question: 'Aksara Batak untuk "ra" adalah...', options: ['ᯞ', 'ᯛ', 'ᯒ', 'ᯘ'], answer: 'ᯒ' }, { question: 'Gabungan aksara `ᯀᯔ᯲` dibaca...', options: ['ama', 'am', 'um', 'ma'], answer: 'am' }, { question: 'Bagaimana cara menulis "dalan" dalam Aksara Batak?', options: ['ᯑᯞᯉ', 'ᯑᯞᯉ᯲', 'ᯑᯞᯪᯉ', 'ᯑ᯲ᯞᯉ'], answer: 'ᯑᯞᯉ᯲' }, { question: 'Aksara Batak untuk "sa" adalah...', options: ['ᯘ', 'ᯂ', 'ᯛ', 'ᯓ'], answer: 'ᯘ' }, { question: 'Aksara `ᯅᯬᯑᯖ᯲` dibaca...', options: ['bodata', 'bodat', 'badat', 'bodta'], answer: 'bodat' }, { question: 'Bagaimana cara menulis "horbo" (kerbau) dalam Aksara Batak?', options: ['ᯂᯬᯒᯅᯬ', 'ᯂᯒᯅ', 'ᯂᯬᯒ᯲ᯅᯬ', 'ᯂᯬᯒ᯲ᯅ'], answer: 'ᯂᯬᯒ᯲ᯅᯬ' }, { question: 'Aksara Batak untuk "ma" adalah...', options: ['ᯉ', 'ᯔ', 'ᯝ', 'ᯐ'], answer: 'ᯔ' }, { question: 'Aksara `ᯂᯮᯖ` dibaca...', options: ['hata', 'hut', 'huta', 'hota'], answer: 'huta' }
-        ];
-        const quizQuestionEl = document.getElementById('quiz-question');
-        const quizOptionsEl = document.getElementById('quiz-options');
-        const quizFeedbackEl = document.getElementById('quiz-feedback');
-        const quizScoreEl = document.getElementById('quiz-score');
-        const quizProgressEl = document.getElementById('quiz-progress');
-        const nextQuestionBtn = document.getElementById('nextQuestionBtn');
-
-        let currentQuestionIndex = 0;
-        let score = 0;
-
-        function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[array[i], array[j]] = [array[j], array[i]]; } }
-
-        function loadQuestion() {
-            if (currentQuestionIndex >= quizData.length) {
-                quizQuestionEl.textContent = '🎉'; quizFeedbackEl.textContent = `Kuis Selesai! Skor Akhir Anda: ${score} dari ${quizData.length}`; quizOptionsEl.innerHTML = ''; nextQuestionBtn.style.display = 'none'; return;
-            }
-            quizFeedbackEl.textContent = ''; nextQuestionBtn.style.display = 'none'; quizOptionsEl.innerHTML = '';
-            const currentQuestion = quizData[currentQuestionIndex];
-            quizQuestionEl.textContent = currentQuestion.question;
-            quizScoreEl.textContent = `Skor: ${score}`; quizProgressEl.textContent = `Soal ${currentQuestionIndex + 1}/${quizData.length}`;
-            const options = [...currentQuestion.options]; shuffleArray(options);
-            const optionsContainer = document.createElement('div'); optionsContainer.className = 'btn-group';
-            options.forEach(option => {
-                const button = document.createElement('button'); button.textContent = option; button.classList.add('quiz-option'); button.addEventListener('click', () => checkAnswer(option, currentQuestion.answer)); optionsContainer.appendChild(button);
-            });
-            quizOptionsEl.appendChild(optionsContainer);
-        }
-
-        function checkAnswer(selectedOption, correctAnswer) {
-            const buttons = quizOptionsEl.querySelectorAll('.quiz-option');
-            buttons.forEach(button => { button.disabled = true; if (button.textContent === correctAnswer) button.classList.add('correct'); });
-            if (selectedOption === correctAnswer) {
-                score++; quizFeedbackEl.style.color = 'var(--correct-green)'; quizFeedbackEl.textContent = 'Benar! Jawaban Anda Tepat.';
-            } else {
-                quizFeedbackEl.style.color = 'var(--incorrect-red)'; quizFeedbackEl.textContent = `Salah. Jawaban yang benar adalah "${correctAnswer}".`;
-                buttons.forEach(button => { if (button.textContent === selectedOption) button.classList.add('incorrect'); });
-            }
-            quizScoreEl.textContent = `Skor: ${score}`; nextQuestionBtn.style.display = 'block';
-        }
-
-        nextQuestionBtn.addEventListener('click', () => { currentQuestionIndex++; loadQuestion(); });
-        loadQuestion();
-
-        const practiceCharacters = [{ latin: 'A', batak: 'ᯀ' }, { latin: 'Ha', batak: 'ᯂ' }, { latin: 'Ka', batak: 'ᯄ' }, { latin: 'Ba', batak: 'ᯅ' }, { latin: 'Pa', batak: 'ᯇ' }, { latin: 'Na', batak: 'ᯉ' }, { latin: 'Ga', batak: 'ᯎ' }, { latin: 'Ja', batak: 'ᯐ' }, { latin: 'Da', batak: 'ᯑ' }, { latin: 'Ra', batak: 'ᯒ' }, { latin: 'Ma', batak: 'ᯔ' }, { latin: 'Ta', batak: 'ᯖ' }, { latin: 'Sa', batak: 'ᯘ' }, { latin: 'Ya', batak: 'ᯛ' }, { latin: 'Nga', batak: 'ᯝ' }, { latin: 'La', batak: 'ᯞ' }];
-        let currentPracticeIndex = 0; const canvas = document.getElementById('practice-canvas'); const ctx = canvas.getContext('2d'); let isDrawing = false;
-        function resizeCanvas() { const container = document.getElementById('writing-practice-container'); canvas.width = container.clientWidth - 40; canvas.height = 300; loadPracticeCharacter(); }
-        function loadPracticeCharacter() { ctx.clearRect(0, 0, canvas.width, canvas.height); const char = practiceCharacters[currentPracticeIndex]; document.getElementById('practice-info').textContent = `Latihan: ${char.latin} (${char.batak})`; ctx.font = '200px AksaraBatak'; ctx.fillStyle = 'rgba(128, 128, 128, 0.2)'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(char.batak, canvas.width / 2, canvas.height / 2); }
-        function getPos(evt) { const rect = canvas.getBoundingClientRect(); const scaleX = canvas.width / rect.width; const scaleY = canvas.height / rect.height; if (evt.touches) return { x: (evt.touches[0].clientX - rect.left) * scaleX, y: (evt.touches[0].clientY - rect.top) * scaleY }; return { x: (evt.clientX - rect.left) * scaleX, y: (evt.clientY - rect.top) * scaleY }; }
-        function startDrawing(e) { e.preventDefault(); isDrawing = true; const { x, y } = getPos(e); ctx.beginPath(); ctx.moveTo(x, y); }
-        function draw(e) { if (!isDrawing) return; e.preventDefault(); const { x, y } = getPos(e); ctx.lineTo(x, y); ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--primary-red'); ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.stroke(); }
-        function stopDrawing() { isDrawing = false; }
-        canvas.addEventListener('mousedown', startDrawing); canvas.addEventListener('mousemove', draw); canvas.addEventListener('mouseup', stopDrawing); canvas.addEventListener('mouseleave', stopDrawing); canvas.addEventListener('touchstart', startDrawing); canvas.addEventListener('touchmove', draw); canvas.addEventListener('touchend', stopDrawing);
-        document.getElementById('clear-canvas-btn').addEventListener('click', () => { ctx.clearRect(0, 0, canvas.width, canvas.height); loadPracticeCharacter(); });
-        document.getElementById('next-char-btn').addEventListener('click', () => { currentPracticeIndex = (currentPracticeIndex + 1) % practiceCharacters.length; loadPracticeCharacter(); });
-        document.getElementById('prev-char-btn').addEventListener('click', () => { currentPracticeIndex = (currentPracticeIndex - 1 + practiceCharacters.length) % practiceCharacters.length; loadPracticeCharacter(); });
-        window.addEventListener('resize', resizeCanvas); resizeCanvas();
-
-        // KONTROL AUDIO
-        const audio = document.getElementById('backgroundAudio'); const audioControlBtn = document.getElementById('audioControlBtn');
-        audioControlBtn.addEventListener('click', () => { if (audio.paused) { audio.play().catch(e => { }); audioControlBtn.innerHTML = '<i class="fas fa-pause"></i>'; } else { audio.pause(); audioControlBtn.innerHTML = '<i class="fas fa-play"></i>'; } });
-    });
-</script>
+        });
+    </script>
 </body>
 
 </html>
