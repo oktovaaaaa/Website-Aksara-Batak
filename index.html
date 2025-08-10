@@ -782,9 +782,9 @@
         }
 
         .footer-column a {
-    color: var(--text-on-dark); 
-    text-decoration: none;      
-}
+            color: var(--text-on-dark);
+            text-decoration: none;
+        }
 
         .footer-column i {
             color: var(--color-accent-primary);
@@ -1166,6 +1166,41 @@
                 bottom: -60px;
             }
         }
+
+           :root {
+            --warna-utama: #e11d48;
+            --warna-putih: #ffffff;
+            --latar-terang: #f9fafb;
+            --permukaan-terang: #ffffff;
+            --teks-terang: #111827;
+            --garis-terang: #e5e7eb;
+            --garis-gelap: #374151;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--latar-terang); color: var(--teks-terang); }
+
+        .bagian-konten { padding: 60px 5%; max-width: 1200px; margin: 0 auto; }
+        .bagian-konten h2, .bagian-konten h3.judul-sub { font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 16px; color: var(--warna-utama); font-weight: 700; text-align: center; }
+        .bagian-konten > p { font-size: 1.1rem; line-height: 1.7; max-width: 700px; margin: 0 auto 40px; text-align: center; opacity: 0.8; }
+
+        .daftar-kuliner { display: grid; gap: 24px; margin-top: 48px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        .daftar-minuman { max-width: 850px; margin-left: auto; margin-right: auto; }
+
+        .item-kuliner { background: var(--permukaan-terang); border: 1px solid var(--garis-terang); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; text-align: center; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); }
+        .item-kuliner:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); }
+        .item-kuliner img { width: 100%; height: 200px; object-fit: cover; }
+
+        .deskripsi-kuliner { padding: 24px; }
+        .deskripsi-kuliner h3 { font-size: 1.4rem; font-weight: 600; color: var(--warna-utama); margin-bottom: 8px; }
+        .deskripsi-kuliner p { font-size: 0.95rem; line-height: 1.6; opacity: 0.8; }
+
+        .kontrol-halaman { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 48px; padding: 10px; }
+        .tombol-halaman { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1rem; color: var(--warna-utama); background-color: transparent; border: 2px solid var(--garis-terang); border-radius: 8px; padding: 8px 16px; min-width: 45px; text-align: center; cursor: pointer; transition: all 0.3s ease; }
+        .tombol-halaman:hover:not(:disabled) { background-color: var(--warna-utama); color: var(--warna-putih); border-color: var(--warna-utama); }
+        .tombol-halaman.aktif { background-color: var(--warna-utama); color: var(--warna-putih); border-color: var(--warna-utama); }
+        .tombol-halaman:disabled { color: var(--garis-gelap); border-color: var(--garis-terang); cursor: not-allowed; opacity: 0.6; }
+        
     </style>
 </head>
 
@@ -1877,96 +1912,67 @@
                         </div>
                     </div>
 
-                    <div class="carousel-card" data-index="6">
-                        <img src="aset/gambar/maimun.jpg" alt="Istana Maimun">
+                                        <div class="carousel-card" data-index="6">
+                        <img src="aset/gambar/museumhutabolon.jpeg" alt="Museum Huta Bolon Simanindo">
                         <div class="carousel-card-body">
-                            <h3 class="interactive-aksara-text">Istana Maimun</h3>
-                            <p class="interactive-aksara-text">Ikon kota Medan, istana Kesultanan Deli ini memadukan
-                                arsitektur Melayu, Islam, dan Eropa.</p>
+                            <h3 class="interactive-aksara-text">Museum Huta Bolon Simanindo</h3>
+                            <p class="interactive-aksara-text">Museum Huta Bolon adalah sebuah perkampungan di Kecamatan Simanindo, Kabupaten Samosir yang memiliki perpaduan potensi alam dan budaya.</p>
                         </div>
                     </div>
 
-                    <div class="carousel-card" data-index="7">
-                        <img src="aset/gambar/pandan.jpg" alt="Pantai Pandan">
+                                        <div class="carousel-card" data-index="7">
+                        <img src="aset/gambar/museumtomok.jpeg" alt="Museum Tomok">
                         <div class="carousel-card-body">
-                            <h3 class="interactive-aksara-text">Pantai Pandan</h3>
-                            <p class="interactive-aksara-text">Destinasi wisata pantai yang eksotis dengan hamparan
-                                pasir
-                                putih dan ombak yang menenangkan.</p>
+                            <h3 class="interactive-aksara-text">Museum Tomok</h3>
+                            <p class="interactive-aksara-text">Bentuk bangunan  khas Batak yang dikenal sebagai Rumah Bolon atau rumah adat Batak Toba khusus untuk para raja dan keluarganya.</p>
                         </div>
                     </div>
+
+                                        <div class="carousel-card" data-index="8">
+                        <img src="aset/gambar/museumtbsilalahi.jpg" alt="Museum TB Silalahi">
+                        <div class="carousel-card-body">
+                            <h3 class="interactive-aksara-text">Museum TB Silalahi</h3>
+                            <p class="interactive-aksara-text">Museum ini didirikan oleh Letjen TNI (Purn) Dr. Tiopan Bernhard Silalahi </p>
+                        </div>
+                    </div>
+
+
 
                 </div>
                 <div class="carousel-pagination" id="destination-carousel-pagination"></div>
             </div>
         </section>
 
-        <section id="makanan" class="content-section">
-            <h2 data-aos="fade-up"><span class="background-icon"><i class="fas fa-utensils"></i></span><span
-                    class="interactive-aksara-text">Sajian Kuliner Khas</span></h2>
-            <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">Cita rasa masakan Batak dikenal
-                kuat, pedas,
-                dan kaya akan rempah-rempah unik seperti andaliman, si merica Batak.</p>
-            <div class="culinary-grid">
-                <div class="culinary-item" data-aos="fade-up"><img src="aset/gambar/arsik.jpg" alt="Arsik">
-                    <div class="culinary-description">
-                        <h3 class="interactive-aksara-text">Arsik</h3>
-                        <p class="interactive-aksara-text">Ikan mas bumbu kuning kaya rempah, dimasak hingga kuahnya
-                            mengering.
-                            Sajian wajib dalam upacara adat.</p>
-                    </div>
-                </div>
-                <div class="culinary-item" data-aos="fade-up" data-aos-delay="100"><img src="aset/gambar/BPK.jpg"
-                        alt="Babi Panggang">
-                    <div class="culinary-description">
-                        <h3 class="interactive-aksara-text">Babi Panggang Karo (BPK)</h3>
-                        <p class="interactive-aksara-text">Daging babi panggang renyah disajikan dengan sambal pedas
-                            andaliman dan
-                            saus khas dari darah.</p>
-                    </div>
-                </div>
-                <div class="culinary-item" data-aos="fade-up" data-aos-delay="200"><img src="aset/gambar/napinadar.jpg"
-                        alt="Manuk Napinadar">
-                    <div class="culinary-description">
-                        <h3 class="interactive-aksara-text">Manuk Napinadar</h3>
-                        <p class="interactive-aksara-text">Ayam panggang yang disiram dengan saus kental dari darah ayam
-                            itu
-                            sendiri, dibumbui andaliman dan rempah lainnya.</p>
-                    </div>
-                </div>
-                <div class="culinary-item" data-aos="fade-up" data-aos-delay="300"><img src="aset/gambar/lapet.jpeg"
-                        alt="Lapet">
-                    <div class="culinary-description">
-                        <h3 class="interactive-aksara-text">Lapet</h3>
-                        <p class="interactive-aksara-text">Kue tradisional berbentuk piramida dari tepung beras dan
-                            kelapa parut,
-                            berisi gula merah, lalu dibungkus daun pisang dan dikukus.</p>
-                    </div>
-                </div>
-            </div>
-            <h3 class="interactive-aksara-text" style="text-align:center; margin-top:64px;" data-aos="fade-up">Minuman
-                Khas</h3>
-            <div class="culinary-grid beverages-grid">
-                <div class="culinary-item" data-aos="fade-up" data-aos-delay="100"><img src="aset/gambar/tuak.jpeg"
-                        alt="Tuak">
-                    <div class="culinary-description">
-                        <h3 class="interactive-aksara-text">Tuak</h3>
-                        <p class="interactive-aksara-text">Minuman beralkohol tradisional dari nira pohon aren atau
-                            kelapa yang
-                            difermentasi. Memiliki rasa manis sedikit asam dan peran sosial yang kuat.</p>
-                    </div>
-                </div>
-                <div class="culinary-item" data-aos="fade-up" data-aos-delay="200"><img src="aset/gambar/kopi.jpg"
-                        alt="Kopi">
-                    <div class="culinary-description">
-                        <h3 class="interactive-aksara-text">Kopi Sidikalang</h3>
-                        <p class="interactive-aksara-text">Salah satu kopi terbaik Indonesia dari dataran tinggi Dairi.
-                            Dikenal
-                            memiliki aroma kuat, keasaman rendah, dan cita rasa yang mantap.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <section id="makanan" class="bagian-konten">
+        <h2>Sajian Kuliner Khas</h2>
+        <p>Cita rasa masakan Batak dikenal kuat, pedas, dan kaya akan rempah-rempah unik seperti andaliman, si merica Batak.</p>
+        
+        <div id="daftar-makanan-utama" class="daftar-kuliner">
+            <div class="item-kuliner"><img src="aset/gambar/arsik.jpg" alt="Arsik"><div class="deskripsi-kuliner"><h3>Arsik</h3><p>Ikan mas bumbu kuning kaya rempah, dimasak hingga kuahnya mengering.</p></div></div>
+            <div class="item-kuliner"><img src="aset/gambar/BPK.jpg" alt="Babi Panggang"><div class="deskripsi-kuliner"><h3>Babi Panggang Karo (BPK)</h3><p>Daging babi panggang renyah disajikan dengan sambal pedas andaliman.</p></div></div>
+            <div class="item-kuliner"><img src="aset/gambar/napinadar.jpg" alt="Manuk Napinadar"><div class="deskripsi-kuliner"><h3>Manuk Napinadar</h3><p>Ayam panggang yang disiram dengan saus kental dari darah ayam itu sendiri.</p></div></div>
+            <div class="item-kuliner"><img src="aset/gambar/lapet.jpeg" alt="Lapet"><div class="deskripsi-kuliner"><h3>Lapet</h3><p>Kue piramida dari tepung beras dan kelapa, berisi gula merah, dan dikukus.</p></div></div>
+            <div class="item-kuliner"><img src="aset/gambar/saksang.jpg" alt="Saksang"><div class="deskripsi-kuliner"><h3>Saksang</h3><p>Masakan dari daging cincang yang dibumbui rempah dan dimasak dengan darah.</p></div></div>
+            <div class="item-kuliner"><img src="aset/gambar/miegomak.jpeg" alt="Mie Gomak"><div class="deskripsi-kuliner"><h3>Mie Gomak</h3><p>Hidangan mie lidi berkuah santan bumbu kuning, sering disebut spaghetti Batak.</p></div></div>
+            <div class="item-kuliner"><img src="aset/gambar/tombur.jpg" alt="Tombur"><div class="deskripsi-kuliner"><h3>Tombur</h3><p>Hidangan ikan yang disiram dengan bumbu khas Batak yang pedas dan segar.</p></div></div>
+            <div class="item-kuliner"><img src="aset/gambar/dalinihorbo.jpg" alt="Dali ni Horbo"><div class="deskripsi-kuliner"><h3>Dali ni Horbo</h3><p>Susu kerbau yang diolah secara tradisional menjadi seperti tahu.</p></div></div>
+            <div class="item-kuliner"><img src="aset/gambar/gulebulunggadung.jpeg" alt="Gule Bulung Gadung"><div class="deskripsi-kuliner"><h3>Gule Bulung Gadung</h3><p>Daun singkong yang ditumbuk dan dimasak dengan santan khas Tapanuli.</p></div></div>
+            <div class="item-kuliner"><img src="aset/gambar/alame.jpeg" alt="Alame"><div class="deskripsi-kuliner"><h3>Alame</h3><p>Dodol khas Mandailing dari gula merah, tepung ketan, dan santan kelapa.</p></div></div>
+            <div class="item-kuliner"><img src="aset/gambar/pagitpagit.jpeg" alt="Pagit pagit"><div class="deskripsi-kuliner"><h3>Pagit-Pagit</h3><p>Makanan khas Karo dari isi perut (rumput setengah dicerna) sapi atau kerbau.</p></div></div>
+            <div class="item-kuliner"><img src="aset/gambar/kidukidu.jpeg" alt="Kidu-kidu"><div class="deskripsi-kuliner"><h3>Kidu-kidu</h3><p>Sosis khas Karo yang terbuat dari daging cincang dibungkus usus.</p></div></div>
+        </div>
+        
+        <div class="kontrol-halaman" id="wadah-kontrol-halaman"></div>
+
+        <hr style="margin-top: 64px; border: 1px solid var(--garis-terang);">
+
+        <h3 class="judul-sub" style="margin-top:64px;">Minuman Khas</h3>
+        <div class="daftar-kuliner daftar-minuman">
+            <div class="item-kuliner"><img src="aset/gambar/tuak.jpeg" alt="Tuak"><div class="deskripsi-kuliner"><h3>Tuak</h3><p>Minuman beralkohol tradisional dari nira pohon aren yang difermentasi.</p></div></div>
+            <div class="item-kuliner"><img src="aset/gambar/kopi.jpg" alt="Kopi"><div class="deskripsi-kuliner"><h3>Kopi Sidikalang</h3><p>Kopi terbaik Indonesia dari Dairi dengan aroma kuat dan rasa mantap.</p></div></div>
+            <div class="item-kuliner"><img src="aset/gambar/sukit.jpeg" alt="Susu Kitik"><div class="deskripsi-kuliner"><h3>Susu Kitik Karo</h3><p>Teh Susu ala Tanah Karo, sering disebut Sukit, akronim dari susu kitik.</p></div></div>
+        </div>
+    </section>
         <section id="peta" class="content-section">
             <h2 data-aos="fade-up"><span class="background-icon"><i class="fas fa-map"></i></span><span
                     class="interactive-aksara-text">Peta Budaya Interaktif</span></h2>
@@ -2257,6 +2263,64 @@
                 }
             }
         });
+
+document.addEventListener('DOMContentLoaded', function () {
+            const itemPerHalaman = 5;
+            
+            // Hanya memilih bagian makanan untuk di-pagination
+            const daftarMakananUtama = document.getElementById('daftar-makanan-utama');
+            const semuaItemMakanan = Array.from(daftarMakananUtama.querySelectorAll('.item-kuliner'));
+            const kontrolHalaman = document.getElementById('wadah-kontrol-halaman');
+            
+            if (semuaItemMakanan.length > 0) {
+                const jumlahTotalItem = semuaItemMakanan.length;
+                const jumlahTotalHalaman = Math.ceil(jumlahTotalItem / itemPerHalaman);
+                let halamanSaatIni = 1;
+
+                function tampilkanHalaman(nomorHalaman) {
+                    halamanSaatIni = nomorHalaman;
+                    const indeksAwal = (nomorHalaman - 1) * itemPerHalaman;
+                    const indeksAkhir = indeksAwal + itemPerHalaman;
+
+                    semuaItemMakanan.forEach((item, indeks) => {
+                        item.style.display = (indeks >= indeksAwal && indeks < indeksAkhir) ? 'block' : 'none';
+                    });
+                    buatTombolHalaman();
+                }
+
+                function buatTombolHalaman() {
+                    kontrolHalaman.innerHTML = '';
+
+                    const tombolSebelumnya = document.createElement('button');
+                    tombolSebelumnya.textContent = 'Sebelumnya';
+                    tombolSebelumnya.classList.add('tombol-halaman');
+                    tombolSebelumnya.disabled = halamanSaatIni === 1;
+                    tombolSebelumnya.addEventListener('click', () => tampilkanHalaman(halamanSaatIni - 1));
+                    kontrolHalaman.appendChild(tombolSebelumnya);
+
+                    for (let i = 1; i <= jumlahTotalHalaman; i++) {
+                        const tombolAngkaHalaman = document.createElement('button');
+                        tombolAngkaHalaman.textContent = i;
+                        tombolAngkaHalaman.classList.add('tombol-halaman');
+                        if (i === halamanSaatIni) {
+                            tombolAngkaHalaman.classList.add('aktif');
+                        }
+                        tombolAngkaHalaman.addEventListener('click', () => tampilkanHalaman(i));
+                        kontrolHalaman.appendChild(tombolAngkaHalaman);
+                    }
+
+                    const tombolBerikutnya = document.createElement('button');
+                    tombolBerikutnya.textContent = 'Berikutnya';
+                    tombolBerikutnya.classList.add('tombol-halaman');
+                    tombolBerikutnya.disabled = halamanSaatIni === jumlahTotalHalaman;
+                    tombolBerikutnya.addEventListener('click', () => tampilkanHalaman(halamanSaatIni + 1));
+                    kontrolHalaman.appendChild(tombolBerikutnya);
+                }
+                
+                tampilkanHalaman(1); 
+            }
+        });
+
     </script>
 </body>
 
