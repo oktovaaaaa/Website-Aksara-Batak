@@ -528,7 +528,7 @@
         }
 
         .converter-module,
-        .quiz-module {
+        .soal-module {
             background: var(--surface-color);
             padding: 32px;
             border-radius: 20px;
@@ -542,7 +542,7 @@
         }
 
         .converter-module:hover,
-        .quiz-module:hover {
+        .soal-module:hover {
             border-color: var(--color-accent-primary);
         }
 
@@ -781,6 +781,11 @@
             color: var(--color-accent-primary);
         }
 
+        .footer-column a {
+    color: var(--text-on-dark); 
+    text-decoration: none;      
+}
+
         .footer-column i {
             color: var(--color-accent-primary);
             width: 20px;
@@ -869,7 +874,7 @@
             font-weight: 500;
         }
 
-        #quiz-prompt-display {
+        #soal-prompt-display {
             font-family: 'AksaraBatak';
             font-size: 2.5rem;
             text-align: center;
@@ -878,13 +883,13 @@
             min-height: 120px;
         }
 
-        #quiz-choices-area .button-cluster {
+        #soal-choices-area .button-cluster {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 16px;
         }
 
-        .quiz-answer-button {
+        .soal-answer-button {
             font-size: 1.2rem;
             padding: 16px;
             background: var(--input-field-bg);
@@ -892,30 +897,30 @@
             color: var(--text-primary);
         }
 
-        .quiz-answer-button:hover {
+        .soal-answer-button:hover {
             border-color: var(--color-accent-primary);
             color: var(--color-accent-primary);
             transform: translateY(-2px);
         }
 
-        .quiz-answer-button.correct {
+        .soal-answer-button.correct {
             background: var(--feedback-correct);
             color: var(--neutral-white);
             border-color: var(--feedback-correct);
         }
 
-        .quiz-answer-button.incorrect {
+        .soal-answer-button.incorrect {
             background: var(--feedback-incorrect);
             color: var(--neutral-white);
             border-color: var(--feedback-incorrect);
         }
 
-        .quiz-answer-button:disabled {
+        .soal-answer-button:disabled {
             opacity: 0.7;
             cursor: not-allowed;
         }
 
-        #quiz-result-message {
+        #soal-result-message {
             text-align: center;
             font-size: 1.2rem;
             font-weight: 600;
@@ -923,7 +928,7 @@
             min-height: 32px;
         }
 
-        #quiz-status-bar {
+        #soal-status-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -943,6 +948,7 @@
             margin-top: 32px;
             margin-left: auto;
             margin-right: auto;
+            overflow: visible;
         }
 
         .destination-carousel-track {
@@ -1033,7 +1039,7 @@
 
         .carousel-pagination {
             position: absolute;
-            bottom: 20px;
+            bottom: -50px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -1096,7 +1102,7 @@
             }
 
             .converter-module,
-            .quiz-module {
+            .soal-module {
                 padding: 32px;
             }
 
@@ -1114,7 +1120,7 @@
                 max-width: 300px;
             }
 
-            #quiz-choices-area .button-cluster {
+            #soal-choices-area .button-cluster {
                 grid-template-columns: 1fr;
             }
 
@@ -1157,7 +1163,7 @@
             }
 
             .carousel-pagination {
-                bottom: 10px;
+                bottom: -60px;
             }
         }
     </style>
@@ -1975,13 +1981,13 @@
             <p class="interactive-aksara-text" data-aos="fade-up" data-aos-delay="100">Uji pengetahuanmu! Tebak arti
                 dari aksara
                 Batak yang ditampilkan.</p>
-            <div class="quiz-module" data-aos="fade-up" data-aos-delay="200">
-                <div id="quiz-status-bar"><span id="quiz-counter">Soal 1/10</span><span id="quiz-score-display">Skor:
+            <div class="soal-module" data-aos="fade-up" data-aos-delay="200">
+                <div id="soal-status-bar"><span id="soal-counter">Soal 1/10</span><span id="soal-score-display">Skor:
                         0</span></div>
-                <div id="quiz-prompt-display">ᯀ</div>
-                <div id="quiz-choices-area" class="button-cluster"></div>
-                <div id="quiz-result-message"></div>
-                <div class="button-cluster" style="margin-top: 32px;"><button id="quiz-next-button"
+                <div id="soal-prompt-display">ᯀ</div>
+                <div id="soal-choices-area" class="button-cluster"></div>
+                <div id="soal-result-message"></div>
+                <div class="button-cluster" style="margin-top: 32px;"><button id="soal-next-button"
                         style="display: none;"><i class="fas fa-arrow-right"></i> Soal Berikutnya</button></div>
             </div>
         </section>
@@ -2006,8 +2012,8 @@
             <div class="footer-column">
                 <h3 class="interactive-aksara-text">Ikuti Kami</h3>
                 <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
-                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+                <a href="https://www.instagram.com/oktovaaaaa/"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://www.youtube.com/@OktovaSamosir"><i class="fab fa-youtube"></i> YouTube</a>
             </div>
 
         </div>
@@ -2106,7 +2112,7 @@
 
             setSiteTheme(preferredTheme);
 
-            const allQuizQuestions = [
+            const allsoalQuestions = [
                 { prompt: 'Aksara Batak untuk "pa" adalah...', choices: ['ᯅ', 'ᯇ', 'ᯑ', 'ᯎ'], correct: 'ᯇ' },
                 { prompt: 'Aksara `ᯉ᯲` dibaca...', choices: ['na', 'n', 'ni', 'nga'], correct: 'n' },
                 { prompt: 'Bagaimana cara menulis "lima" dalam Aksara Batak?', choices: ['ᯞᯔ', 'ᯞᯪᯔ', 'ᯞᯔᯪ', 'ᯒᯪᯔ'], correct: 'ᯞᯪᯔ' },
@@ -2128,29 +2134,29 @@
                 { prompt: 'Aksara Batak untuk "ma" adalah...', choices: ['ᯉ', 'ᯔ', 'ᯝ', 'ᯐ'], correct: 'ᯔ' },
                 { prompt: 'Aksara `ᯂᯮᯖ` dibaca...', choices: ['hata', 'hut', 'huta', 'hota'], correct: 'huta' }
             ];
-            const quizPromptEl = document.getElementById('quiz-prompt-display');
-            const quizChoicesEl = document.getElementById('quiz-choices-area');
-            const quizFeedbackEl = document.getElementById('quiz-result-message');
-            const quizScoreEl = document.getElementById('quiz-score-display');
-            const quizProgressEl = document.getElementById('quiz-counter');
-            const quizNextButton = document.getElementById('quiz-next-button');
-            let quizCurrentIndex = 0, userScore = 0;
+            const soalPromptEl = document.getElementById('soal-prompt-display');
+            const soalChoicesEl = document.getElementById('soal-choices-area');
+            const soalFeedbackEl = document.getElementById('soal-result-message');
+            const soalScoreEl = document.getElementById('soal-score-display');
+            const soalProgressEl = document.getElementById('soal-counter');
+            const soalNextButton = document.getElementById('soal-next-button');
+            let soalCurrentIndex = 0, userScore = 0;
 
             function randomizeArray(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[arr[i], arr[j]] = [arr[j], arr[i]]; } }
-            function renderQuizCard() {
-                if (quizCurrentIndex >= allQuizQuestions.length) {
-                    quizPromptEl.textContent = '🎉';
-                    quizFeedbackEl.textContent = `Kuis Selesai! Skor Akhir Anda: ${userScore} dari ${allQuizQuestions.length}`;
-                    quizChoicesEl.innerHTML = '';
-                    quizNextButton.style.display = 'none'; return;
+            function rendersoalCard() {
+                if (soalCurrentIndex >= allsoalQuestions.length) {
+                    soalPromptEl.textContent = '🎉';
+                    soalFeedbackEl.textContent = `Kuis Selesai! Skor Akhir Anda: ${userScore} dari ${allsoalQuestions.length}`;
+                    soalChoicesEl.innerHTML = '';
+                    soalNextButton.style.display = 'none'; return;
                 }
-                quizFeedbackEl.textContent = '';
-                quizNextButton.style.display = 'none';
-                quizChoicesEl.innerHTML = '';
-                const currentItem = allQuizQuestions[quizCurrentIndex];
-                quizPromptEl.textContent = currentItem.prompt;
-                quizScoreEl.textContent = `Skor: ${userScore}`;
-                quizProgressEl.textContent = `Soal ${quizCurrentIndex + 1}/${allQuizQuestions.length}`;
+                soalFeedbackEl.textContent = '';
+                soalNextButton.style.display = 'none';
+                soalChoicesEl.innerHTML = '';
+                const currentItem = allsoalQuestions[soalCurrentIndex];
+                soalPromptEl.textContent = currentItem.prompt;
+                soalScoreEl.textContent = `Skor: ${userScore}`;
+                soalProgressEl.textContent = `Soal ${soalCurrentIndex + 1}/${allsoalQuestions.length}`;
                 const answerOptions = [...currentItem.choices];
                 randomizeArray(answerOptions);
                 const choicesWrapper = document.createElement('div');
@@ -2158,32 +2164,32 @@
                 answerOptions.forEach(option => {
                     const button = document.createElement('button');
                     button.textContent = option;
-                    button.classList.add('quiz-answer-button');
+                    button.classList.add('soal-answer-button');
                     button.addEventListener('click', () => validateAnswer(option, currentItem.correct));
                     choicesWrapper.appendChild(button);
                 });
-                quizChoicesEl.appendChild(choicesWrapper);
+                soalChoicesEl.appendChild(choicesWrapper);
             }
             function validateAnswer(userChoice, correctChoice) {
-                const choiceButtons = quizChoicesEl.querySelectorAll('.quiz-answer-button');
+                const choiceButtons = soalChoicesEl.querySelectorAll('.soal-answer-button');
                 choiceButtons.forEach(btn => {
                     btn.disabled = true;
                     if (btn.textContent === correctChoice) btn.classList.add('correct');
                 });
                 if (userChoice === correctChoice) {
                     userScore++;
-                    quizFeedbackEl.style.color = 'var(--feedback-correct)';
-                    quizFeedbackEl.textContent = 'Benar! Jawaban Anda Tepat.';
+                    soalFeedbackEl.style.color = 'var(--feedback-correct)';
+                    soalFeedbackEl.textContent = 'Benar! Jawaban Anda Tepat.';
                 } else {
-                    quizFeedbackEl.style.color = 'var(--feedback-incorrect)';
-                    quizFeedbackEl.textContent = `Salah. Jawaban yang benar adalah "${correctChoice}".`;
+                    soalFeedbackEl.style.color = 'var(--feedback-incorrect)';
+                    soalFeedbackEl.textContent = `Salah. Jawaban yang benar adalah "${correctChoice}".`;
                     choiceButtons.forEach(btn => { if (btn.textContent === userChoice) btn.classList.add('incorrect'); });
                 }
-                quizScoreEl.textContent = `Skor: ${userScore}`;
-                quizNextButton.style.display = 'block';
+                soalScoreEl.textContent = `Skor: ${userScore}`;
+                soalNextButton.style.display = 'block';
             }
-            quizNextButton.addEventListener('click', () => { quizCurrentIndex++; renderQuizCard(); });
-            renderQuizCard();
+            soalNextButton.addEventListener('click', () => { soalCurrentIndex++; rendersoalCard(); });
+            rendersoalCard();
 
             const practiceCharSet = [{ latin: 'A', batak: 'ᯀ' }, { latin: 'Ha', batak: 'ᯂ' }, { latin: 'Ka', batak: 'ᯄ' }, { latin: 'Ba', batak: 'ᯅ' }, { latin: 'Pa', batak: 'ᯇ' }, { latin: 'Na', batak: 'ᯉ' }, { latin: 'Ga', batak: 'ᯎ' }, { latin: 'Ja', batak: 'ᯐ' }, { latin: 'Da', batak: 'ᯑ' }, { latin: 'Ra', batak: 'ᯒ' }, { latin: 'Ma', batak: 'ᯔ' }, { latin: 'Ta', batak: 'ᯖ' }, { latin: 'Sa', batak: 'ᯘ' }, { latin: 'Ya', batak: 'ᯛ' }, { latin: 'Nga', batak: 'ᯝ' }, { latin: 'La', batak: 'ᯞ' }];
             let practiceCurrentIndex = 0; const drawingCanvas = document.getElementById('drawing-surface'); const canvasContext = drawingCanvas.getContext('2d'); let isUserDrawing = false;
