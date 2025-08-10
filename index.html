@@ -333,15 +333,26 @@
             position: relative;
             border-bottom: 1px solid var(--border-default);
             overflow: hidden;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .content-section:last-of-type {
+            border-bottom: none;
         }
 
-        .content-section h2 {
+        .content-section h2, .content-section h3.judul-sub {
             font-size: clamp(2.2rem, 4vw, 3.2rem);
             margin-bottom: 24px;
             color: var(--color-accent-primary);
             font-weight: 700;
             text-align: center;
             position: relative;
+        }
+        
+        .content-section h3.judul-sub {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            margin-top: 64px;
         }
 
         .background-icon {
@@ -428,26 +439,26 @@
             margin-right: auto;
         }
 
-        .guide-table {
+        .panduany-table {
             max-width: 800px;
             margin: 32px auto;
             min-width: unset;
         }
 
-        .guide-table td {
+        .panduany-table td {
             font-family: 'Poppins', sans-serif;
             font-size: 1rem;
             vertical-align: middle;
         }
 
-        .guide-table td:nth-child(2),
-        .guide-table td:nth-child(3) {
+        .panduany-table td:nth-child(2),
+        .panduany-table td:nth-child(3) {
             font-family: 'AksaraBatak', sans-serif;
             font-size: 2.5rem;
             color: var(--color-accent-primary);
         }
 
-        .guide-example-container {
+        .panduany-example-container {
             background: var(--surface-color);
             border: 1px solid var(--border-default);
             border-radius: 16px;
@@ -457,7 +468,7 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
         }
 
-        .guide-example-container hr {
+        .panduany-example-container hr {
             border: 0;
             height: 1px;
             background-color: var(--border-default);
@@ -473,11 +484,11 @@
             word-spacing: 24px;
         }
 
-        .guide-example-container p {
+        .panduany-example-container p {
             text-align: center !important;
         }
 
-        #handwriting-module {
+        #menggambar-module {
             background: var(--surface-color);
             border: 1px solid var(--border-default);
             border-radius: 16px;
@@ -488,7 +499,7 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
         }
 
-        #drawing-surface {
+        #gambar-surface {
             border: 2px dashed var(--border-default);
             border-radius: 12px;
             cursor: crosshair;
@@ -498,13 +509,13 @@
             height: 300px;
         }
 
-        .handwriting-prompt {
+        .menggambar-prompt {
             font-size: 1.2rem;
             font-weight: 500;
             margin-bottom: 16px;
         }
 
-        .handwriting-buttons {
+        .menggambar-buttons {
             margin-top: 24px;
             display: flex;
             gap: 16px;
@@ -512,14 +523,14 @@
             flex-wrap: wrap;
         }
 
-        .handwriting-buttons button {
+        .menggambar-buttons button {
             background: var(--input-field-bg);
             color: var(--text-primary);
             border: 1px solid var(--border-default);
             box-shadow: none;
         }
 
-        .handwriting-buttons button:hover {
+        .menggambar-buttons button:hover {
             background: var(--color-accent-primary);
             border-color: var(--color-accent-primary);
             color: var(--neutral-white);
@@ -582,6 +593,7 @@
             font-size: 1.5rem;
             background: rgba(220, 38, 38, 0.05);
             border-color: var(--color-accent-primary);
+            color: var(--color-accent-primary);
         }
 
         .button-cluster {
@@ -703,54 +715,101 @@
             transform: translateY(0);
         }
 
-        .culinary-grid {
+        .daftar-kuliner {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 24px;
             margin-top: 48px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         }
 
-        .beverages-grid {
-            max-width: 650px;
+        .daftar-minuman {
+            max-width: 850px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .culinary-item {
+        .item-kuliner {
             background: var(--surface-color);
             border: 1px solid var(--border-default);
             border-radius: 16px;
             overflow: hidden;
             transition: all 0.3s ease;
             text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
-        .culinary-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        .item-kuliner:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             border-color: var(--color-accent-primary);
         }
 
-        .culinary-item img {
+        .item-kuliner img {
             width: 100%;
             height: 200px;
             object-fit: cover;
         }
 
-        .culinary-description {
+        .deskripsi-kuliner {
             padding: 24px;
         }
 
-        .culinary-description h3 {
+        .deskripsi-kuliner h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
             color: var(--color-accent-primary);
             margin-bottom: 8px;
         }
 
-        .culinary-description p {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin: 0;
+        .deskripsi-kuliner p {
+            font-size: 0.95rem;
+            line-height: 1.6;
             opacity: 0.8;
+            color: var(--text-primary);
+        }
+
+        .kontrol-halaman {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 48px;
+            padding: 10px;
+        }
+
+        .tombol-halaman {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--color-accent-primary);
+            background-color: transparent;
+            border: 2px solid var(--border-default);
+            border-radius: 8px;
+            padding: 8px 16px;
+            min-width: 45px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tombol-halaman:hover:not(:disabled) {
+            background-color: var(--color-accent-primary);
+            color: var(--neutral-white);
+            border-color: var(--color-accent-primary);
+        }
+
+        .tombol-halaman.aktif {
+            background-color: var(--color-accent-primary);
+            color: var(--neutral-white);
+            border-color: var(--color-accent-primary);
+        }
+
+        .tombol-halaman:disabled {
+            color: var(--text-primary);
+            border-color: var(--border-default);
+            cursor: not-allowed;
+            opacity: 0.6;
         }
 
         #interactive-map-area {
@@ -1106,7 +1165,7 @@
                 padding: 32px;
             }
 
-            #handwriting-module {
+            #menggambar-module {
                 padding: 24px;
             }
 
@@ -1166,41 +1225,6 @@
                 bottom: -60px;
             }
         }
-
-           :root {
-            --warna-utama: #e11d48;
-            --warna-putih: #ffffff;
-            --latar-terang: #f9fafb;
-            --permukaan-terang: #ffffff;
-            --teks-terang: #111827;
-            --garis-terang: #e5e7eb;
-            --garis-gelap: #374151;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--latar-terang); color: var(--teks-terang); }
-
-        .bagian-konten { padding: 60px 5%; max-width: 1200px; margin: 0 auto; }
-        .bagian-konten h2, .bagian-konten h3.judul-sub { font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 16px; color: var(--warna-utama); font-weight: 700; text-align: center; }
-        .bagian-konten > p { font-size: 1.1rem; line-height: 1.7; max-width: 700px; margin: 0 auto 40px; text-align: center; opacity: 0.8; }
-
-        .daftar-kuliner { display: grid; gap: 24px; margin-top: 48px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-        .daftar-minuman { max-width: 850px; margin-left: auto; margin-right: auto; }
-
-        .item-kuliner { background: var(--permukaan-terang); border: 1px solid var(--garis-terang); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; text-align: center; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); }
-        .item-kuliner:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); }
-        .item-kuliner img { width: 100%; height: 200px; object-fit: cover; }
-
-        .deskripsi-kuliner { padding: 24px; }
-        .deskripsi-kuliner h3 { font-size: 1.4rem; font-weight: 600; color: var(--warna-utama); margin-bottom: 8px; }
-        .deskripsi-kuliner p { font-size: 0.95rem; line-height: 1.6; opacity: 0.8; }
-
-        .kontrol-halaman { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 48px; padding: 10px; }
-        .tombol-halaman { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1rem; color: var(--warna-utama); background-color: transparent; border: 2px solid var(--garis-terang); border-radius: 8px; padding: 8px 16px; min-width: 45px; text-align: center; cursor: pointer; transition: all 0.3s ease; }
-        .tombol-halaman:hover:not(:disabled) { background-color: var(--warna-utama); color: var(--warna-putih); border-color: var(--warna-utama); }
-        .tombol-halaman.aktif { background-color: var(--warna-utama); color: var(--warna-putih); border-color: var(--warna-utama); }
-        .tombol-halaman:disabled { color: var(--garis-gelap); border-color: var(--garis-terang); cursor: not-allowed; opacity: 0.6; }
-        
     </style>
 </head>
 
@@ -1599,7 +1623,7 @@
                 menggunakan 'Ina ni Surat' <strong>Ba (ᯅ)</strong>.</p>
 
             <div class="responsive-table-wrapper" data-aos="fade-up">
-                <table class="main-aksara-chart guide-table">
+                <table class="main-aksara-chart panduany-table">
                     <thead>
                         <tr>
                             <th>Keterangan</th>
@@ -1645,7 +1669,7 @@
                 <strong>"Batak"</strong>:
             </p>
 
-            <div class="guide-example-container" data-aos="fade-up">
+            <div class="panduany-example-container" data-aos="fade-up">
                 <div>
                     <p class="interactive-aksara-text">Jika kita hanya menggabungkan 'Ina ni Surat':</p>
                     <p class="aksara-math-display">ᯅ + ᯖ + ᯄ</p>
@@ -1669,11 +1693,11 @@
                 tangan Anda!
                 Coba ikuti bentuk aksara yang ditampilkan di kanvas. Gunakan mouse di desktop atau jari di perangkat
                 sentuh.</p>
-            <div id="handwriting-module" data-aos="fade-up" data-aos-delay="200">
-                <div id="handwriting-prompt" class="handwriting-prompt interactive-aksara-text">Latihan: A (ᯀ)</div>
-                <canvas id="drawing-surface" width="550" height="300"></canvas>
-                <div class="handwriting-buttons">
-                    <button id="clear-drawing-btn"><i class="fas fa-eraser"></i> Bersihkan</button>
+            <div id="menggambar-module" data-aos="fade-up" data-aos-delay="200">
+                <div id="menggambar-prompt" class="menggambar-prompt interactive-aksara-text">Latihan: A (ᯀ)</div>
+                <canvas id="gambar-surface" width="550" height="300"></canvas>
+                <div class="menggambar-buttons">
+                    <button id="clear-gambar-btn"><i class="fas fa-eraser"></i> Bersihkan</button>
                     <button id="previous-char-btn"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
                     <button id="next-char-btn"><i class="fas fa-arrow-right"></i> Berikutnya</button>
                 </div>
@@ -1943,7 +1967,7 @@
             </div>
         </section>
 
-<section id="makanan" class="bagian-konten">
+<section id="makanan" class="content-section">
     <h2 class="interactive-aksara-text">Sajian Kuliner Khas</h2>
     <p class="interactive-aksara-text">Cita rasa masakan Batak dikenal kuat, pedas, dan kaya akan rempah-rempah unik seperti andaliman, si merica Batak.</p>
     
@@ -2036,9 +2060,9 @@
     
     <div class="kontrol-halaman" id="wadah-kontrol-halaman"></div>
 
-    <hr style="margin-top: 64px; border: 1px solid var(--garis-terang);">
+    <hr style="margin-top: 64px; border: 1px solid var(--border-default);">
 
-    <h3 class="judul-sub interactive-aksara-text" style="margin-top:64px;">Minuman Khas</h3>
+    <h3 class="judul-sub interactive-aksara-text">Minuman Khas</h3>
     <div class="daftar-kuliner daftar-minuman">
         <div class="item-kuliner">
             <img src="aset/gambar/tuak.jpeg" alt="Tuak">
@@ -2290,18 +2314,18 @@
             rendersoalCard();
 
             const practiceCharSet = [{ latin: 'A', batak: 'ᯀ' }, { latin: 'Ha', batak: 'ᯂ' }, { latin: 'Ka', batak: 'ᯄ' }, { latin: 'Ba', batak: 'ᯅ' }, { latin: 'Pa', batak: 'ᯇ' }, { latin: 'Na', batak: 'ᯉ' }, { latin: 'Ga', batak: 'ᯎ' }, { latin: 'Ja', batak: 'ᯐ' }, { latin: 'Da', batak: 'ᯑ' }, { latin: 'Ra', batak: 'ᯒ' }, { latin: 'Ma', batak: 'ᯔ' }, { latin: 'Ta', batak: 'ᯖ' }, { latin: 'Sa', batak: 'ᯘ' }, { latin: 'Ya', batak: 'ᯛ' }, { latin: 'Nga', batak: 'ᯝ' }, { latin: 'La', batak: 'ᯞ' }];
-            let practiceCurrentIndex = 0; const drawingCanvas = document.getElementById('drawing-surface'); const canvasContext = drawingCanvas.getContext('2d'); let isUserDrawing = false;
-            const resizeDrawingCanvas = () => { const container = document.getElementById('handwriting-module'); drawingCanvas.width = container.clientWidth - 40; drawingCanvas.height = 300; displayPracticeCharacter(); };
-            const displayPracticeCharacter = () => { canvasContext.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height); const charData = practiceCharSet[practiceCurrentIndex]; document.getElementById('handwriting-prompt').textContent = `Latihan: ${charData.latin} (${charData.batak})`; canvasContext.font = '200px AksaraBatak'; canvasContext.fillStyle = 'rgba(128, 128, 128, 0.2)'; canvasContext.textAlign = 'center'; canvasContext.textBaseline = 'middle'; canvasContext.fillText(charData.batak, drawingCanvas.width / 2, drawingCanvas.height / 2); };
-            const getPointerPosition = (event) => { const rect = drawingCanvas.getBoundingClientRect(); const scaleX = drawingCanvas.width / rect.width; const scaleY = drawingCanvas.height / rect.height; if (event.touches) return { x: (event.touches[0].clientX - rect.left) * scaleX, y: (event.touches[0].clientY - rect.top) * scaleY }; return { x: (event.clientX - rect.left) * scaleX, y: (event.clientY - rect.top) * scaleY }; };
-            const beginDrawing = (e) => { e.preventDefault(); isUserDrawing = true; const { x, y } = getPointerPosition(e); canvasContext.beginPath(); canvasContext.moveTo(x, y); };
-            const continueDrawing = (e) => { if (!isUserDrawing) return; e.preventDefault(); const { x, y } = getPointerPosition(e); canvasContext.lineTo(x, y); canvasContext.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--color-accent-primary'); canvasContext.lineWidth = 4; canvasContext.lineCap = 'round'; canvasContext.lineJoin = 'round'; canvasContext.stroke(); };
-            const finishDrawing = () => { isUserDrawing = false; };
-            drawingCanvas.addEventListener('mousedown', beginDrawing); drawingCanvas.addEventListener('mousemove', continueDrawing); drawingCanvas.addEventListener('mouseup', finishDrawing); drawingCanvas.addEventListener('mouseleave', finishDrawing); drawingCanvas.addEventListener('touchstart', beginDrawing); drawingCanvas.addEventListener('touchmove', continueDrawing); drawingCanvas.addEventListener('touchend', finishDrawing);
-            document.getElementById('clear-drawing-btn').addEventListener('click', () => { canvasContext.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height); displayPracticeCharacter(); });
+            let practiceCurrentIndex = 0; const gambarCanvas = document.getElementById('gambar-surface'); const canvasContext = gambarCanvas.getContext('2d'); let isUsergambar = false;
+            const resizegambarCanvas = () => { const container = document.getElementById('menggambar-module'); gambarCanvas.width = container.clientWidth - 40; gambarCanvas.height = 300; displayPracticeCharacter(); };
+            const displayPracticeCharacter = () => { canvasContext.clearRect(0, 0, gambarCanvas.width, gambarCanvas.height); const charData = practiceCharSet[practiceCurrentIndex]; document.getElementById('menggambar-prompt').textContent = `Latihan: ${charData.latin} (${charData.batak})`; canvasContext.font = '200px AksaraBatak'; canvasContext.fillStyle = 'rgba(128, 128, 128, 0.2)'; canvasContext.textAlign = 'center'; canvasContext.textBaseline = 'middle'; canvasContext.fillText(charData.batak, gambarCanvas.width / 2, gambarCanvas.height / 2); };
+            const getPointerPosition = (event) => { const rect = gambarCanvas.getBoundingClientRect(); const scaleX = gambarCanvas.width / rect.width; const scaleY = gambarCanvas.height / rect.height; if (event.touches) return { x: (event.touches[0].clientX - rect.left) * scaleX, y: (event.touches[0].clientY - rect.top) * scaleY }; return { x: (event.clientX - rect.left) * scaleX, y: (event.clientY - rect.top) * scaleY }; };
+            const begingambar = (e) => { e.preventDefault(); isUsergambar = true; const { x, y } = getPointerPosition(e); canvasContext.beginPath(); canvasContext.moveTo(x, y); };
+            const continuegambar = (e) => { if (!isUsergambar) return; e.preventDefault(); const { x, y } = getPointerPosition(e); canvasContext.lineTo(x, y); canvasContext.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--color-accent-primary'); canvasContext.lineWidth = 4; canvasContext.lineCap = 'round'; canvasContext.lineJoin = 'round'; canvasContext.stroke(); };
+            const finishgambar = () => { isUsergambar = false; };
+            gambarCanvas.addEventListener('mousedown', begingambar); gambarCanvas.addEventListener('mousemove', continuegambar); gambarCanvas.addEventListener('mouseup', finishgambar); gambarCanvas.addEventListener('mouseleave', finishgambar); gambarCanvas.addEventListener('touchstart', begingambar); gambarCanvas.addEventListener('touchmove', continuegambar); gambarCanvas.addEventListener('touchend', finishgambar);
+            document.getElementById('clear-gambar-btn').addEventListener('click', () => { canvasContext.clearRect(0, 0, gambarCanvas.width, gambarCanvas.height); displayPracticeCharacter(); });
             document.getElementById('next-char-btn').addEventListener('click', () => { practiceCurrentIndex = (practiceCurrentIndex + 1) % practiceCharSet.length; displayPracticeCharacter(); });
             document.getElementById('previous-char-btn').addEventListener('click', () => { practiceCurrentIndex = (practiceCurrentIndex - 1 + practiceCharSet.length) % practiceCharSet.length; displayPracticeCharacter(); });
-            window.addEventListener('resize', resizeDrawingCanvas); resizeDrawingCanvas();
+            window.addEventListener('resize', resizegambarCanvas); resizegambarCanvas();
 
             const musicPlayer = document.getElementById('background-track'); const musicToggleButton = document.getElementById('music-toggle');
             musicToggleButton.addEventListener('click', function () { if (musicPlayer.paused) { musicPlayer.play().catch(e => { }); musicToggleButton.innerHTML = '<i class="fas fa-pause"></i>'; } else { musicPlayer.pause(); musicToggleButton.innerHTML = '<i class="fas fa-play"></i>'; } });
@@ -2359,12 +2383,13 @@
 document.addEventListener('DOMContentLoaded', function () {
             const itemPerHalaman = 5;
             
-            // Hanya memilih bagian makanan untuk di-pagination
             const daftarMakananUtama = document.getElementById('daftar-makanan-utama');
+            if(!daftarMakananUtama) return; // Guard clause if element doesn't exist
+
             const semuaItemMakanan = Array.from(daftarMakananUtama.querySelectorAll('.item-kuliner'));
             const kontrolHalaman = document.getElementById('wadah-kontrol-halaman');
             
-            if (semuaItemMakanan.length > 0) {
+            if (semuaItemMakanan.length > 0 && kontrolHalaman) {
                 const jumlahTotalItem = semuaItemMakanan.length;
                 const jumlahTotalHalaman = Math.ceil(jumlahTotalItem / itemPerHalaman);
                 let halamanSaatIni = 1;
@@ -2417,3 +2442,4 @@ document.addEventListener('DOMContentLoaded', function () {
 </body>
 
 </html>
+```
